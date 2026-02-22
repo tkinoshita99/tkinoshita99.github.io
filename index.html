@@ -10,10 +10,10 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --black: #0a0a0a;
-      --white: #f0f0f0;
-      --gray: #555;
-      --light-gray: #222;
+      --black: #f5f5f5;
+      --white: #111111;
+      --gray: #888;
+      --light-gray: #ddd;
     }
 
     html { scroll-behavior: smooth; }
@@ -35,7 +35,7 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 9999;
-      opacity: 0.6;
+      opacity: 0.3;
     }
 
     /* NAVIGATION */
@@ -78,7 +78,7 @@
       transition: color 0.3s;
     }
 
-    nav .nav-links a:hover { color: var(--white); }
+    nav .nav-links a:hover { color: #111; }
 
     /* HERO */
     .hero {
@@ -95,7 +95,7 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 8rem 3rem 4rem;
-      border-right: 1px solid #1a1a1a;
+      border-right: 1px solid #e0e0e0;
     }
 
     .hero-index {
@@ -159,7 +159,7 @@
       font-size: clamp(4rem, 10vw, 9rem);
       font-weight: normal;
       line-height: 0.9;
-      color: #111;
+      color: #e0e0e0;
       text-align: right;
       user-select: none;
       position: absolute;
@@ -186,7 +186,7 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--gray);
-      border: 1px solid #1e1e1e;
+      border: 1px solid #ddd;
       padding: 0.4rem 0.8rem;
       display: inline-block;
       width: fit-content;
@@ -202,7 +202,7 @@
     /* SECTION BASE */
     section {
       padding: 6rem 3rem;
-      border-bottom: 1px solid #1a1a1a;
+      border-bottom: 1px solid #e0e0e0;
     }
 
     .section-label {
@@ -233,8 +233,8 @@
 
     .what-item {
       padding: 3rem;
-      border-right: 1px solid #1a1a1a;
-      border-bottom: 1px solid #1a1a1a;
+      border-right: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
       position: relative;
       overflow: hidden;
       transition: background 0.4s;
@@ -242,12 +242,12 @@
 
     .what-item:nth-child(even) { border-right: none; }
     .what-item:nth-child(n+3) { border-bottom: none; }
-    .what-item:hover { background: #0f0f0f; }
+    .what-item:hover { background: #ebebeb; }
 
     .what-num {
       font-family: 'Space Mono', monospace;
       font-size: 0.55rem;
-      color: #333;
+      color: #aaa;
       letter-spacing: 0.2em;
       margin-bottom: 2rem;
     }
@@ -285,12 +285,12 @@
       color: var(--gray);
       text-decoration: none;
       letter-spacing: 0.15em;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #bbb;
       padding-bottom: 0.2rem;
       transition: color 0.3s, border-color 0.3s;
     }
 
-    .what-link:hover { color: var(--white); border-color: var(--white); }
+    .what-link:hover { color: #000; border-color: #000; }
 
     /* BIWAKO SILENCE */
     .biwako-section {
@@ -301,7 +301,7 @@
 
     .biwako-left {
       padding-right: 4rem;
-      border-right: 1px solid #1a1a1a;
+      border-right: 1px solid #e0e0e0;
     }
 
     .biwako-right {
@@ -337,7 +337,7 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      border-bottom: 1px solid #1a1a1a;
+      border-bottom: 1px solid #e0e0e0;
       padding-bottom: 0.8rem;
     }
 
@@ -358,7 +358,7 @@
 
     /* SILENT CARRY */
     .sc-section {
-      background: #080808;
+      background: #efefef;
     }
 
     .sc-inner {
@@ -389,10 +389,10 @@
     .sc-philosophy {
       font-family: 'Space Mono', monospace;
       font-size: 0.62rem;
-      color: #444;
+      color: #777;
       line-height: 2.5;
       font-style: italic;
-      border-left: 1px solid #1a1a1a;
+      border-left: 1px solid #e0e0e0;
       padding-left: 2rem;
     }
 
@@ -421,7 +421,7 @@
 
     .identity-block {
       padding: 3rem;
-      border-right: 1px solid #1a1a1a;
+      border-right: 1px solid #e0e0e0;
     }
 
     .identity-block:last-child { border-right: none; }
@@ -429,7 +429,7 @@
     .identity-num {
       font-family: 'Space Mono', monospace;
       font-size: 0.55rem;
-      color: #333;
+      color: #aaa;
       letter-spacing: 0.2em;
       margin-bottom: 2rem;
       display: block;
@@ -487,17 +487,17 @@
       letter-spacing: 0.2em;
       color: var(--gray);
       text-decoration: none;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #bbb;
       padding-bottom: 0.3rem;
       transition: color 0.3s, border-color 0.3s;
     }
 
-    .contact-email:hover { color: var(--white); border-color: var(--white); }
+    .contact-email:hover { color: #000; border-color: #000; }
 
     /* FOOTER */
     footer {
       padding: 2rem 3rem;
-      border-top: 1px solid #1a1a1a;
+      border-top: 1px solid #e0e0e0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -506,7 +506,7 @@
     footer span {
       font-family: 'Space Mono', monospace;
       font-size: 0.55rem;
-      color: #333;
+      color: #aaa;
       letter-spacing: 0.15em;
     }
 
@@ -546,7 +546,7 @@
       .biwako-right { padding-left: 0; }
       .sc-inner { grid-template-columns: 1fr; gap: 3rem; }
       .identity-section { grid-template-columns: 1fr; }
-      .identity-block { border-right: none; border-bottom: 1px solid #1a1a1a; }
+      .identity-block { border-right: none; border-bottom: 1px solid #e0e0e0; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
@@ -568,7 +568,7 @@
   </nav>
 
   <!-- HERO -->
-  <section class="hero" style="border-bottom: 1px solid #1a1a1a; padding: 0;">
+  <section class="hero" style="border-bottom: 1px solid #e0e0e0; padding: 0;">
     <div class="hero-left">
       <div class="hero-index">001 — Identity</div>
       <h1 class="hero-name">木下 貴博</h1>
