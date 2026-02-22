@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Takahiro Kinoshita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f0f0f0;
+      --gray: #555;
+      --light-gray: #222;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 100;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* NAVIGATION */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+
+    nav .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.6;
+    }
+
+    nav .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.3rem;
+    }
+
+    nav .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--gray);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    nav .nav-links a:hover { color: var(--white); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 3rem 4rem;
+      border-right: 1px solid #1a1a1a;
+    }
+
+    .hero-index {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gray);
+      letter-spacing: 0.2em;
+      margin-bottom: 3rem;
+    }
+
+    .hero-name {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 100;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.2s ease forwards 0.3s;
+    }
+
+    .hero-name-en {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+      color: var(--gray);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 4rem;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards 0.5s;
+    }
+
+    .hero-statement {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(0.65rem, 1vw, 0.8rem);
+      line-height: 2;
+      color: var(--gray);
+      font-style: italic;
+      max-width: 320px;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards 0.7s;
+    }
+
+    .hero-statement em {
+      color: var(--white);
+      font-style: normal;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+    }
+
+    .hero-large-text {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(4rem, 10vw, 9rem);
+      font-weight: normal;
+      line-height: 0.9;
+      color: #111;
+      text-align: right;
+      user-select: none;
+      position: absolute;
+      right: -0.05em;
+      bottom: 3rem;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-tags {
+      position: absolute;
+      top: 50%;
+      left: 3rem;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards 0.9s;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      border: 1px solid #1e1e1e;
+      padding: 0.4rem 0.8rem;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: #1a1a1a;
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 6rem 3rem;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-bottom: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #1a1a1a;
+    }
+
+    /* WHAT I DO */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .what-item {
+      padding: 3rem;
+      border-right: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+
+    .what-item:nth-child(even) { border-right: none; }
+    .what-item:nth-child(n+3) { border-bottom: none; }
+    .what-item:hover { background: #0f0f0f; }
+
+    .what-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: #333;
+      letter-spacing: 0.2em;
+      margin-bottom: 2rem;
+    }
+
+    .what-title-jp {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 100;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .what-title-en {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gray);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .what-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gray);
+      line-height: 2;
+      font-style: italic;
+    }
+
+    .what-link {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--gray);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.2rem;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .what-link:hover { color: var(--white); border-color: var(--white); }
+
+    /* BIWAKO SILENCE */
+    .biwako-section {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 0;
+    }
+
+    .biwako-left {
+      padding-right: 4rem;
+      border-right: 1px solid #1a1a1a;
+    }
+
+    .biwako-right {
+      padding-left: 4rem;
+    }
+
+    .biwako-statement {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 100;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      line-height: 1.6;
+      letter-spacing: 0.05em;
+      margin-bottom: 3rem;
+    }
+
+    .biwako-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gray);
+      line-height: 2.2;
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+
+    .biwako-data {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .data-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 0.8rem;
+    }
+
+    .data-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--gray);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .data-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--white);
+      letter-spacing: 0.1em;
+    }
+
+    /* SILENT CARRY */
+    .sc-section {
+      background: #080808;
+    }
+
+    .sc-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 6rem;
+      align-items: end;
+    }
+
+    .sc-title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2rem, 5vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+    }
+
+    .sc-sub {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 100;
+      font-size: 1rem;
+      color: var(--gray);
+      line-height: 2;
+      margin-bottom: 3rem;
+      letter-spacing: 0.05em;
+    }
+
+    .sc-philosophy {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: #444;
+      line-height: 2.5;
+      font-style: italic;
+      border-left: 1px solid #1a1a1a;
+      padding-left: 2rem;
+    }
+
+    .sc-cta {
+      display: inline-block;
+      margin-top: 2.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--white);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .sc-cta:hover { background: var(--gray); color: var(--white); }
+
+    /* IDENTITY */
+    .identity-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+
+    .identity-block {
+      padding: 3rem;
+      border-right: 1px solid #1a1a1a;
+    }
+
+    .identity-block:last-child { border-right: none; }
+
+    .identity-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: #333;
+      letter-spacing: 0.2em;
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .identity-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .identity-val {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 100;
+      font-size: 1rem;
+      line-height: 2;
+      letter-spacing: 0.05em;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 40vh;
+      text-align: center;
+      border-bottom: none;
+    }
+
+    .contact-pre {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gray);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .contact-statement {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 100;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+
+    .contact-email {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gray);
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.3rem;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .contact-email:hover { color: var(--white); border-color: var(--white); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: #333;
+      letter-spacing: 0.15em;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .js-loaded .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .js-loaded .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 1.5rem; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 7rem 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .what-grid { grid-template-columns: 1fr; }
+      .what-item { border-right: none; }
+      .biwako-section { grid-template-columns: 1fr; }
+      .biwako-left { border-right: none; padding-right: 0; margin-bottom: 3rem; }
+      .biwako-right { padding-left: 0; }
+      .sc-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .identity-section { grid-template-columns: 1fr; }
+      .identity-block { border-right: none; border-bottom: 1px solid #1a1a1a; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">
+      Takahiro Kinoshita<br>
+      <span style="color:#333">— Shiga, Japan</span>
+    </div>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#silence">Biwako Silence</a>
+      <a href="#carry">Silent Carry</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" style="border-bottom: 1px solid #1a1a1a; padding: 0;">
+    <div class="hero-left">
+      <div class="hero-index">001 — Identity</div>
+      <h1 class="hero-name">木下 貴博</h1>
+      <p class="hero-name-en">Kinoshita Takahiro</p>
+      <p class="hero-statement">
+        <em>EXPERIENCE TRANSLATOR</em><br>
+        <span style="color:#444;font-size:0.58rem;line-height:2.2;">Translating the gap between<br>what brands mean and what people feel.</span><br><br>
+        UX/UI + 99LETTERS Music Producer.<br>
+        Shiga, Japan.
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-tags">
+        <span class="tag">UX / UI Design</span>
+        <span class="tag">Music Production</span>
+        <span class="tag">Sensory Consulting</span>
+        <span class="tag">99LETTERS</span>
+        <span class="tag">Kinoshita Studio</span>
+      </div>
+      <div class="hero-large-text">TK</div>
+    </div>
+  </section>
+
+  <!-- WHAT I DO -->
+  <section id="work" style="padding: 5rem 0;">
+    <div style="padding: 0 3rem;">
+      <div class="section-label">002 — What I Do</div>
+    </div>
+    <div class="what-grid reveal">
+      <div class="what-item">
+        <div class="what-num">— 01</div>
+        <div class="what-title-jp">体験設計</div>
+        <div class="what-title-en">Sensory Consulting</div>
+        <p class="what-desc">
+          選ばれる理由をデザインする。<br>
+          印象をコントロールし、<br>
+          来る前から、その場所を感じさせる。
+        </p>
+        <a href="#contact" class="what-link">Kinoshita Studio →</a>
+      </div>
+      <div class="what-item">
+        <div class="what-num">— 02</div>
+        <div class="what-title-jp">UX / UI</div>
+        <div class="what-title-en">Interface Design</div>
+        <p class="what-desc">
+          10年以上、人が何かを<br>
+          「感じる」瞬間を設計してきた。<br>
+          余白が思想を語る。
+        </p>
+      </div>
+      <div class="what-item">
+        <div class="what-num">— 03</div>
+        <div class="what-title-jp">音楽制作</div>
+        <div class="what-title-en">Music Production — 99LETTERS</div>
+        <p class="what-desc">
+          国際レーベルからリリース。<br>
+          音は体験設計の核にある。<br>
+          聴こえないものを聴かせる。
+        </p>
+        <a href="https://instagram.com/99letters" target="_blank" class="what-link">@99letters →</a>
+      </div>
+      <div class="what-item">
+        <div class="what-num">— 04</div>
+        <div class="what-title-jp">編集眼</div>
+        <div class="what-title-en">Curation — Silent Carry</div>
+        <p class="what-desc">
+          フィールドで生き残ったものだけを、<br>
+          世界から連れてくる。<br>
+          説明はいらない。手に取ればわかる。
+        </p>
+        <a href="#carry" class="what-link">Silent Carry →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIWAKO SILENCE -->
+  <section id="silence">
+    <div class="section-label">003 — Project</div>
+    <div class="biwako-section reveal">
+      <div class="biwako-left">
+        <h2 class="biwako-statement">
+          BIWAKO<br>SILENCE
+        </h2>
+        <p class="biwako-sub">
+          琵琶湖の静けさを、<br>
+          AI × 音 × 視覚で体験設計するシリーズ。<br><br>
+          Lake Biwa is 104 meters deep.<br>
+          The silence has a shape.
+        </p>
+        <a href="https://instagram.com/tkinoshita99" target="_blank" class="what-link">@tkinoshita99 →</a>
+      </div>
+      <div class="biwako-right">
+        <div class="biwako-data">
+          <div class="data-line">
+            <span class="data-key">Location</span>
+            <span class="data-val">Lake Biwa, Shiga</span>
+          </div>
+          <div class="data-line">
+            <span class="data-key">Depth</span>
+            <span class="data-val">104 m</span>
+          </div>
+          <div class="data-line">
+            <span class="data-key">Medium</span>
+            <span class="data-val">AI × Sound × Visual</span>
+          </div>
+          <div class="data-line">
+            <span class="data-key">Format</span>
+            <span class="data-val">Series</span>
+          </div>
+          <div class="data-line">
+            <span class="data-key">Status</span>
+            <span class="data-val">— Ongoing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SILENT CARRY -->
+  <section id="carry" class="sc-section">
+    <div class="section-label">004 — Curation</div>
+    <div class="sc-inner reveal">
+      <div>
+        <h2 class="sc-title">SILENT<br>CARRY</h2>
+        <p class="sc-sub">
+          私がフィールドに持っていくものだけを置く。<br>
+          余計な主張をしないギアを、世界から連れてくる。
+        </p>
+        <a href="#" class="sc-cta">Visit Store →</a>
+      </div>
+      <div>
+        <p class="sc-philosophy">
+          Selecting what survives the field.<br><br>
+          説明が要らないもの。<br>
+          使うほど理由がわかるもの。<br>
+          景色に溶けるもの。<br><br>
+          ここにあるのは、<br>
+          その基準を通過したものだけです。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- IDENTITY -->
+  <section>
+    <div class="section-label">005 — Background</div>
+    <div class="identity-section reveal">
+      <div class="identity-block">
+        <span class="identity-num">— 01</span>
+        <div class="identity-key">Base</div>
+        <div class="identity-val">
+          滋賀県<br>
+          琵琶湖畔<br>
+          <span style="font-family:'Space Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:0.1em;">Shiga, Japan</span>
+        </div>
+      </div>
+      <div class="identity-block">
+        <span class="identity-num">— 02</span>
+        <div class="identity-key">Experience</div>
+        <div class="identity-val">
+          UX/UI Design 10yr+<br>
+          Music Production 10yr+<br>
+          <span style="font-family:'Space Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:0.1em;">International label releases</span>
+        </div>
+      </div>
+      <div class="identity-block">
+        <span class="identity-num">— 03</span>
+        <div class="identity-key">Channels</div>
+        <div class="identity-val">
+          <a href="https://instagram.com/tkinoshita99" target="_blank" style="color:inherit;text-decoration:none;display:block;">@tkinoshita99</a>
+          <a href="https://instagram.com/kkinoshita.studio" target="_blank" style="color:inherit;text-decoration:none;display:block;">@kkinoshita.studio</a>
+          <a href="https://instagram.com/99letters" target="_blank" style="color:inherit;text-decoration:none;display:block;font-family:'Space Mono',monospace;font-size:0.6rem;color:#555;letter-spacing:0.1em;">@99letters</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <p class="contact-pre">006 — Contact</p>
+    <p class="contact-statement reveal">
+      届けたい体験と、届いている体験の間に<br>ズレを感じている人へ。<br>
+      <span style="font-family:'Space Mono',monospace;font-size:0.7rem;color:#555;font-style:italic;">For those who feel the gap between intent and experience.</span>
+    </p>
+    <a href="/cdn-cgi/l/email-protection#066e6f463f3f6a63727263747528616f726e7364286f69" class="contact-email"><span class="__cf_email__" data-cfemail="452d2c052e2c2b2a362d2c312468363130212c2a6b262a28">[email&#160;protected]</span></a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Takahiro Kinoshita — Kinoshita Studio</span>
+    <span>Shiga, Japan — 99letters.github.io</span>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // SCROLL REVEAL
+    document.body.classList.add('js-loaded');
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) el.target.classList.add('visible');
+      });
+    }, { threshold: 0.05 });
+    reveals.forEach(el => observer.observe(el));
+    // Trigger visible for already-in-view elements
+    setTimeout(() => {
+      reveals.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) el.classList.add('visible');
+      });
+    }, 100);
+  </script>
+</body>
+</html>
