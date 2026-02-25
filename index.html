@@ -291,6 +291,29 @@
 
     .what-link:hover { color: #000; border-color: #000; }
 
+    /* INSTAGRAM GRID */
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-top: 0;
+    }
+    .ig-grid blockquote {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+    @media (max-width: 900px) {
+      .ig-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .ig-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* BIWAKO SILENCE */
     .biwako-section {
       display: grid;
@@ -632,7 +655,7 @@
         </div>
       </div>
       <div style="margin-top:2rem;">
-        <div style="display:flex;flex-direction:column;gap:1.5rem;">
+        <div class="ig-grid">
           <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVDyvVYj3-S/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
           <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVEctzDD7xE/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
           <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVEm0dEk0w3/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
