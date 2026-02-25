@@ -295,23 +295,34 @@
     .ig-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 1rem;
+      gap: 0.5rem;
       margin-top: 0;
     }
-    .ig-grid blockquote {
+    .ig-item {
+      overflow: hidden;
+      position: relative;
+      height: 220px;
+    }
+    .ig-item blockquote {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: scale(0.42);
+      transform-origin: top left;
+      width: 238% !important;
+      max-width: none !important;
       min-width: 0 !important;
-      max-width: 100% !important;
-      width: 100% !important;
+      pointer-events: auto;
     }
     @media (max-width: 900px) {
-      .ig-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .ig-grid { grid-template-columns: repeat(3, 1fr); }
+      .ig-item { height: 180px; }
+      .ig-item blockquote { transform: scale(0.35); width: 286% !important; }
     }
     @media (max-width: 600px) {
-      .ig-grid {
-        grid-template-columns: 1fr;
-      }
+      .ig-grid { grid-template-columns: repeat(2, 1fr); }
+      .ig-item { height: 160px; }
+      .ig-item blockquote { transform: scale(0.3); width: 333% !important; }
     }
 
     /* BIWAKO SILENCE */
@@ -656,11 +667,11 @@
       </div>
       <div style="margin-top:2rem;">
         <div class="ig-grid">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVDyvVYj3-S/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVEctzDD7xE/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVEm0dEk0w3/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVErXJSkyDZ/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVFO4VpjxOf/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
+          <div class="ig-item"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVDyvVYj3-S/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote></div>
+          <div class="ig-item"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVEctzDD7xE/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote></div>
+          <div class="ig-item"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVEm0dEk0w3/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote></div>
+          <div class="ig-item"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVErXJSkyDZ/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote></div>
+          <div class="ig-item"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVFO4VpjxOf/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote></div>
         </div>
         <script async src="//www.instagram.com/embed.js"></script>
       </div>
