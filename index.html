@@ -763,7 +763,7 @@
       届けたい体験と、届いている体験の間に<br>ズレを感じている人へ。<br>
       <span style="font-family:'Space Mono',monospace;font-size:0.7rem;color:#aaa;font-style:italic;">For those who feel the gap between intent and experience.</span>
     </p>
-    <a href="/cdn-cgi/l/email-protection#1e2727727b6a6a7b6c6d27275e79737f7772307d7173" class="contact-email"><span class="__cf_email__" data-cfemail="98a1a1f4fdececfdeaeba1a1d8fff5f9f1f4b6fbf7f5">[email&#160;protected]</span></a>
+    <span class="contact-email" id="contact-email-top"></span>
   </section>
 
   <!-- FOOTER -->
@@ -772,7 +772,7 @@
     <span>Shiga, Japan — tkinoshita99.github.io</span>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // SCROLL REVEAL
     document.body.classList.add('js-loaded');
     const reveals = document.querySelectorAll('.reveal');
@@ -783,3 +783,26 @@
     }, { threshold: 0.05 });
     reveals.forEach(el => observer.observe(el));
     // Trigger visible for al
+    setTimeout(() => {
+      reveals.forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+      });
+    }, 100);
+  </script>
+
+<script>
+(function(){
+  var u="99letters99";
+  var d="gmail.com";
+  var el=document.getElementById("contact-email-top");
+  if(el){
+    el.textContent=u+"@"+d;
+    el.style.cursor="pointer";
+    el.className+=" contact-email";
+    el.onclick=function(){window.location.href="mailto:"+u+"@"+d;};
+  }
+})();
+</script>
+
+</body>
+</html>
