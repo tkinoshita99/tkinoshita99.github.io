@@ -557,6 +557,15 @@
         object-fit: cover;
         object-position: center top;
         border-bottom: 1px solid #e0e0e0;
+        order: -1;
+      }
+      .hero {
+        flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .hero-left, .hero-right {
+        width: 100%;
       }
     }
     @keyframes fadeUp {
@@ -638,9 +647,8 @@
       </div>
       <div class="hero-large-text">TK</div>
     </div>
-  </section>
-
   <img src="hero-mobile.jpg" alt="Takahiro Kinoshita" class="hero-mobile-img">
+  </section>
 
   <!-- BIWAKO SILENCE -->
   <section id="silence">
