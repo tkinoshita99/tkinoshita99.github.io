@@ -1,101 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Takahiro Kinoshita</title>
-    <meta property="og:title" content="Takahiro Kinoshita — Experience Translator">
-  <meta property="og:description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。滋賀県を拠点に活動するUX/UIデザイナー・体験翻訳家。">
-  <meta property="og:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
-  <meta property="og:url" content="https://tkinoshita99.github.io/">
+  <title>Kinoshita Studio — 木下スタジオ</title>
+    <meta property="og:title" content="木下スタジオ | Kinoshita Studio — 琵琶湖にあるデザイン">
+  <meta property="og:description" content="届けたい体験と届いている体験のズレを揃える。滋賀県を拠点に、UX/UIデザイン・Webデザイン・アートディレクションを提供するデザインスタジオ。">
+  <meta property="og:image" content="https://kinoshitastudio.github.io/ogp-studio.png">
+  <meta property="og:url" content="https://kinoshitastudio.github.io/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
-  <meta name="twitter:title" content="Takahiro Kinoshita — Experience Translator">
-  <meta name="twitter:description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。">
+  <meta name="twitter:image" content="https://kinoshitastudio.github.io/ogp-studio.png">
+  <meta name="twitter:title" content="木下スタジオ | Kinoshita Studio">
+  <meta name="twitter:description" content="届けたい体験と届いている体験のズレを揃える。滋賀県を拠点に活動するデザインスタジオ。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --black: #ffffff;
-      --white: #0f0f0f;
-      --gray: #999;
-      --light-gray: #ddd;
+      --bg: #4a4a47;
+      --fg: #f0ede8;
+      --gray: #8a8a85;
+      --border: #5a5a57;
+      --subtle: #404040;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--black);
-      color: var(--white);
+      background: var(--bg);
+      color: var(--fg);
       font-family: 'Noto Sans JP', sans-serif;
       font-weight: 100;
       overflow-x: hidden;
       cursor: crosshair;
     }
 
-    /* NOISE OVERLAY */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.3;
-    }
-
-    /* NAVIGATION */
+    /* NAV */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       padding: 2rem 3rem;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       z-index: 100;
+      background: #4a4a47;
+      border-bottom: 1px solid var(--border);
     }
 
-    nav .logo {
+    .nav-logo {
       font-family: 'Space Mono', monospace;
       font-size: 0.65rem;
       letter-spacing: 0.2em;
-      color: var(--white);
+      color: #f0ede8;
       text-transform: uppercase;
       line-height: 1.6;
+      text-decoration: none;
     }
 
-    nav .nav-links {
+    .nav-logo span { color: #999; }
+
+    .nav-links {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       gap: 0.3rem;
     }
 
-    nav .nav-links a {
+    .nav-links a {
       font-family: 'Space Mono', monospace;
       font-size: 0.6rem;
       letter-spacing: 0.15em;
-      color: var(--gray);
+      color: #999;
       text-decoration: none;
       text-transform: uppercase;
       transition: color 0.3s;
     }
 
-    nav .nav-links a:hover { color: #111; }
+    .nav-links a:hover { color: #f0ede8; }
 
     /* HERO */
     .hero {
       min-height: 100vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      padding: 0;
-      position: relative;
-      overflow: hidden;
+      border-bottom: 1px solid var(--border);
     }
 
     .hero-left {
@@ -103,23 +94,24 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 8rem 3rem 4rem;
-      border-right: 1px solid #e0e0e0;
+      border-right: 1px solid var(--border);
     }
 
     .hero-index {
       font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--gray);
-      letter-spacing: 0.2em;
+      font-size: 0.58rem;
+      color: #999;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
       margin-bottom: 3rem;
     }
 
     .hero-name {
       font-family: 'Noto Sans JP', sans-serif;
       font-weight: 100;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.2;
+      letter-spacing: 0.05em;
       margin-bottom: 0.5rem;
       opacity: 0;
       transform: translateY(30px);
@@ -128,8 +120,8 @@
 
     .hero-name-en {
       font-family: 'Space Mono', monospace;
-      font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-      color: var(--gray);
+      font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+      color: #999;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       margin-bottom: 4rem;
@@ -139,17 +131,17 @@
 
     .hero-statement {
       font-family: 'Space Mono', monospace;
-      font-size: clamp(0.65rem, 1vw, 0.8rem);
-      line-height: 2;
-      color: var(--gray);
+      font-size: 0.68rem;
+      line-height: 2.2;
+      color: #999;
       font-style: italic;
-      max-width: 320px;
+      max-width: 340px;
       opacity: 0;
       animation: fadeUp 1.2s ease forwards 0.7s;
     }
 
     .hero-statement em {
-      color: var(--white);
+      color: #f0ede8;
       font-style: normal;
     }
 
@@ -160,14 +152,15 @@
       align-items: flex-end;
       padding: 8rem 3rem 4rem;
       position: relative;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards 0.9s;
     }
 
     .hero-large-text {
       font-family: 'Space Mono', monospace;
       font-size: clamp(4rem, 10vw, 9rem);
-      font-weight: normal;
       line-height: 0.9;
-      color: #ebebeb;
+      color: #3a3a37;
       text-align: right;
       user-select: none;
       position: absolute;
@@ -177,15 +170,9 @@
     }
 
     .hero-tags {
-      position: absolute;
-      top: 50%;
-      left: 3rem;
-      transform: translateY(-50%);
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-      opacity: 0;
-      animation: fadeUp 1.2s ease forwards 0.9s;
     }
 
     .tag {
@@ -193,8 +180,8 @@
       font-size: 0.58rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gray);
-      border: 1px solid #ddd;
+      color: #999;
+      border: 1px solid var(--border);
       padding: 0.4rem 0.8rem;
       display: inline-block;
       width: fit-content;
@@ -202,29 +189,22 @@
       transition: color 0.3s, border-color 0.3s, background 0.3s;
     }
     .tag:hover {
-      color: #1a1a1a;
-      border-color: #1a1a1a;
-      background: rgba(0,0,0,0.04);
+      color: var(--fg);
+      border-color: var(--fg);
+      background: rgba(255,255,255,0.05);
     }
 
-    /* DIVIDER */
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: #e0e0e0;
-    }
-
-    /* SECTION BASE */
+    /* SECTIONS */
     section {
       padding: 6rem 3rem;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid var(--border);
     }
 
     .section-label {
       font-family: 'Space Mono', monospace;
       font-size: 0.58rem;
       letter-spacing: 0.3em;
-      color: var(--gray);
+      color: #999;
       text-transform: uppercase;
       margin-bottom: 4rem;
       display: flex;
@@ -236,254 +216,191 @@
       content: '';
       flex: 1;
       height: 1px;
-      background: #e0e0e0;
+      background: var(--border);
     }
 
-    /* WHAT I DO */
-    .what-grid {
+    /* SERVICE GRID */
+    .service-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0;
     }
 
-    .what-item {
+    .service-item {
       padding: 3rem;
-      border-right: 1px solid #e0e0e0;
-      border-bottom: 1px solid #e0e0e0;
-      position: relative;
-      overflow: hidden;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       transition: background 0.4s;
     }
 
-    .what-item:nth-child(even) { border-right: none; }
-    .what-item:nth-child(n+3) { border-bottom: none; }
-    .what-item:hover { background: #ebebeb; }
+    .service-item:nth-child(even) { border-right: none; }
+    .service-item:nth-child(n+3) { border-bottom: none; }
+    .service-item:hover { background: #404040; }
 
-    .what-num {
+    .service-num {
       font-family: 'Space Mono', monospace;
       font-size: 0.55rem;
-      color: #aaa;
+      color: #6a6a67;
       letter-spacing: 0.2em;
       margin-bottom: 2rem;
     }
 
-    .what-title-jp {
+    .service-title-jp {
       font-family: 'Noto Sans JP', sans-serif;
       font-weight: 100;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       letter-spacing: 0.05em;
       margin-bottom: 0.3rem;
     }
 
-    .what-title-en {
+    .service-title-en {
       font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--gray);
+      font-size: 0.58rem;
+      color: #999;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       margin-bottom: 1.5rem;
     }
 
-    .what-desc {
+    .service-desc {
       font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--gray);
-      line-height: 2;
-      font-style: italic;
-    }
-
-    .what-link {
-      display: inline-block;
-      margin-top: 1.5rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      color: var(--gray);
-      text-decoration: none;
-      letter-spacing: 0.15em;
-      border-bottom: 1px solid #bbb;
-      padding-bottom: 0.2rem;
-      transition: color 0.3s, border-color 0.3s;
-    }
-
-    .what-link:hover { color: #000; border-color: #000; }
-
-    /* INSTAGRAM GRID */
-    .ig-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      margin-top: 0;
-    }
-    .ig-grid blockquote {
-      min-width: 0 !important;
-      max-width: 100% !important;
-      width: 100% !important;
-    }
-    @media (max-width: 900px) {
-      .ig-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .ig-grid { grid-template-columns: 1fr; }
-    }
-
-    /* BIWAKO SILENCE */
-    .biwako-section {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 0;
-    }
-
-    .biwako-left {
-      padding-right: 4rem;
-      border-right: 1px solid #e0e0e0;
-    }
-
-    .biwako-right {
-      padding-left: 4rem;
-    }
-
-    .biwako-statement {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: clamp(1.5rem, 3vw, 2.5rem);
-      line-height: 1.6;
-      letter-spacing: 0.05em;
-      margin-bottom: 3rem;
-    }
-
-    .biwako-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--gray);
+      font-size: 0.6rem;
+      color: #999;
       line-height: 2.2;
       font-style: italic;
-      margin-bottom: 2rem;
     }
 
-    .biwako-data {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 3rem;
-    }
-
-    .data-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 0.8rem;
-    }
-
-    .data-key {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      color: var(--gray);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .data-val {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--white);
-      letter-spacing: 0.1em;
-    }
-
-    /* SILENT CARRY */
-    .sc-section {
-      background: #f7f7f7;
-    }
-
-    .sc-inner {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 6rem;
-      align-items: end;
-    }
-
-    .sc-title {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(2rem, 5vw, 5rem);
-      line-height: 1;
-      letter-spacing: -0.03em;
-      margin-bottom: 2rem;
-    }
-
-    .sc-sub {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: 1rem;
-      color: var(--gray);
-      line-height: 2;
-      margin-bottom: 3rem;
-      letter-spacing: 0.05em;
-    }
-
-    .sc-philosophy {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: #aaa;
-      line-height: 2.5;
-      font-style: italic;
-      border-left: 1px solid #e0e0e0;
-      padding-left: 2rem;
-    }
-
-    .sc-cta {
-      display: inline-block;
-      margin-top: 2.5rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--white);
-      padding: 1rem 2rem;
-      text-decoration: none;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .sc-cta:hover { background: var(--gray); color: var(--white); }
-
-    /* IDENTITY */
-    .identity-section {
+    /* WORKS */
+    .works-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 0;
     }
 
-    .identity-block {
+    .work-item {
       padding: 3rem;
-      border-right: 1px solid #e0e0e0;
+      border-right: 1px solid var(--border);
     }
 
-    .identity-block:last-child { border-right: none; }
+    .work-item:nth-child(3n) { border-right: none; }
+    .work-item:nth-child(n+4) { border-top: 1px solid var(--border); }
 
-    .identity-num {
+    .work-num {
       font-family: 'Space Mono', monospace;
       font-size: 0.55rem;
-      color: #aaa;
+      color: #6a6a67;
       letter-spacing: 0.2em;
-      margin-bottom: 2rem;
-      display: block;
+      margin-bottom: 1.5rem;
     }
 
-    .identity-key {
+    .work-thumb {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #3d3d3a;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .work-thumb-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
+      font-size: 0.55rem;
+      color: #6a6a67;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 1rem;
     }
 
-    .identity-val {
+    .work-title {
       font-family: 'Noto Sans JP', sans-serif;
       font-weight: 100;
       font-size: 1rem;
-      line-height: 2;
       letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .work-cat {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: #999;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* PROFILE */
+    .profile-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .profile-left {
+      padding-right: 4rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .profile-right {
+      padding-left: 4rem;
+    }
+
+    .profile-name {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 100;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-name-en {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: #999;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .profile-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: #999;
+      line-height: 2.5;
+      font-style: italic;
+    }
+
+    .profile-data {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-row:first-child { border-top: 1px solid var(--border); }
+
+    .profile-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: #999;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .profile-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: #f0ede8;
+      letter-spacing: 0.1em;
     }
 
     /* CONTACT */
@@ -500,7 +417,7 @@
     .contact-pre {
       font-family: 'Space Mono', monospace;
       font-size: 0.6rem;
-      color: var(--gray);
+      color: #999;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       margin-bottom: 2rem;
@@ -512,26 +429,26 @@
       font-size: clamp(1.2rem, 3vw, 2rem);
       letter-spacing: 0.05em;
       margin-bottom: 3rem;
-      line-height: 1.6;
+      line-height: 1.8;
     }
 
     .contact-email {
       font-family: 'Space Mono', monospace;
       font-size: 0.7rem;
       letter-spacing: 0.2em;
-      color: var(--gray);
+      color: #999;
       text-decoration: none;
-      border-bottom: 1px solid #bbb;
+      border-bottom: 1px solid #ccc;
       padding-bottom: 0.3rem;
       transition: color 0.3s, border-color 0.3s;
     }
 
-    .contact-email:hover { color: #000; border-color: #000; }
+    .contact-email:hover { color: #f0ede8; border-color: #f0ede8; }
 
     /* FOOTER */
     footer {
       padding: 2rem 3rem;
-      border-top: 1px solid #e0e0e0;
+      border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -540,54 +457,53 @@
     footer span {
       font-family: 'Space Mono', monospace;
       font-size: 0.55rem;
-      color: #aaa;
+      color: #7a7a77;
       letter-spacing: 0.15em;
     }
 
-    /* ANIMATIONS */
-    /* MOBILE HERO IMAGE */
-    .hero-mobile-img {
+    footer a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: #7a7a77;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover { color: #f0ede8; }
+
+    /* ANIMATION */
+    /* MOBILE LOGO */
+    .hero-mobile-logo {
       display: none;
     }
     @media(max-width: 768px) {
-      .hero-mobile-img {
-        display: block;
-        width: 100%;
-        height: 280px;
-        object-fit: cover;
-        object-position: center top;
-        border-bottom: 1px solid #e0e0e0;
-        order: -1;
-      }
-      .hero {
-        flex-direction: column;
+      .hero-mobile-logo {
         display: flex;
-        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
       }
-      .hero-left, .hero-right {
-        width: 100%;
+      .hero-mobile-logo img {
+        width: 110px;
+        height: 110px;
+        object-fit: contain;
       }
     }
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* SCROLL REVEAL */
     .reveal {
       opacity: 1;
       transform: translateY(0);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
 
-    .js-loaded .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .js-loaded .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .js-loaded .reveal { opacity: 0; transform: translateY(20px); }
+    .js-loaded .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* MOBILE */
     @media (max-width: 768px) {
@@ -596,218 +512,231 @@
       .hero-right { display: none; }
       .hero-left { padding: 7rem 1.5rem 4rem; }
       section { padding: 4rem 1.5rem; }
-      .what-grid { grid-template-columns: 1fr; }
-      .what-item { border-right: none; }
-      .biwako-section { grid-template-columns: 1fr; }
-      .biwako-left { border-right: none; padding-right: 0; margin-bottom: 3rem; }
-      .biwako-right { padding-left: 0; }
-      .sc-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .identity-section { grid-template-columns: 1fr; }
-      .identity-block { border-right: none; border-bottom: 1px solid #e0e0e0; }
+      .service-grid { grid-template-columns: 1fr; }
+      .service-item { border-right: none; }
+      .works-grid { grid-template-columns: 1fr; }
+      .work-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .profile-section { grid-template-columns: 1fr; }
+      .profile-left { border-right: none; padding-right: 0; margin-bottom: 3rem; }
+      .profile-right { padding-left: 0; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
-    <div class="logo">
-      Takahiro Kinoshita<br>
-      <span style="color:#999">— Shiga, Japan</span>
+    <div class="nav-logo">
+      Kinoshita Studio<br>
+      <span>— Shiga, Japan</span>
     </div>
     <div class="nav-links">
-      <a href="experience-translator.html">Experience Translator</a>
-      <a href="#silence">Biwako Silence</a>
-      <a href="#carry">Silent Carry</a>
+      <a href="#service">Service</a>
+      <a href="#works">Works</a>
+      <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
 
+  <!-- MOBILE LOGO -->
+  <div class="hero-mobile-logo">
+    <img src="ogp.png" alt="Kinoshita Studio Logo">
+  </div>
+
   <!-- HERO -->
-  <section class="hero" style="border-bottom: 1px solid #e0e0e0; padding: 0;">
+  <div class="hero">
     <div class="hero-left">
-      <div class="hero-index">001 — Identity</div>
-      <h1 class="hero-name">木下 貴博</h1>
-      <p class="hero-name-en">Kinoshita Takahiro</p>
+      <div class="hero-index">001 — Studio</div>
+      <h1 class="hero-name">木下スタジオ</h1>
+      <p class="hero-name-en">Kinoshita Studio</p>
       <p class="hero-statement">
-        <em>EXPERIENCE TRANSLATOR</em><br>
-        <span style="color:#999;font-size:0.58rem;line-height:2.2;">Translating the gap between<br>what brands mean and what people feel.</span><br><br>
-        UX/UI + 99LETTERS Music Producer.<br>
-        Shiga, Japan.
+        <em>届けたい体験と、届いている体験の間を、デザインで揃える。</em><br><br>
+        滋賀県を拠点に、UX/UIデザインを軸とした<br>
+        体験設計を行うスタジオ。<br>
+        木下貴博が一人で運営しています。
       </p>
     </div>
     <div class="hero-right">
       <div class="hero-tags">
-        <a href="https://kinoshitastudio.github.io/ux-ui-design.html" target="_blank" class="tag">UX / UI Design</a>
-        <a href="https://instagram.com/99letters" target="_blank" class="tag">Music Production</a>
-        <a href="experience-translator.html" class="tag">Sensory Consulting</a>
-        <a href="https://instagram.com/99letters" target="_blank" class="tag">99LETTERS</a>
-        <a href="https://kinoshitastudio.github.io/" target="_blank" class="tag">Kinoshita Studio</a>
+      <div style="margin-bottom:2.5rem;opacity:0;animation:fadeUp 1.2s ease forwards 0.9s;">
+        <svg width="80" height="80" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="250" y1="20"  x2="250" y2="480" stroke="#f0ede8" stroke-width="1.2"/>
+          <line x1="20"  y1="250" x2="480" y2="250" stroke="#f0ede8" stroke-width="1.2"/>
+          <line x1="88"  y1="88"  x2="412" y2="412" stroke="#f0ede8" stroke-width="1.2"/>
+          <line x1="412" y1="88"  x2="88"  y2="412" stroke="#f0ede8" stroke-width="1.2"/>
+          <line x1="165" y1="30"  x2="335" y2="470" stroke="#f0ede8" stroke-width="1.2"/>
+          <line x1="30"  y1="335" x2="470" y2="165" stroke="#f0ede8" stroke-width="1.2"/>
+          <line x1="30"  y1="165" x2="470" y2="335" stroke="#f0ede8" stroke-width="1.2"/>
+          <line x1="335" y1="30"  x2="165" y2="470" stroke="#f0ede8" stroke-width="1.2"/>
+          <circle cx="250" cy="250" r="5" fill="#f0ede8"/>
+        </svg>
       </div>
-      <div class="hero-large-text">TK</div>
+        <a href="https://tkinoshita99.github.io/experience-translator.html" target="_blank" class="tag">Experience Translator</a>
+        <a href="ux-ui-design.html" class="tag">UX / UI Design</a>
+        <a href="works.html" class="tag">Web Design</a>
+        <a href="art-direction.html" class="tag">Art Direction</a>
+        <a href="https://instagram.com/99letters" target="_blank" class="tag">Music — 99LETTERS</a>
+      </div>
+      <div class="hero-large-text">KS</div>
     </div>
-  <img src="hero-mobile.jpg" alt="Takahiro Kinoshita" class="hero-mobile-img">
-  </section>
+  </div>
 
-  <!-- BIWAKO SILENCE -->
-  <section id="silence">
-    <div class="section-label">002 — Project</div>
-    <div class="biwako-section reveal">
-      <div class="biwako-left">
-        <h2 class="biwako-statement">
-          BIWAKO<br>SILENCE
-        </h2>
-        <p class="biwako-sub">
-          琵琶湖の静けさを、<br>
-          AI × 音 × 視覚で体験設計するシリーズ。<br><br>
-          Lake Biwa is 104 meters deep.<br>
-          The silence has a shape.
+  <!-- SERVICE -->
+  <section id="service">
+    <div class="section-label reveal">002 — Service</div>
+    <div class="service-grid reveal">
+      <div class="service-item" style="cursor:pointer;" onclick="location.href='ux-ui-design.html'">
+        <div class="service-num">— 01</div>
+        <div class="service-title-jp">UX / UI設計</div>
+        <div class="service-title-en">UX / UI Design</div>
+        <p class="service-desc">
+          人が「感じる」瞬間を設計する。<br>
+          画面の向こうにいる人を起点に、<br>
+          使われるデザインをつくる。
         </p>
-        <a href="https://instagram.com/tkinoshita99" target="_blank" class="what-link">@tkinoshita99 →</a>
+        <div style="margin-top:1.5rem;font-family:'Space Mono',monospace;font-size:0.58rem;color:#8a8a85;letter-spacing:0.15em;border-bottom:1px solid #5a5a57;padding-bottom:0.2rem;display:inline-block;">詳しく見る →</div>
       </div>
-      <div class="biwako-right">
-        <div class="biwako-data">
-          <div class="data-line">
-            <span class="data-key">Location</span>
-            <span class="data-val">Lake Biwa, Shiga</span>
-          </div>
-          <div class="data-line">
-            <span class="data-key">Depth</span>
-            <span class="data-val">104 m</span>
-          </div>
-          <div class="data-line">
-            <span class="data-key">Medium</span>
-            <span class="data-val">AI × Sound × Visual</span>
-          </div>
-          <div class="data-line">
-            <span class="data-key">Format</span>
-            <span class="data-val">Series</span>
-          </div>
-          <div class="data-line">
-            <span class="data-key">Status</span>
-            <span class="data-val">— Ongoing</span>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:2rem;">
-        <div class="ig-grid">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVNnUldj7gj/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVDyvVYj3-S/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVEctzDD7xE/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-        </div>
-        <script async src="//www.instagram.com/embed.js"></script>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT I DO -->
-  <section id="work" style="padding: 5rem 0;">
-    <div style="padding: 0 3rem;">
-      <div class="section-label">003 — What I Do</div>
-    </div>
-    <div class="what-grid reveal">
-      <div class="what-item">
-        <div class="what-num">— 01</div>
-        <div class="what-title-jp">体験翻訳</div>
-        <div class="what-title-en">Experience Translator</div>
-        <p class="what-desc">
-          届けたい体験と、届いている体験の間には<br>
-          必ずズレがある。<br>
-          そのズレを発見して、揃える。
+      <div class="service-item" style="cursor:pointer;" onclick="location.href='works.html'">
+        <div class="service-num">— 02</div>
+        <div class="service-title-jp">Webデザイン</div>
+        <div class="service-title-en">Web Design</div>
+        <p class="service-desc">
+          ブランドの思想を、<br>
+          画面上の体験に翻訳する。<br>
+          余白が思想を語る設計。
         </p>
-        <a href="experience-translator.html" class="what-link">詳しく見る →</a>
+        <div style="margin-top:1.5rem;font-family:'Space Mono',monospace;font-size:0.58rem;color:#8a8a85;letter-spacing:0.15em;border-bottom:1px solid #5a5a57;padding-bottom:0.2rem;display:inline-block;">詳しく見る →</div>
       </div>
-      <div class="what-item">
-        <div class="what-num">— 02</div>
-        <div class="what-title-jp">UX / UI</div>
-        <div class="what-title-en">Interface Design</div>
-        <p class="what-desc">
-          10年以上、人が何かを<br>
-          「感じる」瞬間を設計してきた。<br>
-          余白が思想を語る。
+      <div class="service-item" style="cursor:pointer;" onclick="location.href='art-direction.html'">
+        <div class="service-num">— 03</div>
+        <div class="service-title-jp">アートディレクション</div>
+        <div class="service-title-en">Art Direction</div>
+        <p class="service-desc">
+          ビジュアルの方向性を定め、<br>
+          一貫した世界観をつくる。<br>
+          グラフィック、写真、映像まで。
         </p>
-        <a href="https://kinoshitastudio.github.io/" target="_blank" class="what-link">Kinoshita Studio →</a>
+        <div style="margin-top:1.5rem;font-family:'Space Mono',monospace;font-size:0.58rem;color:#8a8a85;letter-spacing:0.15em;border-bottom:1px solid #5a5a57;padding-bottom:0.2rem;display:inline-block;">詳しく見る →</div>
       </div>
-      <div class="what-item">
-        <div class="what-num">— 03</div>
-        <div class="what-title-jp">音楽制作</div>
-        <div class="what-title-en">Music Production — 99LETTERS</div>
-        <p class="what-desc">
-          国際レーベルからリリース。<br>
-          音は体験設計の核にある。<br>
-          聴こえないものを聴かせる。
+      <div class="service-item" style="cursor:pointer;" onclick="location.href='https://tkinoshita99.github.io/experience-translator.html'">
+        <div class="service-num">— 04</div>
+        <div class="service-title-jp">体験設計顧問</div>
+        <div class="service-title-en">Experience Advisory</div>
+        <p class="service-desc">
+          届けたい体験と届いている体験の<br>
+          ズレを発見し、揃える。<br>
+          月次顧問として継続関与。
         </p>
-        <a href="https://instagram.com/99letters" target="_blank" class="what-link">@99letters →</a>
-      </div>
-      <div class="what-item">
-        <div class="what-num">— 04</div>
-        <div class="what-title-jp">編集眼</div>
-        <div class="what-title-en">Curation — Silent Carry</div>
-        <p class="what-desc">
-          フィールドで生き残ったものだけを、<br>
-          世界から連れてくる。<br>
-          説明はいらない。手に取ればわかる。
-        </p>
-        <a href="#carry" class="what-link">Silent Carry →</a>
+        <div style="margin-top:1.5rem;font-family:'Space Mono',monospace;font-size:0.58rem;color:#8a8a85;letter-spacing:0.15em;border-bottom:1px solid #5a5a57;padding-bottom:0.2rem;display:inline-block;cursor:pointer;" onclick="location.href='https://tkinoshita99.github.io/experience-translator.html'">詳しく見る →</div>
       </div>
     </div>
   </section>
 
-  <!-- SILENT CARRY -->
-  <section id="carry" class="sc-section">
-    <div class="section-label">004 — Curation</div>
-    <div class="sc-inner reveal">
-      <div>
-        <h2 class="sc-title">SILENT<br>CARRY</h2>
-        <p class="sc-sub">
-          私がフィールドに持っていくものだけを置く。<br>
-          余計な主張をしないギアを、世界から連れてくる。
-        </p>
-        <a href="silent-carry.html" class="sc-cta">詳しく見る →</a>
+  <!-- WORKS -->
+  <section id="works">
+    <div class="section-label reveal">003 — Works</div>
+    <div class="works-grid reveal">
+
+      <div class="work-item">
+        <div class="work-num">— 01</div>
+        <div class="work-thumb">
+          <img src="https://framerusercontent.com/images/Gfc1QmoX2ELcI2gyq3SQKeE1pns.png" alt="Concept Graphic Design" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="work-title">Concept Graphic Design</div>
+        <div class="work-cat">Graphic Design</div>
       </div>
-      <div>
-        <p class="sc-philosophy">
-          Selecting what survives the field.<br><br>
-          説明が要らないもの。<br>
-          使うほど理由がわかるもの。<br>
-          景色に溶けるもの。<br><br>
-          ここにあるのは、<br>
-          その基準を通過したものだけです。
-        </p>
+
+      <div class="work-item">
+        <div class="work-num">— 02</div>
+        <div class="work-thumb">
+          <img src="https://framerusercontent.com/images/aoO2ZkrHcCHM9c718q1Jdcy8zs.png" alt="AI Art" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="work-title">AI Art Direction</div>
+        <div class="work-cat">AI Art / Concept Design</div>
       </div>
+
+      <div class="work-item">
+        <div class="work-num">— 03</div>
+        <div class="work-thumb">
+          <img src="https://framerusercontent.com/images/cNr9yME1LHf2K9hqUKHhc1OttA.png" alt="UX Design" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="work-title">UX Design</div>
+        <div class="work-cat">UX / UI Design</div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-num">— 04</div>
+        <div class="work-thumb">
+          <img src="https://99letters.github.io/img/login.png" alt="Login Form UI" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="work-title">Login Form</div>
+        <div class="work-cat">User Interface</div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-num">— 05</div>
+        <div class="work-thumb">
+          <img src="https://99letters.github.io/img/flyer1.png" alt="Flyer Art Direction" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="work-title">Flyer Design</div>
+        <div class="work-cat">Art Direction / Photography</div>
+      </div>
+
+            <div class="work-item" style="cursor:pointer;" onclick="location.href='works.html'">
+        <div class="work-num">— 06</div>
+        <div class="work-thumb">
+          <img src="img-kiyamagokin2.png" alt="Web Design" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+        </div>
+        <div class="work-title">Web / LP Design</div>
+        <div class="work-cat">Web Design</div>
+        <div style="margin-top:1.2rem;font-family:'Space Mono',monospace;font-size:0.58rem;color:#8a8a85;letter-spacing:0.15em;border-bottom:1px solid #5a5a57;padding-bottom:0.2rem;display:inline-block;">制作事例を見る →</div>
+      </div>
+
     </div>
   </section>
 
-  <!-- IDENTITY -->
-  <section>
-    <div class="section-label">005 — Background</div>
-    <div class="identity-section reveal">
-      <div class="identity-block">
-        <span class="identity-num">— 01</span>
-        <div class="identity-key">Base</div>
-        <div class="identity-val">
-          滋賀県<br>
-          琵琶湖畔<br>
-          <span style="font-family:'Space Mono',monospace;font-size:0.6rem;color:#aaa;letter-spacing:0.1em;">Shiga, Japan</span>
-        </div>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label reveal">004 — About</div>
+    <div class="profile-section reveal">
+      <div class="profile-left">
+        <div class="profile-name">木下 貴博</div>
+        <div class="profile-name-en">Kinoshita Takahiro</div>
+        <p class="profile-desc">
+          滋賀県在住。UX/UIデザイナーとして10年以上、<br>
+          人が何かを「感じる」瞬間を設計してきた。<br><br>
+          デザインと音楽という2つの軸から、<br>
+          体験を翻訳することを生業としている。<br><br>
+          音楽プロデューサーとして99LETTERSの名義で<br>
+          国際レーベルからリリース実績あり。
+        </p>
       </div>
-      <div class="identity-block">
-        <span class="identity-num">— 02</span>
-        <div class="identity-key">Experience</div>
-        <div class="identity-val">
-          UX/UI Design 10yr+<br>
-          Music Production 10yr+<br>
-          <span style="font-family:'Space Mono',monospace;font-size:0.6rem;color:#aaa;letter-spacing:0.1em;">International label releases</span>
-        </div>
-      </div>
-      <div class="identity-block">
-        <span class="identity-num">— 03</span>
-        <div class="identity-key">Channels</div>
-        <div class="identity-val">
-          <a href="https://instagram.com/tkinoshita99" target="_blank" style="color:inherit;text-decoration:none;display:block;">@tkinoshita99</a>
-          <a href="https://instagram.com/kkinoshita.studio" target="_blank" style="color:inherit;text-decoration:none;display:block;">@kkinoshita.studio</a>
-          <a href="https://instagram.com/99letters" target="_blank" style="color:inherit;text-decoration:none;display:block;font-family:'Space Mono',monospace;font-size:0.6rem;color:#aaa;letter-spacing:0.1em;">@99letters</a>
+      <div class="profile-right">
+        <div class="profile-data">
+          <div class="profile-row">
+            <span class="profile-key">Base</span>
+            <span class="profile-val">Shiga, Japan</span>
+          </div>
+          <div class="profile-row">
+            <span class="profile-key">UX/UI</span>
+            <span class="profile-val">10yr+</span>
+          </div>
+          <div class="profile-row">
+            <span class="profile-key">Music</span>
+            <span class="profile-val">99LETTERS</span>
+          </div>
+          <div class="profile-row">
+            <span class="profile-key">Project</span>
+            <span class="profile-val">BIWAKO SILENCE</span>
+          </div>
+          <div class="profile-row">
+            <span class="profile-key">Store</span>
+            <span class="profile-val">SILENT CARRY</span>
+          </div>
+          <div class="profile-row">
+            <span class="profile-key">Site</span>
+            <span class="profile-val">tkinoshita99.github.io</span>
+          </div>
         </div>
       </div>
     </div>
@@ -815,51 +744,44 @@
 
   <!-- CONTACT -->
   <section id="contact" class="contact-section">
-    <p class="contact-pre">006 — Contact</p>
+    <p class="contact-pre">005 — Contact</p>
     <p class="contact-statement reveal">
-      届けたい体験と、届いている体験の間に<br>ズレを感じている人へ。<br>
-      <span style="font-family:'Space Mono',monospace;font-size:0.7rem;color:#aaa;font-style:italic;">For those who feel the gap between intent and experience.</span>
+      デザインの依頼、相談、<br>お問い合わせはこちらへ。
     </p>
-    <span class="contact-email" id="contact-email-top"></span>
+    <span class="contact-email" id="contact-email"></span>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <span>© 2025 Takahiro Kinoshita — Kinoshita Studio</span>
-    <span>Shiga, Japan — tkinoshita99.github.io</span>
+    <span>© 2025 Kinoshita Studio — Takahiro Kinoshita</span>
+    <a href="https://tkinoshita99.github.io" target="_blank">tkinoshita99.github.io →</a>
   </footer>
 
   <script>
-    // SCROLL REVEAL
     document.body.classList.add('js-loaded');
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(el => {
-        if (el.isIntersecting) el.target.classList.add('visible');
-      });
+      entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
     }, { threshold: 0.05 });
     reveals.forEach(el => observer.observe(el));
-    // Trigger visible for al
     setTimeout(() => {
       reveals.forEach(el => {
         if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
       });
     }, 100);
-  </script>
 
-<script>
-(function(){
-  var u="99letters99";
-  var d="gmail.com";
-  var el=document.getElementById("contact-email-top");
-  if(el){
-    el.textContent=u+"@"+d;
-    el.style.cursor="pointer";
-    el.className+=" contact-email";
-    el.onclick=function(){window.location.href="mailto:"+u+"@"+d;};
-  }
-})();
-</script>
+    // Contact email (Cloudflare回避)
+    (function(){
+      var u="tkinoshita.studio";
+      var d="gmail.com";
+      var el=document.getElementById("contact-email");
+      if(el){
+        el.textContent=u+"@"+d;
+        el.style.cursor="pointer";
+        el.onclick=function(){window.location.href="mailto:"+u+"@"+d;};
+      }
+    })();
+  </script>
 
 </body>
 </html>
