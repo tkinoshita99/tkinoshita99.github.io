@@ -545,6 +545,20 @@
     }
 
     /* ANIMATIONS */
+    /* MOBILE HERO IMAGE */
+    .hero-mobile-img {
+      display: none;
+    }
+    @media(max-width: 768px) {
+      .hero-mobile-img {
+        display: block;
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        object-position: center top;
+        border-bottom: 1px solid #e0e0e0;
+      }
+    }
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
@@ -625,6 +639,8 @@
       <div class="hero-large-text">TK</div>
     </div>
   </section>
+
+  <img src="hero-mobile.jpg" alt="Takahiro Kinoshita" class="hero-mobile-img">
 
   <!-- BIWAKO SILENCE -->
   <section id="silence">
