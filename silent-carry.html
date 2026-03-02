@@ -8,11 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Sans+JP:wght@100;300&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0a;
-    --fg: #e8e4dd;
-    --muted: #555;
-    --dim: #2a2a2a;
-    --accent: #e8e4dd;
+    --bg: #b5a882;
+    --fg: #1a1a14;
+    --muted: #5a5240;
+    --dim: #9e9270;
+    --accent: #1a1a14;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -151,6 +151,7 @@
     line-height: 1.05;
     letter-spacing: -0.02em;
     margin-bottom: 48px;
+    color: #ffffff;
     opacity: 0;
     animation: fadeUp 1.2s ease forwards 0.5s;
   }
@@ -181,11 +182,18 @@
     font-family: 'Space Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.2em;
-    color: var(--bg);
-    background: var(--fg);
+    color: #1a1a14;
+    background: #ffffff;
+    border: 1.5px solid #1a1a14;
     padding: 14px 28px;
     text-decoration: none;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
+  }
+
+  .btn-primary:hover {
+    background: #1a1a14;
+    color: #ffffff;
+    opacity: 1;
   }
 
   .btn-primary:hover { opacity: 0.7; }
@@ -268,7 +276,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 48px;
     font-weight: 300;
-    color: var(--dim);
+    color: rgba(255,255,255,0.3);
     line-height: 1;
     margin-bottom: 24px;
   }
@@ -330,6 +338,7 @@
     font-weight: 300;
     font-size: 20px;
     margin-bottom: 8px;
+    color: #ffffff;
   }
 
   .flow-content p {
@@ -356,7 +365,7 @@
     font-size: clamp(24px, 3vw, 36px);
     line-height: 1.8;
     max-width: 640px;
-    color: var(--fg);
+    color: #ffffff;
   }
 
   .concept-text em {
@@ -395,6 +404,7 @@
     font-size: 22px;
     margin-bottom: 12px;
     font-style: italic;
+    color: #ffffff;
   }
 
   .criteria-body {
@@ -421,7 +431,7 @@
     font-size: clamp(20px, 2.5vw, 28px);
     line-height: 1.8;
     font-style: italic;
-    color: var(--fg);
+    color: #ffffff;
   }
 
   .curator-meta {
@@ -434,11 +444,12 @@
     font-size: 10px;
     letter-spacing: 0.2em;
     margin-bottom: 16px;
+    color: #ffffff;
   }
 
   .curator-desc {
     font-size: 12px;
-    color: var(--muted);
+    color: rgba(255,255,255,0.75);
     line-height: 2.2;
   }
 
@@ -453,9 +464,18 @@
     font-family: 'Space Mono', monospace;
     font-size: 8px;
     letter-spacing: 0.1em;
-    border: 1px solid var(--dim);
+    border: 1px solid rgba(255,255,255,0.5);
     padding: 4px 10px;
-    color: var(--muted);
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+
+  .curator-tag:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #1a1a14;
   }
 
   /* CTA section */
@@ -469,6 +489,7 @@
     font-weight: 300;
     font-size: clamp(32px, 5vw, 64px);
     margin-bottom: 16px;
+    color: #ffffff;
   }
 
   .cta-section p {
@@ -726,11 +747,11 @@
         BIWAKO SILENCEでは、琵琶湖の見えない側面をデータ・音・視覚で翻訳した。SILENT CARRYは、その審美眼をギア選定に応用したプロジェクト。
       </div>
       <div class="curator-tags">
-        <span class="curator-tag">UX / UI DESIGN 10YR+</span>
-        <span class="curator-tag">99LETTERS</span>
-        <span class="curator-tag">BIWAKO SILENCE</span>
+        <a href="https://kkinoshita.studio" target="_blank" class="curator-tag">UX / UI DESIGN 10YR+</a>
+        <a href="https://instagram.com/99letters" target="_blank" class="curator-tag">99LETTERS</a>
+        <a href="https://instagram.com/tkinoshita99" target="_blank" class="curator-tag">BIWAKO SILENCE</a>
         <span class="curator-tag">SHIGA, JAPAN</span>
-        <span class="curator-tag">EXPERIENCE TRANSLATOR</span>
+        <a href="https://tkinoshita99.github.io/experience-translator.html" target="_blank" class="curator-tag">EXPERIENCE TRANSLATOR</a>
       </div>
     </div>
   </div>
