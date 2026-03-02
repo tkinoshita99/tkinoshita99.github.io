@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silent Carry | Takahiro Kinoshita</title>
+  <meta name="description" content="私がフィールドに持っていくものだけを置く。余計な主張をしないギアを、世界から連れてくる。">
+  <meta property="og:title" content="Silent Carry — Takahiro Kinoshita">
+  <meta property="og:description" content="Selecting what survives the field. 説明が要らないもの。使うほど理由がわかるもの。景色に溶けるもの。">
+  <meta property="og:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
+  <meta property="og:url" content="https://tkinoshita99.github.io/silent-carry.html">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#f5f5f0;--fg:#1a1a1a;--gray:#8a8a85;--border:#e0e0e0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--fg);font-family:'Noto Sans JP',sans-serif;font-weight:100;overflow-x:hidden;cursor:crosshair}
+
+    nav{position:fixed;top:0;left:0;right:0;padding:2rem 3rem;display:flex;justify-content:space-between;align-items:flex-start;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.2em;color:var(--fg);text-transform:uppercase;line-height:1.6;text-decoration:none}
+    .nav-logo span{color:var(--gray)}
+    .nav-links{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem}
+    .nav-links a{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--gray);text-decoration:none;text-transform:uppercase;transition:color .3s}
+    .nav-links a:hover{color:var(--fg)}
+
+    /* HERO */
+    .hero{min-height:100vh;display:grid;grid-template-columns:2fr 1fr;align-items:end;padding:10rem 3rem 6rem;border-bottom:1px solid var(--border);gap:6rem}
+    .hero-title{font-family:'Space Mono',monospace;font-size:clamp(3rem,7vw,7rem);line-height:1;letter-spacing:-0.03em;margin-bottom:2rem;opacity:0;animation:fadeUp 1s ease forwards .2s}
+    .hero-sub{font-family:'Noto Sans JP',sans-serif;font-weight:100;font-size:1rem;color:var(--gray);line-height:2;margin-bottom:3rem;letter-spacing:.05em;opacity:0;animation:fadeUp 1s ease forwards .4s}
+    .hero-cta{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;color:var(--fg);text-decoration:none;background:var(--fg);color:var(--bg);padding:1rem 2rem;display:inline-block;transition:opacity .3s;opacity:0;animation:fadeUp 1s ease forwards .6s}
+    .hero-cta:hover{opacity:.8}
+    .hero-philosophy{font-family:'Space Mono',monospace;font-size:.62rem;color:#aaa;line-height:2.8;font-style:italic;border-left:1px solid var(--border);padding-left:2rem;opacity:0;animation:fadeUp 1s ease forwards .5s}
+
+    /* CONCEPT */
+    .concept-section{padding:8rem 3rem;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+    .section-label{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.3em;color:var(--gray);text-transform:uppercase;margin-bottom:3rem}
+    .concept-statement{font-family:'Noto Sans JP',sans-serif;font-weight:100;font-size:clamp(1.5rem,3vw,2.2rem);line-height:1.8;letter-spacing:.05em}
+    .concept-body{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--gray);line-height:2.8;font-style:italic}
+
+    /* CRITERIA */
+    .criteria-section{padding:6rem 3rem;border-bottom:1px solid var(--border)}
+    .criteria-grid{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:3rem}
+    .criteria-item{border-right:1px solid var(--border);padding:2.5rem;transition:background .3s}
+    .criteria-item:hover{background:#efefea}
+    .criteria-item:last-child{border-right:none}
+    .criteria-num{font-family:'Space Mono',monospace;font-size:.52rem;color:#aaa;letter-spacing:.2em;margin-bottom:1.5rem}
+    .criteria-title{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem}
+    .criteria-desc{font-family:'Noto Sans JP',sans-serif;font-weight:100;font-size:.85rem;color:var(--gray);line-height:2.2}
+
+    /* STORE CTA */
+    .store-section{padding:8rem 3rem;text-align:center;border-bottom:1px solid var(--border)}
+    .store-statement{font-family:'Noto Sans JP',sans-serif;font-weight:100;font-size:clamp(1.2rem,2.5vw,1.8rem);color:var(--gray);line-height:2;margin-bottom:4rem;letter-spacing:.05em}
+    .store-cta{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);background:var(--fg);padding:1.2rem 3rem;display:inline-block;text-decoration:none;transition:opacity .3s}
+    .store-cta:hover{opacity:.75}
+
+    /* BACK */
+    .back-section{padding:4rem 3rem;display:flex;justify-content:space-between;align-items:center}
+    .back-link{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--gray);text-decoration:none;letter-spacing:.15em;border-bottom:1px solid var(--border);padding-bottom:.2rem;transition:color .3s,border-color .3s}
+    .back-link:hover{color:var(--fg);border-color:var(--fg)}
+
+    footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    footer span,footer a{font-family:'Space Mono',monospace;font-size:.55rem;color:var(--gray);letter-spacing:.15em;text-decoration:none;transition:color .3s}
+    footer a:hover{color:var(--fg)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;gap:3rem;min-height:auto;padding-top:8rem}
+      .concept-section{grid-template-columns:1fr;gap:3rem}
+      .criteria-grid{grid-template-columns:1fr}
+      .criteria-item{border-right:none;border-bottom:1px solid var(--border)}
+      .criteria-item:last-child{border-bottom:none}
+    }
+    @media(max-width:600px){
+      nav{padding:1.5rem}
+      .hero,.concept-section,.criteria-section,.store-section{padding-left:1.5rem;padding-right:1.5rem}
+      .back-section{padding:3rem 1.5rem;flex-direction:column;gap:1rem}
+      footer{flex-direction:column;gap:1rem;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Takahiro Kinoshita<br><span>— Shiga, Japan</span></a>
+  <div class="nav-links">
+    <a href="index.html">Top</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <h1 class="hero-title">SILENT<br>CARRY</h1>
+    <p class="hero-sub">
+      私がフィールドに持っていくものだけを置く。<br>
+      余計な主張をしないギアを、世界から連れてくる。
+    </p>
+    <a href="#store" class="hero-cta">VISIT STORE →</a>
+  </div>
+  <div>
+    <p class="hero-philosophy">
+      Selecting what survives the field.<br><br>
+      説明が要らないもの。<br>
+      使うほど理由がわかるもの。<br>
+      景色に溶けるもの。<br><br>
+      ここにあるのは、<br>
+      その基準を通過したものだけです。
+    </p>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="concept-section">
+  <div>
+    <div class="section-label">— Concept</div>
+    <p class="concept-statement">
+      フィールドで生き残ったものだけが、<br>
+      ここに来る資格を持つ。
+    </p>
+  </div>
+  <div>
+    <p class="concept-body">
+      道具は、説明しない。<br>
+      使い続けることで、自分が証明する。<br><br>
+      余計な主張のないデザイン。<br>
+      景色に溶けるシルエット。<br>
+      使うほどに意味がわかる構造。<br><br>
+      木下貴博が実際に選び、<br>
+      フィールドで使ったものだけを置く。
+    </p>
+  </div>
+</section>
+
+<!-- CRITERIA -->
+<section class="criteria-section">
+  <div class="section-label">— Selection Criteria</div>
+  <div class="criteria-grid">
+    <div class="criteria-item">
+      <div class="criteria-num">— 01</div>
+      <div class="criteria-title">No Explanation</div>
+      <p class="criteria-desc">
+        説明が要らないもの。<br>
+        手に取れば伝わる。<br>
+        言葉より、構造が語る。
+      </p>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-num">— 02</div>
+      <div class="criteria-title">Field Proven</div>
+      <p class="criteria-desc">
+        実際に持ち出し、<br>
+        使い続けたもの。<br>
+        机上では選ばない。
+      </p>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-num">— 03</div>
+      <div class="criteria-title">Dissolves in Landscape</div>
+      <p class="criteria-desc">
+        景色に溶けるもの。<br>
+        主張しないシルエット。<br>
+        自然の中で目立たない美しさ。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- STORE CTA -->
+<section id="store" class="store-section">
+  <p class="store-statement">
+    基準を通過したものだけが、<br>
+    ここにある。
+  </p>
+  <a href="#" class="store-cta">VISIT STORE →</a>
+</section>
+
+<div class="back-section">
+  <a href="index.html" class="back-link">← Back to Top</a>
+  <a href="index.html#contact" class="back-link">Contact →</a>
+</div>
+
+<footer>
+  <span>© 2025 Takahiro Kinoshita</span>
+  <a href="index.html">tkinoshita99.github.io →</a>
+</footer>
+
+</body>
+</html>
