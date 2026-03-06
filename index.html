@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Takahiro Kinoshita</title>
-    <meta name="description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。滋賀県を拠点に活動するUX/UIデザイナー・体験翻訳家・音楽プロデューサー（99LETTERS）。木下貴博のポートフォリオサイト。">
+  <meta name="description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。滋賀県を拠点に活動するUX/UIデザイナー・体験翻訳家・音楽プロデューサー（99LETTERS）。木下貴博のポートフォリオサイト。">
   <meta property="og:title" content="Takahiro Kinoshita — Experience Translator">
   <meta property="og:description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。滋賀県を拠点に活動するUX/UIデザイナー・体験翻訳家。">
   <meta property="og:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
@@ -14,6 +14,10 @@
   <meta name="twitter:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
   <meta name="twitter:title" content="Takahiro Kinoshita — Experience Translator">
   <meta name="twitter:description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="favicon192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -847,7 +851,6 @@
       });
     }, { threshold: 0.05 });
     reveals.forEach(el => observer.observe(el));
-    // Trigger visible for al
     setTimeout(() => {
       reveals.forEach(el => {
         if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');

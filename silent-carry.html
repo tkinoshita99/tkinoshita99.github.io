@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SILENT CARRY — Takahiro Kinoshita</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="192x192" href="favicon192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Sans+JP:wght@100;300&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
@@ -212,10 +216,7 @@
   .btn-primary:hover {
     background: #1a1a14;
     color: #ffffff;
-    opacity: 1;
   }
-
-  .btn-primary:hover { opacity: 0.7; }
 
   .hero-scroll {
     position: absolute;
@@ -237,14 +238,6 @@
     width: 40px;
     height: 1px;
     background: var(--muted);
-  }
-
-  /* Divider */
-  .divider {
-    width: 1px;
-    height: 80px;
-    background: var(--dim);
-    margin: 0 40px;
   }
 
   /* Sections */
@@ -623,7 +616,7 @@
   <img src="silent-carry-logo-white.png" alt="silent carry" class="hero-logo">
 </div>
 
-<!-- Why Here = ユーザー価値 -->
+<!-- Why Here -->
 <section id="value">
   <div class="section-label reveal">002 — Why Here</div>
 
@@ -768,7 +761,7 @@
         BIWAKO SILENCEでは、琵琶湖の見えない側面をデータ・音・視覚で翻訳した。SILENT CARRYは、その審美眼をギア選定に応用したプロジェクト。
       </div>
       <div class="curator-tags">
-        <a href="https://kkinoshita.studio" target="_blank" class="curator-tag">UX / UI DESIGN 10YR+</a>
+        <a href="https://kinoshitastudio.github.io" target="_blank" class="curator-tag">UX / UI DESIGN 10YR+</a>
         <a href="https://instagram.com/99letters" target="_blank" class="curator-tag">99LETTERS</a>
         <a href="https://instagram.com/tkinoshita99" target="_blank" class="curator-tag">BIWAKO SILENCE</a>
         <span class="curator-tag">SHIGA, JAPAN</span>
@@ -782,7 +775,7 @@
 <div class="cta-section" id="store">
   <h2 class="reveal">基準を通過したものだけが、ここにある。</h2>
   <p class="reveal">Currently building. Coming soon.</p>
-  <a href="#" class="btn-primary reveal">VISIT STORE →</a>
+  <a href="https://silentcarry.base.shop/" target="_blank" class="btn-primary reveal">VISIT STORE →</a>
 </div>
 
 <!-- Footer -->
@@ -793,10 +786,9 @@
 </footer>
 
 <script>
-// ===== SCROLL REVEAL =====
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
+  entries.forEach((entry) => {
     if (entry.isIntersecting) {
       setTimeout(() => entry.target.classList.add('visible'), 80);
       observer.unobserve(entry.target);
@@ -805,102 +797,83 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 reveals.forEach(el => observer.observe(el));
 
-// ===== AMBIENT SOUND =====
 let audioCtx = null;
 let isPlaying = false;
 let masterGain = null;
-let nodes = [];
 
 function createAmbientSound() {
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   masterGain = audioCtx.createGain();
   masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
   masterGain.connect(audioCtx.destination);
-
   const sr = audioCtx.sampleRate;
 
-  // --- Layer 1: 深い水面の静寂 — 極低域のブラウンノイズ ---
   const depthBuffer = audioCtx.createBuffer(2, sr * 8, sr);
   for (let ch = 0; ch < 2; ch++) {
     const d = depthBuffer.getChannelData(ch);
     let last = 0;
     for (let i = 0; i < d.length; i++) {
       const white = Math.random() * 2 - 1;
-      last = (last + 0.02 * white) / 1.02; // brown noise
+      last = (last + 0.02 * white) / 1.02;
       d[i] = last * 8;
     }
   }
   const depthSrc = audioCtx.createBufferSource();
   depthSrc.buffer = depthBuffer;
   depthSrc.loop = true;
-
   const depthLow = audioCtx.createBiquadFilter();
   depthLow.type = 'lowpass';
-  depthLow.frequency.value = 55; // 水底の低周波のみ
-
+  depthLow.frequency.value = 55;
   const depthGain = audioCtx.createGain();
   depthGain.gain.value = 0.18;
-
   depthSrc.connect(depthLow);
   depthLow.connect(depthGain);
   depthGain.connect(masterGain);
   depthSrc.start();
 
-  // --- Layer 2: 湖面のさざ波 — ごく細いホワイトノイズ、ほぼ聴こえないレベル ---
   const rippleBuffer = audioCtx.createBuffer(1, sr * 12, sr);
   const rippleData = rippleBuffer.getChannelData(0);
   for (let i = 0; i < rippleData.length; i++) rippleData[i] = Math.random() * 2 - 1;
-
   const rippleSrc = audioCtx.createBufferSource();
   rippleSrc.buffer = rippleBuffer;
   rippleSrc.loop = true;
-
   const rippleHP = audioCtx.createBiquadFilter();
   rippleHP.type = 'highpass';
   rippleHP.frequency.value = 3000;
-
   const rippleLP = audioCtx.createBiquadFilter();
   rippleLP.type = 'lowpass';
   rippleLP.frequency.value = 6000;
-
   const rippleGain = audioCtx.createGain();
-  rippleGain.gain.value = 0.022; // 極小音量 — 気配だけ
-
+  rippleGain.gain.value = 0.022;
   rippleSrc.connect(rippleHP);
   rippleHP.connect(rippleLP);
   rippleLP.connect(rippleGain);
   rippleGain.connect(masterGain);
   rippleSrc.start();
 
-  // --- Layer 3: 呼吸するような超低速LFOで水面の揺れを表現 ---
   const lfo = audioCtx.createOscillator();
   lfo.type = 'sine';
-  lfo.frequency.value = 0.04; // 25秒に1サイクル — ほぼ止まっている
+  lfo.frequency.value = 0.04;
   const lfoGain = audioCtx.createGain();
   lfoGain.gain.value = 0.06;
   lfo.connect(lfoGain);
   lfoGain.connect(depthGain.gain);
   lfo.start();
 
-  // --- Layer 4: 空間の静寂 — 聴こえないほどの高周波正弦波 ---
   const silOsc = audioCtx.createOscillator();
   silOsc.type = 'sine';
   silOsc.frequency.value = 6400;
   const silGain = audioCtx.createGain();
-  silGain.gain.value = 0.0008; // 存在感ゼロに近い — 空気感のみ
+  silGain.gain.value = 0.0008;
   silOsc.connect(silGain);
   silGain.connect(masterGain);
   silOsc.start();
-
-  nodes = [depthSrc, rippleSrc, lfo, silOsc];
 }
 
 function toggleSound() {
   const btn = document.getElementById('soundToggle');
   const label = document.getElementById('soundLabel');
-
   if (!audioCtx) createAmbientSound();
-
   if (!isPlaying) {
     audioCtx.resume();
     masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
