@@ -312,6 +312,49 @@
 
     .what-link:hover { color: #000; border-color: #000; }
 
+    /* HERO BUTTONS */
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards 0.9s;
+    }
+
+    .hero-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .hero-btn-primary {
+      color: #ffffff;
+      background: #0f0f0f;
+      border: 1px solid #0f0f0f;
+    }
+
+    .hero-btn-primary:hover {
+      background: transparent;
+      color: #0f0f0f;
+    }
+
+    .hero-btn-secondary {
+      color: #0f0f0f;
+      background: transparent;
+      border: 1px solid #d0d0d0;
+    }
+
+    .hero-btn-secondary:hover {
+      border-color: #0f0f0f;
+    }
+
     /* INSTAGRAM GRID */
     .ig-grid {
       display: grid;
@@ -607,6 +650,8 @@
       .hero { grid-template-columns: 1fr; }
       .hero-right { display: none; }
       .hero-left { padding: 7rem 1.5rem 4rem; }
+      .hero-btns { flex-direction: column; gap: 0.8rem; }
+      .hero-btn { text-align: center; }
       section { padding: 4rem 1.5rem; }
       .what-grid { grid-template-columns: 1fr; }
       .what-item { border-right: none; }
@@ -648,6 +693,10 @@
         UX/UI + 99LETTERS Music Producer.<br>
         Shiga, Japan.
       </p>
+      <div class="hero-btns">
+        <a href="https://kinoshitastudio.github.io/" target="_blank" class="hero-btn hero-btn-primary">Kinoshita Studio →</a>
+        <a href="experience-translator.html" class="hero-btn hero-btn-secondary">Experience Translator →</a>
+      </div>
     </div>
     <div class="hero-right">
       <div class="hero-tags">
