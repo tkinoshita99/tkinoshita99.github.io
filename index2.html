@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takahiro Kinoshita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&family=DM+Sans:ital,wght@0,200;0,300;1,200;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --bg:    #ffffff;
+  --ink:   #0e0e0e;
+  --faint: rgba(14,14,14,0.07);
+  --mid:   rgba(14,14,14,0.28);
+  --sub:   rgba(14,14,14,0.52);
+}
+
+html, body {
+  width:100%; height:100%;
+  background:var(--bg);
+  overflow:hidden;
+  cursor:none;
+  font-family:'DM Sans',sans-serif;
+}
+
+/* ── カーソル */
+#cursor {
+  position:fixed; width:5px; height:5px;
+  background:var(--ink); border-radius:50%;
+  pointer-events:none; z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .18s,height .18s,background .18s,border .18s;
+  mix-blend-mode:multiply;
+}
+#cursor.hovering { width:38px; height:38px; background:transparent; border:1px solid var(--ink); }
+
+/* ── グレイン */
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.026'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:500;
+}
+
+/* ── 背景グラデ */
+#bg-grad {
+  position:fixed; inset:0; z-index:0;
+  transition:background 1.4s ease;
+  background:
+    radial-gradient(ellipse 70% 60% at 8% 12%,rgba(14,14,14,0.042) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 50% at 92% 88%,rgba(14,14,14,0.032) 0%,transparent 60%),
+    #fff;
+}
+#bg-grad.none { background:#fff; }
+#bg-grad.warm { background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(14,14,14,0.038) 0%,transparent 70%),#fff; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ナビゲーション（左上・縦並び）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#nav {
+  position:fixed; top:28px; left:32px;
+  display:flex; flex-direction:column; gap:10px;
+  z-index:300;
+  opacity:0; animation:fadeUp 3s ease 3s forwards;
+}
+#nav a {
+  font-family:'DM Sans',sans-serif;
+  font-weight:200; font-size:10px;
+  letter-spacing:0.24em; text-transform:uppercase;
+  color:var(--mid); text-decoration:none;
+  cursor:none;
+  transition:color .25s;
+  /* 線が出ないようにborderとoutlineは完全に除去 */
+  border:none; outline:none;
+}
+#nav a:hover, #nav a.active { color:var(--ink); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   グラデ切り替え（右下）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#grad-switcher {
+  position:fixed; bottom:26px; left:32px;
+  display:flex; gap:14px; z-index:20;
+  opacity:0; animation:fadeUp 3s ease 5s forwards;
+}
+#grad-switcher button {
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:9px; letter-spacing:0.22em; text-transform:uppercase;
+  background:none; border:none; outline:none;
+  cursor:none; color:var(--mid); padding:4px 0;
+  transition:color .25s;
+  -webkit-appearance:none;
+}
+#grad-switcher button:hover { color:var(--ink); }
+#grad-switcher button.active {
+  color:var(--ink);
+  text-decoration:underline;
+  text-underline-offset:4px;
+  text-decoration-color:rgba(14,14,14,0.35);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   スタジオリンク
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.studio-link {
+  position:fixed; bottom:26px; right:32px;
+  font-family:'DM Sans',sans-serif;
+  font-weight:200; font-size:10px;
+  letter-spacing:0.26em; text-transform:uppercase;
+  color:var(--mid); text-decoration:none;
+  border:none; outline:none;
+  opacity:0; animation:fadeUp 4s ease 4s forwards;
+  z-index:10; transition:color .3s; cursor:none;
+}
+.studio-link:hover { color:var(--ink); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   メインステージ（トップ）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#home-stage {
+  position:fixed; inset:0; z-index:1;
+  overflow:hidden;
+  animation:fadeUp 1.4s ease 0.1s both;
+  transition:opacity .6s ease, transform .6s ease;
+}
+#home-stage.hidden { opacity:0; pointer-events:none; transform:translateY(-8px); }
+
+.fragment { position:absolute; cursor:none; user-select:none; }
+
+.char-jp {
+  font-family:'Noto Sans JP',sans-serif; font-weight:300;
+  color:var(--ink); opacity:0;
+  animation:fadeUp 1.8s ease forwards;
+  line-height:0.88; letter-spacing:-0.01em; pointer-events:none;
+}
+.char-jp.faint { color:var(--faint); }
+.char-jp.mid   { color:var(--mid); }
+.char-jp.sub   { color:var(--sub); }
+
+.char-en {
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  color:var(--ink); opacity:0;
+  animation:fadeUp 1.8s ease forwards;
+  line-height:0.88; letter-spacing:-0.02em; pointer-events:none;
+}
+.char-en.faint { color:var(--faint); }
+.char-en.mid   { color:var(--mid); }
+.char-en.sub   { color:var(--sub); }
+
+/* ダッシュが線にならないよう inline-block で強制 */
+.char-en.dash {
+  display:inline-block;
+  line-height:1;
+  pointer-events:none;
+}
+
+.stone {
+  opacity:0; animation:fadeUp 2s ease forwards;
+  position:absolute; cursor:none;
+}
+.stone svg { display:block; width:100%; height:auto; filter:drop-shadow(0 3px 12px rgba(0,0,0,0.09)); transition:filter .4s; }
+.stone:hover svg { filter:drop-shadow(0 7px 22px rgba(0,0,0,0.16)); }
+.stone.ringing { animation:stoneRing 0.07s ease infinite alternate; }
+
+.sound-ring {
+  position:fixed; border-radius:50%;
+  border:2px solid rgba(14,14,14,0.45);
+  pointer-events:none;
+  width:300px; height:300px;
+  margin-left:-150px; margin-top:-150px;
+  transform:scale(0);
+  transform-origin:center center;
+  animation:soundRingOut var(--dur,1.8s) cubic-bezier(0.2,0.6,0.4,1) forwards;
+  z-index:200;
+}
+
+/* 意味テキスト */
+#meaning {
+  position:fixed; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center; pointer-events:none;
+  z-index:50; opacity:0; transition:opacity .9s ease;
+}
+#meaning.visible { opacity:1; }
+#meaning p {
+  font-family:'Noto Sans JP',sans-serif; font-weight:300;
+  font-size:clamp(11px,1.7vw,17px); color:var(--ink);
+  letter-spacing:0.18em; line-height:1.6;
+}
+#meaning em { color:var(--mid); font-style:normal; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   下層ページ共通
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sub-page {
+  position:fixed; inset:0; z-index:2;
+  background:var(--bg);
+  overflow:hidden;
+  opacity:0; pointer-events:none;
+  transition:opacity .5s ease, transform .5s ease;
+  transform:translateY(12px);
+}
+.sub-page.active {
+  opacity:1; pointer-events:all;
+  transform:translateY(0);
+}
+
+/* 下層ページのタイトル */
+.sub-title {
+  position:absolute; top:28px; left:32px;
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:10px; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--mid);
+}
+
+/* 閉じるボタン */
+.sub-close {
+  position:absolute; top:28px; right:32px;
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:10px; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--mid); cursor:none; background:none;
+  border:none; outline:none; transition:color .25s;
+}
+.sub-close:hover { color:var(--ink); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ポートフォリオ下層：石の群れ
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#portfolio-stage {
+  position:absolute; inset:0;
+  overflow:hidden;
+}
+
+.p-stone {
+  position:absolute; cursor:none;
+  opacity:0; animation:fadeUp 1.6s ease forwards;
+}
+.p-stone svg { display:block; width:100%; height:auto; filter:drop-shadow(0 3px 14px rgba(0,0,0,0.1)); transition:filter .4s; }
+.p-stone:hover svg { filter:drop-shadow(0 8px 24px rgba(0,0,0,0.18)); }
+.p-stone .p-label {
+  position:absolute; bottom:-22px; left:50%;
+  transform:translateX(-50%);
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:9px; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--mid); white-space:nowrap;
+  pointer-events:none; opacity:0; transition:opacity .3s;
+}
+.p-stone:hover .p-label { opacity:1; }
+.p-stone.ringing { animation:stoneRing 0.07s ease infinite alternate; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ケーススタディ モーダル
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#case-modal {
+  position:fixed; inset:0;
+  z-index:400;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,0.72);
+  backdrop-filter:blur(4px);
+  opacity:0; pointer-events:none;
+  transition:opacity .45s ease;
+}
+#case-modal.open { opacity:1; pointer-events:all; }
+
+#case-box {
+  background:#fff;
+  border:2px solid var(--ink);      /* 太め枠線 */
+  width:min(540px, 88vw);
+  max-height:82vh;
+  overflow-y:auto;
+  padding:0;
+  position:relative;
+  /* スクロールバー */
+  scrollbar-width:thin;
+  scrollbar-color:var(--mid) transparent;
+}
+
+/* モーダル閉じる */
+#modal-close {
+  position:sticky; top:0; right:0;
+  float:right; clear:right;
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:9px; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--mid); cursor:none; background:rgba(255,255,255,0.95);
+  border:none; outline:none; transition:color .25s;
+  padding:16px 20px 0 0;
+}
+#modal-close:hover { color:var(--ink); }
+
+/* モーダルコンテンツ */
+#case-content { padding:32px 36px 40px; }
+
+#case-content .case-tag {
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:9px; letter-spacing:0.26em; text-transform:uppercase;
+  color:var(--mid); display:block; margin-bottom:18px;
+}
+#case-content .case-title {
+  font-family:'Noto Sans JP',sans-serif; font-weight:300;
+  font-size:clamp(18px,3vw,26px); line-height:1.3;
+  color:var(--ink); margin-bottom:6px; letter-spacing:0.02em;
+}
+#case-content .case-sub {
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--mid); margin-bottom:28px;
+}
+#case-content .case-img {
+  width:100%; display:block;
+  margin-bottom:24px;
+  /* 画像が無い場合のプレースホルダー */
+  background:#f4f4f4;
+  min-height:180px;
+  object-fit:cover;
+}
+#case-content .case-img.placeholder {
+  display:flex; align-items:center; justify-content:center;
+  min-height:200px;
+}
+#case-content .case-img.placeholder span {
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:9px; letter-spacing:0.2em; color:var(--mid);
+}
+#case-content .case-desc {
+  font-family:'Noto Sans JP',sans-serif; font-weight:300;
+  font-size:clamp(12px,1.5vw,14px); line-height:2.2;
+  color:var(--sub); margin-bottom:32px; letter-spacing:0.04em;
+}
+#case-content .case-more {
+  display:inline-block;
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:10px; letter-spacing:0.26em; text-transform:uppercase;
+  color:var(--ink); text-decoration:none; cursor:none;
+  border-bottom:1px solid rgba(14,14,14,0.3);
+  padding-bottom:3px;
+  transition:border-color .3s,color .3s;
+}
+#case-content .case-more:hover { border-color:var(--ink); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   About / 体験翻訳 シンプル下層
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.simple-sub {
+  display:flex; align-items:center; justify-content:center;
+  text-align:center;
+}
+.simple-sub-inner {
+  max-width:480px; padding:0 32px;
+}
+.simple-sub-inner p {
+  font-family:'Noto Sans JP',sans-serif; font-weight:300;
+  font-size:clamp(13px,1.8vw,17px); line-height:2.6;
+  color:var(--sub); letter-spacing:0.08em;
+}
+.simple-sub-inner .s-title {
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:9px; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--mid); margin-bottom:28px; display:block;
+}
+.simple-sub-inner a {
+  display:inline-block; margin-top:36px;
+  font-family:'DM Sans',sans-serif; font-weight:200;
+  font-size:10px; letter-spacing:0.24em; text-transform:uppercase;
+  color:var(--ink); text-decoration:none; cursor:none;
+  border-bottom:1px solid rgba(14,14,14,0.3);
+  padding-bottom:3px; transition:border-color .3s;
+}
+.simple-sub-inner a:hover { border-color:var(--ink); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   キーフレーム
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes stoneRing {
+  0%  {transform:rotate(-1.4deg) translateY(0);}
+  100%{transform:rotate(1.4deg) translateY(-2px);}
+}
+@keyframes soundRingOut {
+  0%  {opacity:.65; transform:scale(0);}
+  40% {opacity:.45;}
+  100%{opacity:0;   transform:scale(1);}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="bg-grad"></div>
+
+<!-- ナビゲーション -->
+<nav id="nav">
+  <a href="#" data-page="portfolio">Portfolio</a>
+  <a href="#" data-page="translator">体験翻訳</a>
+  <a href="#" data-page="about">About</a>
+</nav>
+
+<!-- スタジオリンク -->
+<a href="https://kinoshitastudio.github.io/" class="studio-link" target="_blank">Kinoshita Studio →</a>
+
+<!-- グラデ切り替え -->
+<div id="grad-switcher">
+  <button data-grad="none">None</button>
+  <button data-grad="subtle" class="active">Subtle</button>
+  <button data-grad="warm">Warm</button>
+</div>
+
+<!-- ━━ メインステージ（トップ） -->
+<div id="home-stage"></div>
+
+<div id="meaning"><p>触れるまで<br><em>意味はない</em></p></div>
+
+<!-- ━━ Portfolio 下層 -->
+<div class="sub-page" id="page-portfolio">
+  <span class="sub-title">Portfolio</span>
+  <button class="sub-close" data-close>← Back</button>
+  <div id="portfolio-stage"></div>
+</div>
+
+<!-- ━━ 体験翻訳 下層 -->
+<div class="sub-page simple-sub" id="page-translator">
+  <span class="sub-title">体験翻訳</span>
+  <button class="sub-close" data-close>← Back</button>
+  <div class="simple-sub-inner">
+    <span class="s-title">Experience Translation</span>
+    <p>
+      届けたい体験と、<br>
+      届いている体験のあいだには<br>
+      必ずズレがある。<br><br>
+      そのズレを発見して、<br>
+      揃える。
+    </p>
+    <a href="https://kinoshitastudio.github.io/what-i-do.html" target="_blank">詳しく見る →</a>
+  </div>
+</div>
+
+<!-- ━━ About 下層 -->
+<div class="sub-page simple-sub" id="page-about">
+  <span class="sub-title">About</span>
+  <button class="sub-close" data-close>← Back</button>
+  <div class="simple-sub-inner">
+    <span class="s-title">Takahiro Kinoshita</span>
+    <p>
+      音から始まった。<br><br>
+      UX / UI Design — 10yr+<br>
+      Music — 99LETTERS<br>
+      Base — Shiga, Japan
+    </p>
+    <a href="https://kinoshitastudio.github.io/" target="_blank">Kinoshita Studio →</a>
+  </div>
+</div>
+
+<!-- ━━ ケーススタディ モーダル -->
+<div id="case-modal">
+  <div id="case-box">
+    <button id="modal-close">Close</button>
+    <div id="case-content"></div>
+  </div>
+</div>
+
+<script>
+const vw = window.innerWidth, vh = window.innerHeight;
+const rng = (seed,n) => Math.abs(Math.sin(seed*9301+n*49297));
+
+// ━━ カーソル
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX+'px';
+  cursor.style.top  = e.clientY+'px';
+});
+function addHover(el) {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+}
+
+// ━━ グラデ
+const bgGrad = document.getElementById('bg-grad');
+bgGrad.className = 'subtle';
+document.querySelectorAll('#grad-switcher button').forEach(btn => {
+  addHover(btn);
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#grad-switcher button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    bgGrad.className = btn.dataset.grad;
+  });
+});
+
+// ━━ ページ遷移
+const homeStage = document.getElementById('home-stage');
+const subPages  = document.querySelectorAll('.sub-page');
+
+function showPage(id) {
+  homeStage.classList.toggle('hidden', !!id);
+  subPages.forEach(p => {
+    p.classList.toggle('active', p.id === 'page-'+id);
+  });
+  document.querySelectorAll('#nav a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === id);
+  });
+}
+
+document.querySelectorAll('#nav a').forEach(a => {
+  addHover(a);
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = a.dataset.page;
+    const isActive = a.classList.contains('active');
+    showPage(isActive ? null : target);
+  });
+});
+document.querySelectorAll('[data-close]').forEach(btn => {
+  addHover(btn);
+  btn.addEventListener('click', () => showPage(null));
+});
+
+// ━━ Audio
+let audioCtx = null;
+function ensureAudio() {
+  if (!audioCtx) audioCtx = new(window.AudioContext||window.webkitAudioContext)();
+  if (audioCtx.state==='suspended') audioCtx.resume();
+}
+function playHichiriki(freq,dur) {
+  ensureAudio(); const t=audioCtx.currentTime;
+  const o1=audioCtx.createOscillator(); o1.type='sawtooth'; o1.frequency.value=freq;
+  const o2=audioCtx.createOscillator(); o2.type='square'; o2.frequency.value=freq*2.01;
+  const lfo=audioCtx.createOscillator(); lfo.frequency.value=5.2;
+  const lg=audioCtx.createGain(); lg.gain.value=freq*0.013;
+  lfo.connect(lg); lg.connect(o1.frequency);
+  const filt=audioCtx.createBiquadFilter(); filt.type='bandpass'; filt.frequency.value=freq*2.4; filt.Q.value=2.8;
+  const g=audioCtx.createGain();
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.14,t+.07);
+  g.gain.setValueAtTime(0.14,t+dur*.5); g.gain.exponentialRampToValueAtTime(0.001,t+dur);
+  const dly=audioCtx.createDelay(.5); dly.delayTime.value=.09;
+  const dg=audioCtx.createGain(); dg.gain.value=.22;
+  o1.connect(filt); o2.connect(filt); filt.connect(g);
+  g.connect(audioCtx.destination); g.connect(dly); dly.connect(dg); dg.connect(dly); dg.connect(audioCtx.destination);
+  [o1,o2,lfo].forEach(o=>{o.start(t);o.stop(t+dur+.6);});
+}
+function playShō(dur) {
+  ensureAudio(); const t=audioCtx.currentTime;
+  [293.66,369.99,440,554.37,659.25].forEach((freq,i)=>{
+    const o=audioCtx.createOscillator(); o.type='sine'; o.frequency.value=freq;
+    const g=audioCtx.createGain();
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.032,t+.18+i*.06);
+    g.gain.setValueAtTime(.032,t+dur*.65); g.gain.exponentialRampToValueAtTime(0.001,t+dur);
+    o.connect(g); g.connect(audioCtx.destination); o.start(t); o.stop(t+dur+.4);
+  });
+}
+
+function emitSoundRings(x,y,count,dur) {
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const r=document.createElement('div'); r.className='sound-ring';
+      r.style.setProperty('--dur',(dur*.85)+'s');
+      // margin方式：left/topは中心座標そのまま（margin-left/topで-150px済み）
+      r.style.left=x+'px'; r.style.top=y+'px';
+      r.style.borderColor=`rgba(14,14,14,${Math.max(.45-i*.08,.12)})`;
+      document.body.appendChild(r);
+      setTimeout(()=>r.remove(),dur*1000+200);
+    },i*(dur*240));
+  }
+}
+
+// ━━ 石SVG生成
+function makeStone(seed) {
+  let d='';
+  const pts=11+Math.floor(rng(seed,50)*4);
+  for(let i=0;i<pts;i++){
+    const a=(i/pts)*Math.PI*2-Math.PI/2;
+    const r=50*(.74+rng(seed,i)*.46);
+    const asp=0.58+rng(seed,i+100)*0.36;
+    d+=(i===0?'M':'L')+`${(100+Math.cos(a)*r).toFixed(1)},${(80+Math.sin(a)*r*asp).toFixed(1)} `;
+  }
+  d+='Z';
+  const L=74+rng(seed,99)*16,H=24+rng(seed,88)*24,S=6+rng(seed,77)*7;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160">
+    <defs>
+      <radialGradient id="sg${seed}" cx="${30+rng(seed,10)*16}%" cy="${28+rng(seed,11)*12}%" r="64%">
+        <stop offset="0%"   stop-color="hsl(${H},${S+4}%,${L+12}%)"/>
+        <stop offset="50%"  stop-color="hsl(${H},${S}%,${L}%)"/>
+        <stop offset="100%" stop-color="hsl(${H},${S-2}%,${L-18}%)"/>
+      </radialGradient>
+      <filter id="sf${seed}" x="-8%" y="-8%" width="116%" height="116%">
+        <feTurbulence type="fractalNoise" baseFrequency="${.54+rng(seed,20)*.14}" numOctaves="3" result="n"/>
+        <feColorMatrix type="saturate" values="0" in="n" result="gn"/>
+        <feBlend in="SourceGraphic" in2="gn" mode="multiply" result="b"/>
+        <feComposite in="b" in2="SourceGraphic" operator="in"/>
+      </filter>
+    </defs>
+    <path d="${d}" fill="url(#sg${seed})" filter="url(#sf${seed})"/>
+  </svg>`;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  テキスト 3パターン（リロードごとにランダム）
+//  ※ EMダッシュは完全に使わない
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const TEXT_PATTERNS = [
+  // A：余白・間
+  {
+    jp: [
+      { text:'余', size:'23vw', rotate:0,    cls:'',     xR:.56, yR:-.05 },
+      { text:'白', size:'14vw', rotate:90,   cls:'sub',  xR:.04, yR:.38  },
+      { text:'余', size:'19vw', rotate:180,  cls:'faint',xR:-.04,yR:.70  },
+      { text:'間', size:'26vw', rotate:0,    cls:'faint',xR:.50, yR:.48  },
+      { text:'間', size:'7vw',  rotate:0,    cls:'sub',  xR:.76, yR:.06  },
+      { text:'白', size:'9vw',  rotate:-90,  cls:'mid',  xR:.88, yR:.55  },
+    ],
+    en: [
+      { text:'space',      size:'clamp(9px,1.8vw,22px)',  rotate:-1, cls:'mid' },
+      { text:'between',    size:'clamp(7px,0.9vw,11px)',  rotate:90, cls:'sub' },
+      { text:'silence',    size:'clamp(11px,2.2vw,26px)', rotate:0,  cls:'mid' },
+      { text:'perception', size:'clamp(7px,0.85vw,10px)', rotate:0,  cls:'sub' },
+      { text:'translate',  size:'clamp(8px,1.1vw,13px)',  rotate:0,  cls:'sub' },
+    ],
+    meaning: ['触れるまで', '意味はない'],
+  },
+  // B：届かず
+  {
+    jp: [
+      { text:'届', size:'18vw', rotate:0,    cls:'faint',xR:.68, yR:.30  },
+      { text:'か', size:'8vw',  rotate:-90,  cls:'sub',  xR:.80, yR:.55  },
+      { text:'ず', size:'27vw', rotate:0,    cls:'faint',xR:.48, yR:.58  },
+      { text:'届', size:'11vw', rotate:180,  cls:'mid',  xR:.06, yR:.12  },
+      { text:'か', size:'20vw', rotate:0,    cls:'faint',xR:-.04,yR:.68  },
+      { text:'ず', size:'6vw',  rotate:90,   cls:'sub',  xR:.84, yR:.16  },
+    ],
+    en: [
+      { text:'gap',          size:'clamp(11px,2.2vw,28px)', rotate:-1, cls:'mid' },
+      { text:'undelivered',  size:'clamp(7px,0.9vw,11px)',  rotate:0,  cls:'sub' },
+      { text:'signal',       size:'clamp(9px,1.6vw,20px)',  rotate:0,  cls:'mid' },
+      { text:'noise',        size:'clamp(7px,0.85vw,10px)', rotate:90, cls:'sub' },
+      { text:'distance',     size:'clamp(8px,1.1vw,13px)',  rotate:0,  cls:'sub' },
+    ],
+    meaning: ['届いているか', 'どうか'],
+  },
+  // C：解釈・ズレ
+  {
+    jp: [
+      { text:'解', size:'12vw', rotate:0,    cls:'mid',  xR:.18, yR:.08  },
+      { text:'釈', size:'7vw',  rotate:90,   cls:'sub',  xR:.22, yR:.26  },
+      { text:'解', size:'22vw', rotate:180,  cls:'faint',xR:.52, yR:.44  },
+      { text:'釈', size:'16vw', rotate:0,    cls:'faint',xR:-.04,yR:.62  },
+      { text:'解', size:'8vw',  rotate:-90,  cls:'sub',  xR:.82, yR:.70  },
+      { text:'釈', size:'28vw', rotate:0,    cls:'faint',xR:.40, yR:-.04 },
+    ],
+    en: [
+      { text:'interpret',  size:'clamp(9px,1.8vw,22px)',  rotate:-1, cls:'mid' },
+      { text:'translate',  size:'clamp(7px,0.9vw,11px)',  rotate:90, cls:'sub' },
+      { text:'gap',        size:'clamp(11px,2vw,24px)',   rotate:0,  cls:'mid' },
+      { text:'context',    size:'clamp(7px,0.85vw,10px)', rotate:0,  cls:'sub' },
+      { text:'between',    size:'clamp(8px,1.1vw,13px)',  rotate:0,  cls:'sub' },
+    ],
+    meaning: ['意味は', 'ズレの中にある'],
+  },
+];
+
+// ── ランダム配置用：画面を論理ゾーンに分割
+function makeZones(cols, rows) {
+  const z=[];
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++)
+    z.push({ xMin:vw*(c/cols+.04), xMax:vw*((c+1)/cols-.04), yMin:vh*(r/rows+.04), yMax:vh*((r+1)/rows-.04) });
+  return z;
+}
+function pickZone(zones, used) {
+  const avail=zones.map((_,i)=>i).filter(i=>!used.has(i));
+  const zi=avail[Math.floor(Math.random()*avail.length)];
+  used.add(zi);
+  const z=zones[zi];
+  return { x: z.xMin+Math.random()*(z.xMax-z.xMin), y: z.yMin+Math.random()*(z.yMax-z.yMin) };
+}
+
+// ── パターン選択
+const pat = TEXT_PATTERNS[Math.floor(Math.random()*TEXT_PATTERNS.length)];
+
+const stage   = document.getElementById('home-stage');
+const meaning = document.getElementById('meaning');
+
+// 意味テキスト更新
+meaning.querySelector('p').innerHTML = `${pat.meaning[0]}<br><em>${pat.meaning[1]}</em>`;
+
+// ── 日本語文字：xR/yRは固定、delayは順番で
+pat.jp.forEach((f,i) => {
+  const el=document.createElement('div');
+  el.className=`fragment char-jp ${f.cls}`;
+  const x=f.xR*vw, y=f.yR*vh;
+  const delay=.15+i*.22;
+  el.style.cssText=`left:${x}px;top:${y}px;font-size:${f.size};animation-delay:${delay}s;${f.rotate?'transform:rotate('+f.rotate+'deg)':''}`;
+  el.textContent=f.text;
+  stage.appendChild(el);
+});
+
+// ── 欧文：位置をランダム（ゾーン方式）
+const enZones=makeZones(4,3);
+const usedEnZones=new Set();
+// 欧文は画面下〜中間に寄せたい → yMin下限を設定
+const bottomZones=enZones.filter(z=>z.yMin>vh*.55);
+const mixedZones=bottomZones.length>=pat.en.length ? bottomZones : enZones;
+const usedMixed=new Set();
+
+pat.en.forEach((f,i) => {
+  const pos=pickZone(mixedZones.length ? mixedZones : enZones, usedMixed);
+  const el=document.createElement('div');
+  el.className=`fragment char-en ${f.cls}`;
+  const delay=2.0+i*.32;
+  el.style.cssText=`left:${pos.x}px;top:${pos.y}px;font-size:${f.size};animation-delay:${delay}s;${f.rotate?'transform:rotate('+f.rotate+'deg)':''}`;
+  el.textContent=f.text;
+  stage.appendChild(el);
+});
+
+// ── 石：seed・サイズ固定、位置はランダム
+const stoneDefs = [
+  { seed:1,  w:vw*.14, sound:'hichi', freq:293.66, dur:2.0 },
+  { seed:2,  w:vw*.09, sound:'sho',   freq:0,      dur:2.6 },
+  { seed:7,  w:vw*.20, sound:'hichi', freq:369.99, dur:1.8 },
+  { seed:13, w:vw*.06, sound:'hichi', freq:440.00, dur:1.6 },
+  { seed:21, w:vw*.26, sound:'sho',   freq:0,      dur:3.0 },
+];
+
+const stoneZones=makeZones(4,3);
+const usedStoneZones=new Set();
+const topStones=stoneDefs.map((def,i)=>{
+  const pos=pickZone(stoneZones,usedStoneZones);
+  return { ...def, x:pos.x, y:pos.y, delay:.4+i*.3 };
+});
+
+function buildTopStone(f, container) {
+  const el=document.createElement('div');
+  el.className='fragment stone';
+  el.innerHTML=makeStone(f.seed);
+  el.style.cssText=`left:${f.x}px;top:${f.y}px;width:${f.w}px;animation-delay:${f.delay}s`;
+  const getCX=()=>el.getBoundingClientRect().left+el.offsetWidth/2;
+  const getCY=()=>el.getBoundingClientRect().top+el.offsetHeight/2;
+  addHover(el);
+  el.addEventListener('click',()=>{
+    f.sound==='sho'?playShō(f.dur):playHichiriki(f.freq,f.dur);
+    el.classList.remove('ringing'); void el.offsetWidth; el.classList.add('ringing');
+    setTimeout(()=>el.classList.remove('ringing'),f.dur*900);
+    emitSoundRings(getCX(),getCY(),f.sound==='sho'?4:5,f.dur);
+    meaning.classList.add('visible');
+    setTimeout(()=>meaning.classList.remove('visible'),(f.dur+1.4)*1000);
+  });
+  container.appendChild(el);
+}
+topStones.forEach(f => buildTopStone(f, stage));
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  Portfolio 下層：石でケーススタディ一覧
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const cases = [
+  {
+    seed:5,  w:vw*.18, x:vw*.08, y:vh*.22, delay:.2,
+    sound:'hichi', freq:329.63, dur:1.8,
+    label:'Yataimura',
+    title:'大阪屋台村 祭',
+    sub:'Brand Experience Design / Web',
+    img:'https://kinoshitastudio.github.io/yatai-05-result.png',
+    desc:'道頓堀川沿いに誕生した屋台村のブランド体験を設計。「食べに来る場所」から「祭りの空気を体験できる場所」へ再定義し、Webとビジュアルで体験のズレを揃えた。',
+    url:'https://kinoshitastudio.github.io/case-yataimura.html',
+  },
+  {
+    seed:9,  w:vw*.26, x:vw*.32, y:vh*.40, delay:.4,
+    sound:'sho', freq:0, dur:2.6,
+    label:'Avenir',
+    title:'Avenir',
+    sub:'UX / UI Design',
+    img:null,
+    desc:'体験のギャップを発見し、デザイン言語で処方したケーススタディ。ユーザーが受け取っている体験と、ブランドが届けたい体験のズレを可視化した。',
+    url:'https://kinoshitastudio.github.io/case-avenir.html',
+  },
+  {
+    seed:17, w:vw*.11, x:vw*.68, y:vh*.15, delay:.6,
+    sound:'hichi', freq:392.00, dur:1.6,
+    label:'Mirise',
+    title:'Mirise',
+    sub:'Brand / UX Design',
+    img:null,
+    desc:'地域に根ざしたブランドの体験翻訳。届けたい温度感をデザインシステムに落とし込み、一貫した体験を設計した。',
+    url:'https://kinoshitastudio.github.io/case-mirise.html',
+  },
+  {
+    seed:33, w:vw*.21, x:vw*.60, y:vh*.52, delay:.8,
+    sound:'sho', freq:0, dur:2.4,
+    label:'Rincars',
+    title:'Rincars',
+    sub:'Web / Visual Design',
+    img:null,
+    desc:'自動車関連サービスのWebリデザイン。ユーザーの判断フローを再設計し、コンバージョンと体験品質を同時に向上させた。',
+    url:'https://kinoshitastudio.github.io/case-rincars.html',
+  },
+  {
+    seed:41, w:vw*.08, x:vw*.20, y:vh*.68, delay:1.0,
+    sound:'hichi', freq:261.63, dur:2.0,
+    label:'Maruichi',
+    title:'Maruichi',
+    sub:'Brand Experience',
+    img:null,
+    desc:'老舗ブランドのリブランディング。長年のブランド資産を守りながら、現代のユーザーに届く体験言語へと翻訳した。',
+    url:'https://kinoshitastudio.github.io/case-maruichi.html',
+  },
+  {
+    seed:55, w:vw*.15, x:vw*.78, y:vh*.72, delay:1.2,
+    sound:'hichi', freq:349.23, dur:1.9,
+    label:'Manjuya',
+    title:'Manjuya',
+    sub:'UX / Brand Design',
+    img:null,
+    desc:'和菓子ブランドの体験設計。職人の技と現代のユーザー体験をつなぐデザイン言語を構築した。',
+    url:'https://kinoshitastudio.github.io/case-manjuya.html',
+  },
+];
+
+const pStage = document.getElementById('portfolio-stage');
+const caseModal   = document.getElementById('case-modal');
+const caseContent = document.getElementById('case-content');
+const modalClose  = document.getElementById('modal-close');
+
+function openCase(c) {
+  const imgHtml = c.img
+    ? `<img class="case-img" src="${c.img}" alt="${c.title}" loading="lazy">`
+    : `<div class="case-img placeholder"><span>— Visual</span></div>`;
+
+  caseContent.innerHTML = `
+    <span class="case-tag">${c.sub}</span>
+    <div class="case-title">${c.title}</div>
+    <div class="case-sub">Case Study</div>
+    ${imgHtml}
+    <p class="case-desc">${c.desc}</p>
+    <a class="case-more" href="${c.url}" target="_blank">More — Kinoshita Studio →</a>
+  `;
+  caseModal.classList.add('open');
+  addHover(caseContent.querySelector('.case-more'));
+}
+
+modalClose.addEventListener('click', () => caseModal.classList.remove('open'));
+addHover(modalClose);
+caseModal.addEventListener('click', e => { if(e.target===caseModal) caseModal.classList.remove('open'); });
+
+cases.forEach(c => {
+  const el=document.createElement('div');
+  el.className='p-stone';
+  el.innerHTML=makeStone(c.seed)+`<span class="p-label">${c.label}</span>`;
+  el.style.cssText=`left:${c.x}px;top:${c.y}px;width:${c.w}px;animation-delay:${c.delay}s`;
+  const getCX=()=>el.getBoundingClientRect().left+el.offsetWidth/2;
+  const getCY=()=>el.getBoundingClientRect().top+el.offsetHeight/2;
+  addHover(el);
+  el.addEventListener('click',()=>{
+    c.sound==='sho'?playShō(c.dur):playHichiriki(c.freq,c.dur);
+    el.classList.remove('ringing'); void el.offsetWidth; el.classList.add('ringing');
+    setTimeout(()=>el.classList.remove('ringing'),c.dur*900);
+    emitSoundRings(getCX(),getCY(),4,c.dur);
+    setTimeout(()=>openCase(c), 300);
+  });
+  pStage.appendChild(el);
+});
+
+// ━━ パラックス（トップのみ）
+document.addEventListener('mousemove', e => {
+  if(homeStage.classList.contains('hidden')) return;
+  const px=(e.clientX/vw-.5)*2, py=(e.clientY/vh-.5)*2;
+  document.querySelectorAll('#home-stage .char-jp').forEach((el,i)=>{
+    const d=.003+(i%3)*.002;
+    const rot=el.style.transform.match(/rotate\([^)]+\)/)?.[0]||'';
+    el.style.transform=(rot?rot+' ':'')+`translate(${px*-13*d}px,${py*-9*d}px)`;
+  });
+  document.querySelectorAll('#home-stage .char-en').forEach((el,i)=>{
+    const d=.002+(i%2)*.002;
+    const rot=el.style.transform.match(/rotate\([^)]+\)/)?.[0]||'';
+    el.style.transform=(rot?rot+' ':'')+`translate(${px*-10*d}px,${py*-7*d}px)`;
+  });
+  document.querySelectorAll('#home-stage .stone').forEach((el,i)=>{
+    if(el.classList.contains('ringing')) return;
+    const d=.007+i*.003;
+    el.style.transform=`translate(${px*-16*d}px,${py*-11*d}px)`;
+  });
+});
+</script>
+</body>
+</html>
