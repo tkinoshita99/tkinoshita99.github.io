@@ -340,10 +340,15 @@ stageItems.forEach((item,i)=>{
   el.appendChild(img);
   addHover(el);
   el.addEventListener('click',()=>{
-    playTone(freqs[i],1.8);
-    const rect=el.getBoundingClientRect();
-    emitRings(rect.left+rect.width/2,rect.top+rect.height/2,1.8);
-    setTimeout(()=>openDetail(item),200);
+    if(i===2){
+      // プリンター: 紙を射出
+      shootPaper(el);
+    } else {
+      playTone(freqs[i],1.8);
+      const rect=el.getBoundingClientRect();
+      emitRings(rect.left+rect.width/2,rect.top+rect.height/2,1.8);
+      setTimeout(()=>openDetail(item),200);
+    }
   });
   stage.appendChild(el);
 
@@ -375,6 +380,231 @@ allItems.forEach((item,i)=>{
   });
   footerP.appendChild(span);
 });
+
+
+// ━━ 紙射出システム v2 ━━
+const papers = [];
+let paperCount = 0;
+const MAX_PAPERS = 60;
+
+function makePaperContent() {
+  const type = Math.floor(Math.random() * 10);
+  const ink = '#1600A2';
+  const gray = '#bbb';
+
+  switch(type) {
+    case 0: return `
+      <text x="18" y="38" font-family="monospace" font-size="7" fill="${ink}" opacity="0.5">KINOSHITA STUDIO</text>
+      <line x1="18" y1="50" x2="132" y2="50" stroke="${gray}" stroke-width="0.5"/>
+      <line x1="18" y1="62" x2="110" y2="62" stroke="${gray}" stroke-width="0.5"/>
+      <line x1="18" y1="74" x2="125" y2="74" stroke="${gray}" stroke-width="0.5"/>
+      <line x1="18" y1="86" x2="98" y2="86" stroke="${gray}" stroke-width="0.5"/>
+      <line x1="18" y1="98" x2="120" y2="98" stroke="${gray}" stroke-width="0.5"/>
+      <line x1="18" y1="110" x2="105" y2="110" stroke="${gray}" stroke-width="0.5"/>
+      <text x="18" y="180" font-family="monospace" font-size="6" fill="${ink}" opacity="0.25">体験翻訳論 — 2025</text>`;
+
+    case 1: return `
+      <text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.4">EXPERIENCE GAP ANALYSIS</text>
+      <line x1="18" y1="130" x2="132" y2="130" stroke="${gray}" stroke-width="0.5"/>
+      <line x1="18" y1="60" x2="18" y2="130" stroke="${gray}" stroke-width="0.5"/>
+      <polyline points="18,120 40,105 60,115 80,85 100,95 120,70 132,78" fill="none" stroke="${ink}" stroke-width="1.5" opacity="0.6"/>
+      <circle cx="80" cy="85" r="2.5" fill="${ink}" opacity="0.7"/>
+      <circle cx="120" cy="70" r="2.5" fill="${ink}" opacity="0.7"/>`;
+
+    case 2: return `
+      <rect x="18" y="70" width="114" height="72" rx="2" fill="none" stroke="${ink}" stroke-width="0.8" opacity="0.2"/>
+      <text x="75" y="98" font-family="monospace" font-size="9" fill="${ink}" opacity="0.7" text-anchor="middle">TAKAHIRO</text>
+      <text x="75" y="111" font-family="monospace" font-size="9" fill="${ink}" opacity="0.7" text-anchor="middle">KINOSHITA</text>
+      <text x="75" y="124" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.4" text-anchor="middle">Experience Translator</text>
+      <text x="75" y="134" font-family="monospace" font-size="5" fill="${ink}" opacity="0.3" text-anchor="middle">kinoshitastudio.github.io</text>`;
+
+    case 3: {
+      let rects = '';
+      for(let r=0;r<8;r++) for(let c=0;c<10;c++) {
+        const op = (0.1+Math.random()*0.35).toFixed(2);
+        const w = (5+Math.random()*4).toFixed(1);
+        rects += `<rect x="${20+c*11}" y="${42+r*14}" width="${w}" height="8" rx="1" fill="${ink}" opacity="${op}"/>`;
+      }
+      return `<text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">DATA — 04/2025</text>${rects}`; }
+
+    case 4: return `
+      <text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">CONCEPT SKETCH</text>
+      <polygon points="75,55 83,63 83,75 75,83 67,75 67,63" fill="none" stroke="${ink}" stroke-width="1.2" opacity="0.5"/>
+      <line x1="75" y1="55" x2="75" y2="83" stroke="${ink}" stroke-width="0.5" opacity="0.3"/>
+      <line x1="67" y1="63" x2="83" y2="75" stroke="${ink}" stroke-width="0.5" opacity="0.3"/>
+      <line x1="83" y1="63" x2="67" y2="75" stroke="${ink}" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="75" cy="69" r="3" fill="${ink}" opacity="0.4"/>
+      <line x1="18" y1="100" x2="132" y2="100" stroke="${gray}" stroke-width="0.5"/>
+      <line x1="18" y1="114" x2="115" y2="114" stroke="${gray}" stroke-width="0.5"/>
+      <line x1="18" y1="128" x2="125" y2="128" stroke="${gray}" stroke-width="0.5"/>`;
+
+    case 5: return `
+      <text x="75" y="28" font-family="monospace" font-size="7" fill="${ink}" opacity="0.5" text-anchor="middle">EXPERIENCE REPORT</text>
+      <line x1="18" y1="35" x2="132" y2="35" stroke="${gray}" stroke-width="0.5" stroke-dasharray="3,2"/>
+      <text x="18" y="48" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.45">体験翻訳論</text>
+      <text x="132" y="48" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.45" text-anchor="end">01</text>
+      <text x="18" y="60" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.45">体験研究</text>
+      <text x="132" y="60" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.45" text-anchor="end">01</text>
+      <text x="18" y="72" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.45">体験作品</text>
+      <text x="132" y="72" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.45" text-anchor="end">01</text>
+      <line x1="18" y1="80" x2="132" y2="80" stroke="${gray}" stroke-width="0.5" stroke-dasharray="3,2"/>
+      <text x="18" y="92" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.55">TOTAL</text>
+      <text x="132" y="92" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.55" text-anchor="end">03</text>
+      <text x="75" y="175" font-family="monospace" font-size="5" fill="${ink}" opacity="0.2" text-anchor="middle">ありがとうございました</text>`;
+
+    case 6: {
+      let path='M18,95 ';
+      for(let x=18;x<=132;x+=3) {
+        const y=95+Math.sin((x-18)*0.18)*18*(0.5+Math.random()*0.5);
+        path+=`L${x},${y.toFixed(1)} `;
+      }
+      return `<text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">99LETTERS — WAVEFORM</text>
+        <path d="${path}" fill="none" stroke="${ink}" stroke-width="1.2" opacity="0.5"/>
+        <line x1="18" y1="95" x2="132" y2="95" stroke="${gray}" stroke-width="0.3" stroke-dasharray="2,3"/>`; }
+
+    case 7: return `
+      <text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">EXPERIENCE MAPPING</text>
+      <circle cx="62" cy="92" r="30" fill="${ink}" fill-opacity="0.05" stroke="${ink}" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="88" cy="92" r="30" fill="${ink}" fill-opacity="0.05" stroke="${ink}" stroke-width="0.8" opacity="0.4"/>
+      <text x="50" y="90" font-family="monospace" font-size="5" fill="${ink}" opacity="0.5" text-anchor="middle">意図</text>
+      <text x="50" y="98" font-family="monospace" font-size="5" fill="${ink}" opacity="0.5" text-anchor="middle">した</text>
+      <text x="100" y="90" font-family="monospace" font-size="5" fill="${ink}" opacity="0.5" text-anchor="middle">届い</text>
+      <text x="100" y="98" font-family="monospace" font-size="5" fill="${ink}" opacity="0.5" text-anchor="middle">た</text>
+      <text x="75" y="94" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.75" text-anchor="middle" font-weight="bold">ズレ</text>`;
+
+    case 8: {
+      const s=8, startX=17, startY=38;
+      let rects='';
+      const pattern=[[1,1,1,0,0,0,1,1,1],[1,0,1,0,0,0,1,0,1],[1,1,1,0,1,0,1,1,1],[0,0,0,0,0,0,0,0,0],[0,0,1,1,0,1,1,0,0],[0,0,0,0,0,0,0,0,0],[1,1,1,0,0,0,1,0,0],[1,0,1,0,0,0,0,1,0],[1,1,1,0,0,0,0,0,1]];
+      for(let r=0;r<9;r++) for(let c=0;c<9;c++) {
+        if(pattern[r][c]||Math.random()>0.55) {
+          const op=(pattern[r][c]?0.7:0.2+Math.random()*0.3).toFixed(2);
+          rects+=`<rect x="${startX+c*s}" y="${startY+r*s}" width="${s-1}" height="${s-1}" fill="${ink}" opacity="${op}" rx="0.5"/>`;
+        }
+      }
+      return `<text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">SCAN TO EXPERIENCE</text>${rects}`; }
+
+    default: return `
+      <text x="75" y="100" font-family="monospace" font-size="8" fill="${ink}" opacity="0.06" text-anchor="middle" transform="rotate(-30,75,106)">KINOSHITA STUDIO</text>
+      <text x="75" y="116" font-family="monospace" font-size="8" fill="${ink}" opacity="0.06" text-anchor="middle" transform="rotate(-30,75,118)">体験翻訳論</text>`;
+  }
+}
+
+function shootPaper(printerEl) {
+  paperCount++;
+  const rect = printerEl.getBoundingClientRect();
+  const exitX = rect.left + rect.width * 0.30;
+  const exitY = rect.bottom - rect.height * 0.18;
+
+  const paperW=150, paperH=212;
+  const pad=60;
+  const targetX = pad + Math.random()*(window.innerWidth-paperW-pad*2);
+  const targetY = pad + Math.random()*(window.innerHeight-paperH-pad);
+  const targetRot = (Math.random()-0.5)*44;
+
+  const paper = document.createElement('div');
+  paper.style.cssText = `
+    position:fixed; left:${exitX}px; top:${exitY}px;
+    width:${paperW}px; height:${paperH}px;
+    z-index:${300+paperCount}; pointer-events:none;
+    transform-origin:top center;
+    opacity:0;
+    transform:scaleX(0.08) scaleY(0.015) translateY(0px);
+  `;
+  const content = makePaperContent();
+  paper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 212" width="${paperW}" height="${paperH}" style="overflow:visible">
+    <defs><filter id="ps${paperCount}" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="3" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.15)"/>
+    </filter></defs>
+    <rect x="0" y="0" width="150" height="212" fill="white" filter="url(#ps${paperCount})" rx="1"/>
+    ${content}
+  </svg>`;
+
+  document.body.appendChild(paper);
+  papers.push(paper);
+  playPrinterSound();
+
+  // Phase1: プリンターから薄く小さく出現 → フルサイズに広がる
+  requestAnimationFrame(() => {
+    paper.style.transition = 'opacity 0.12s ease, transform 0.42s cubic-bezier(0.22,1,0.36,1)';
+    paper.style.opacity = '1';
+    paper.style.transform = 'scaleX(1) scaleY(1) translateY(-12px)';
+
+    // Phase2: 飛んで着地
+    setTimeout(() => {
+      const dur = 0.38 + Math.random()*0.22;
+      paper.style.transition = `left ${dur}s cubic-bezier(0.25,0.46,0.45,0.94), top ${dur}s cubic-bezier(0.55,0,1,0.45), transform ${dur}s cubic-bezier(0.215,0.61,0.355,1)`;
+      paper.style.left = targetX+'px';
+      paper.style.top  = targetY+'px';
+      paper.style.transform = `rotate(${targetRot}deg) scale(1)`;
+    }, 400);
+  });
+
+  if(paperCount >= MAX_PAPERS) setTimeout(showFullMessage, 1400);
+}
+
+function playPrinterSound() {
+  ensureAudio();
+  const t = audioCtx.currentTime;
+
+  // メインのプリンターノイズ（変調付き）
+  const bufN = Math.floor(audioCtx.sampleRate*0.22);
+  const bufNoise = audioCtx.createBuffer(1, bufN, audioCtx.sampleRate);
+  const dN = bufNoise.getChannelData(0);
+  for(let i=0;i<bufN;i++) {
+    const mod = Math.sin(i*0.08)*0.35 + 0.65;
+    dN[i] = (Math.random()*2-1)*mod;
+  }
+  const srcN = audioCtx.createBufferSource(); srcN.buffer=bufNoise;
+  const bp = audioCtx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=650; bp.Q.value=0.9;
+  const hp = audioCtx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=280;
+  const gN = audioCtx.createGain();
+  gN.gain.setValueAtTime(0,t); gN.gain.linearRampToValueAtTime(0.55,t+0.03);
+  gN.gain.setValueAtTime(0.55,t+0.14); gN.gain.exponentialRampToValueAtTime(0.001,t+0.22);
+  srcN.connect(bp); bp.connect(hp); hp.connect(gN); gN.connect(audioCtx.destination);
+  srcN.start(t); srcN.stop(t+0.25);
+
+  // 紙送りの「カシャ」
+  const bufC = Math.floor(audioCtx.sampleRate*0.06);
+  const bufCrunch = audioCtx.createBuffer(1,bufC,audioCtx.sampleRate);
+  const dC=bufCrunch.getChannelData(0);
+  for(let i=0;i<bufC;i++) dC[i]=(Math.random()*2-1);
+  const srcC=audioCtx.createBufferSource(); srcC.buffer=bufCrunch;
+  const lp=audioCtx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1800;
+  const gC=audioCtx.createGain(); gC.gain.setValueAtTime(0.35,t); gC.gain.exponentialRampToValueAtTime(0.001,t+0.06);
+  srcC.connect(lp); lp.connect(gC); gC.connect(audioCtx.destination);
+  srcC.start(t); srcC.stop(t+0.07);
+
+  // 排紙完了の「カチッ」
+  const click=audioCtx.createOscillator(); click.type='square';
+  click.frequency.setValueAtTime(1600,t+0.19); click.frequency.exponentialRampToValueAtTime(180,t+0.24);
+  const gCl=audioCtx.createGain(); gCl.gain.setValueAtTime(0.09,t+0.19); gCl.gain.exponentialRampToValueAtTime(0.001,t+0.25);
+  click.connect(gCl); gCl.connect(audioCtx.destination);
+  click.start(t+0.19); click.stop(t+0.26);
+}
+
+function showFullMessage() {
+  const msg = document.createElement('div');
+  msg.style.cssText = `
+    position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+    z-index:9000;font-family:'DM Mono',monospace;font-weight:300;
+    font-size:13px;letter-spacing:0.1em;color:#1600A2;text-align:center;
+    pointer-events:all;cursor:none;opacity:0;transition:opacity 0.8s ease;
+    background:rgba(216,214,210,0.88);padding:20px 32px;backdrop-filter:blur(4px);
+  `;
+  msg.innerHTML='paper jam<br><span style="font-size:10px;opacity:0.5;letter-spacing:0.08em;">click to clear</span>';
+  document.body.appendChild(msg);
+  requestAnimationFrame(()=>msg.style.opacity='1');
+  addHover(msg);
+  msg.addEventListener('click',()=>{
+    papers.forEach((p,idx)=>setTimeout(()=>{
+      p.style.transition='all 0.25s ease';p.style.opacity='0';p.style.transform+=' scale(0.9)';
+      setTimeout(()=>p.remove(),280);
+    },idx*15));
+    papers.length=0;paperCount=0;
+    msg.style.opacity='0';setTimeout(()=>msg.remove(),800);
+  });
+}
 </script>
 </body>
 </html>
