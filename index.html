@@ -541,6 +541,7 @@ function shootPaper(printerEl) {
   });
 
   if(paperCount >= MAX_PAPERS) setTimeout(showFullMessage, 1400);
+
 }
 
 function playPrinterSound() {
@@ -605,6 +606,93 @@ function showFullMessage() {
     msg.style.opacity='0';setTimeout(()=>msg.remove(),800);
   });
 }
+
+
+
+// ━━ 消去ジェスチャー ━━
+// papers/paperCount はこのscriptタグのトップレベルで定義済み
+// ドラッグ（PC）またはゴシゴシ（スマホ）で紙を全消去
+let _eraseDown = false;
+let _erasePts  = [];
+let _eraseBusy = false;
+
+function _erasePos(e) {
+  const src = e.touches ? e.touches[0] : e;
+  return { x: src.clientX, y: src.clientY, t: performance.now() };
+}
+
+function _eraseCheck(e) {
+  if (_eraseBusy || papers.length === 0) return;
+  const p = _erasePos(e);
+  _erasePts.push(p);
+  // 直近200ms以内だけ保持
+  _erasePts = _erasePts.filter(q => p.t - q.t < 200);
+  if (_erasePts.length < 2) return;
+
+  let dist = 0;
+  for (let i = 1; i < _erasePts.length; i++) {
+    const dx = _erasePts[i].x - _erasePts[i-1].x;
+    const dy = _erasePts[i].y - _erasePts[i-1].y;
+    dist += Math.sqrt(dx*dx + dy*dy);
+  }
+  const dt = _erasePts[_erasePts.length-1].t - _erasePts[0].t;
+  const speed = dt > 0 ? dist / dt : 0;
+
+  // 速度5px/ms以上 かつ 40px以上の移動で発動
+  if (speed > 5 && dist > 40) {
+    _eraseBusy = true;
+    _doErase();
+  }
+}
+
+function _doErase() {
+  // papersは配列の参照なのでspliceで中身を取り出す
+  const list = papers.splice(0, papers.length);
+  paperCount = 0;
+
+  // 消去音
+  try {
+    ensureAudio();
+    const t = audioCtx.currentTime;
+    const sz = Math.floor(audioCtx.sampleRate * 0.14);
+    const buf = audioCtx.createBuffer(1, sz, audioCtx.sampleRate);
+    const d   = buf.getChannelData(0);
+    for (let i = 0; i < sz; i++) d[i] = (Math.random()*2-1) * (1 - i/sz);
+    const src = audioCtx.createBufferSource(); src.buffer = buf;
+    const hp  = audioCtx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=1200;
+    const g   = audioCtx.createGain();
+    g.gain.setValueAtTime(0.5, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+    src.connect(hp); hp.connect(g); g.connect(audioCtx.destination);
+    src.start(t); src.stop(t + 0.16);
+  } catch(err) {}
+
+  // 紙を飛ばして消す
+  list.forEach((p, i) => {
+    setTimeout(() => {
+      const rx = (Math.random()-0.5) * 180;
+      const ry = -60 - Math.random() * 80;
+      p.style.transition = 'all 0.28s cubic-bezier(0.55,0,1,0.45)';
+      p.style.opacity    = '0';
+      p.style.transform  = (p.style.transform || '') + ` translate(${rx}px,${ry}px) scale(0.4)`;
+      setTimeout(() => p.remove(), 310);
+    }, i * 10);
+  });
+
+  setTimeout(() => { _eraseBusy = false; _erasePts = []; }, 400);
+}
+
+// PCマウス
+document.addEventListener('mousedown',  (e) => { _eraseDown=true; _erasePts=[{..._erasePos(e)}]; });
+document.addEventListener('mouseup',    ()  => { _eraseDown=false; _erasePts=[]; });
+document.addEventListener('mouseleave', ()  => { _eraseDown=false; _erasePts=[]; });
+document.addEventListener('mousemove',  (e) => { if(_eraseDown) _eraseCheck(e); });
+
+// スマホタッチ
+document.addEventListener('touchstart', (e) => { _erasePts=[{..._erasePos(e)}]; }, {passive:true});
+document.addEventListener('touchend',   ()  => { _erasePts=[]; _eraseBusy=false; });
+document.addEventListener('touchmove',  (e) => { _eraseCheck(e); }, {passive:true});
+
 </script>
 </body>
 </html>
