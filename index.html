@@ -147,6 +147,67 @@ body::before{content:'';position:fixed;inset:0;z-index:500;pointer-events:none;
 .d-more{display:inline-block;font-family:'DM Mono',monospace;font-weight:300;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;cursor:none;border-bottom:1px solid rgba(22,0,162,0.35);padding-bottom:2px;transition:opacity .25s;}
 .d-more:hover{opacity:.55;}
 
+
+/* ゴミ箱ボタン */
+#trash-btn{
+  position:fixed;bottom:72px;right:36px;z-index:9000;
+  width:44px;height:44px;
+  background:rgba(216,214,210,0.85);
+  border:1px solid rgba(22,0,162,0.25);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;
+  opacity:0;
+  transform:scale(0.6) translateY(8px);
+  transition:opacity 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events:none;
+  backdrop-filter:blur(4px);
+}
+#trash-btn.visible{
+  opacity:1;
+  transform:scale(1) translateY(0);
+  pointer-events:all;
+}
+#trash-btn:hover{
+  background:rgba(22,0,162,0.08);
+  border-color:rgba(22,0,162,0.6);
+}
+#trash-btn svg{
+  transition:transform 0.2s ease;
+}
+#trash-btn:hover svg{
+  transform:scale(1.15);
+}
+/* オーディオボタン */
+#audio-btn{
+  position:fixed;bottom:128px;right:36px;z-index:9000;
+  width:44px;height:44px;
+  background:rgba(216,214,210,0.85);
+  border:1px solid rgba(22,0,162,0.25);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;
+  opacity:0;
+  transform:scale(0.6) translateY(8px);
+  transition:opacity 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events:none;
+  backdrop-filter:blur(4px);
+}
+#audio-btn.visible{
+  opacity:1;
+  transform:scale(1) translateY(0);
+  pointer-events:all;
+}
+#audio-btn.playing{
+  background:rgba(22,0,162,0.12);
+  border-color:rgba(22,0,162,0.7);
+}
+#audio-btn:hover{
+  background:rgba(22,0,162,0.08);
+  border-color:rgba(22,0,162,0.6);
+}
+
+
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 @keyframes ringOut{0%{opacity:.5;transform:scale(0);}50%{opacity:.25;}100%{opacity:0;transform:scale(1);}}
 
@@ -180,6 +241,17 @@ body::before{content:'';position:fixed;inset:0;z-index:500;pointer-events:none;
 <div id="footer-labels"><p id="footer-text"></p></div>
 
 <div id="stage"></div>
+<button id="trash-btn" title="紙を捨てる">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 5h14M8 5V3h4v2M6 5l1 11h6l1-11" stroke="#1600A2" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9 8v5M11 8v5" stroke="#1600A2" stroke-width="1.1" stroke-linecap="round"/>
+  </svg>
+</button>
+<button id="audio-btn">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="5,3 17,10 5,17" fill="#1600A2" opacity="0.85"/>
+  </svg>
+</button>
 
 <!-- 詳細パネル -->
 <div id="detail">
@@ -382,7 +454,7 @@ allItems.forEach((item,i)=>{
 });
 
 
-// ━━ 紙射出システム v2 ━━
+// ━━ 紙射出システム v3 ━━
 const papers = [];
 let paperCount = 0;
 const MAX_PAPERS = 60;
@@ -391,7 +463,6 @@ function makePaperContent() {
   const type = Math.floor(Math.random() * 10);
   const ink = '#1600A2';
   const gray = '#bbb';
-
   switch(type) {
     case 0: return `
       <text x="18" y="38" font-family="monospace" font-size="7" fill="${ink}" opacity="0.5">KINOSHITA STUDIO</text>
@@ -402,7 +473,6 @@ function makePaperContent() {
       <line x1="18" y1="98" x2="120" y2="98" stroke="${gray}" stroke-width="0.5"/>
       <line x1="18" y1="110" x2="105" y2="110" stroke="${gray}" stroke-width="0.5"/>
       <text x="18" y="180" font-family="monospace" font-size="6" fill="${ink}" opacity="0.25">体験翻訳論 — 2025</text>`;
-
     case 1: return `
       <text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.4">EXPERIENCE GAP ANALYSIS</text>
       <line x1="18" y1="130" x2="132" y2="130" stroke="${gray}" stroke-width="0.5"/>
@@ -410,23 +480,20 @@ function makePaperContent() {
       <polyline points="18,120 40,105 60,115 80,85 100,95 120,70 132,78" fill="none" stroke="${ink}" stroke-width="1.5" opacity="0.6"/>
       <circle cx="80" cy="85" r="2.5" fill="${ink}" opacity="0.7"/>
       <circle cx="120" cy="70" r="2.5" fill="${ink}" opacity="0.7"/>`;
-
     case 2: return `
       <rect x="18" y="70" width="114" height="72" rx="2" fill="none" stroke="${ink}" stroke-width="0.8" opacity="0.2"/>
       <text x="75" y="98" font-family="monospace" font-size="9" fill="${ink}" opacity="0.7" text-anchor="middle">TAKAHIRO</text>
       <text x="75" y="111" font-family="monospace" font-size="9" fill="${ink}" opacity="0.7" text-anchor="middle">KINOSHITA</text>
       <text x="75" y="124" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.4" text-anchor="middle">Experience Translator</text>
       <text x="75" y="134" font-family="monospace" font-size="5" fill="${ink}" opacity="0.3" text-anchor="middle">kinoshitastudio.github.io</text>`;
-
     case 3: {
       let rects = '';
       for(let r=0;r<8;r++) for(let c=0;c<10;c++) {
-        const op = (0.1+Math.random()*0.35).toFixed(2);
-        const w = (5+Math.random()*4).toFixed(1);
-        rects += `<rect x="${20+c*11}" y="${42+r*14}" width="${w}" height="8" rx="1" fill="${ink}" opacity="${op}"/>`;
+        const op=(0.1+Math.random()*0.35).toFixed(2);
+        const w=(5+Math.random()*4).toFixed(1);
+        rects+=`<rect x="${20+c*11}" y="${42+r*14}" width="${w}" height="8" rx="1" fill="${ink}" opacity="${op}"/>`;
       }
       return `<text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">DATA — 04/2025</text>${rects}`; }
-
     case 4: return `
       <text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">CONCEPT SKETCH</text>
       <polygon points="75,55 83,63 83,75 75,83 67,75 67,63" fill="none" stroke="${ink}" stroke-width="1.2" opacity="0.5"/>
@@ -435,9 +502,7 @@ function makePaperContent() {
       <line x1="83" y1="63" x2="67" y2="75" stroke="${ink}" stroke-width="0.5" opacity="0.3"/>
       <circle cx="75" cy="69" r="3" fill="${ink}" opacity="0.4"/>
       <line x1="18" y1="100" x2="132" y2="100" stroke="${gray}" stroke-width="0.5"/>
-      <line x1="18" y1="114" x2="115" y2="114" stroke="${gray}" stroke-width="0.5"/>
-      <line x1="18" y1="128" x2="125" y2="128" stroke="${gray}" stroke-width="0.5"/>`;
-
+      <line x1="18" y1="114" x2="115" y2="114" stroke="${gray}" stroke-width="0.5"/>`;
     case 5: return `
       <text x="75" y="28" font-family="monospace" font-size="7" fill="${ink}" opacity="0.5" text-anchor="middle">EXPERIENCE REPORT</text>
       <line x1="18" y1="35" x2="132" y2="35" stroke="${gray}" stroke-width="0.5" stroke-dasharray="3,2"/>
@@ -451,17 +516,13 @@ function makePaperContent() {
       <text x="18" y="92" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.55">TOTAL</text>
       <text x="132" y="92" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.55" text-anchor="end">03</text>
       <text x="75" y="175" font-family="monospace" font-size="5" fill="${ink}" opacity="0.2" text-anchor="middle">ありがとうございました</text>`;
-
     case 6: {
       let path='M18,95 ';
-      for(let x=18;x<=132;x+=3) {
-        const y=95+Math.sin((x-18)*0.18)*18*(0.5+Math.random()*0.5);
-        path+=`L${x},${y.toFixed(1)} `;
-      }
+      for(let x=18;x<=132;x+=3){const y=95+Math.sin((x-18)*0.18)*18*(0.5+Math.random()*0.5);path+=`L${x},${y.toFixed(1)} `;}
       return `<text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">99LETTERS — WAVEFORM</text>
         <path d="${path}" fill="none" stroke="${ink}" stroke-width="1.2" opacity="0.5"/>
-        <line x1="18" y1="95" x2="132" y2="95" stroke="${gray}" stroke-width="0.3" stroke-dasharray="2,3"/>`; }
-
+        <line x1="18" y1="95" x2="132" y2="95" stroke="${gray}" stroke-width="0.3" stroke-dasharray="2,3"/>`;
+    }
     case 7: return `
       <text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">EXPERIENCE MAPPING</text>
       <circle cx="62" cy="92" r="30" fill="${ink}" fill-opacity="0.05" stroke="${ink}" stroke-width="0.8" opacity="0.4"/>
@@ -471,19 +532,14 @@ function makePaperContent() {
       <text x="100" y="90" font-family="monospace" font-size="5" fill="${ink}" opacity="0.5" text-anchor="middle">届い</text>
       <text x="100" y="98" font-family="monospace" font-size="5" fill="${ink}" opacity="0.5" text-anchor="middle">た</text>
       <text x="75" y="94" font-family="monospace" font-size="5.5" fill="${ink}" opacity="0.75" text-anchor="middle" font-weight="bold">ズレ</text>`;
-
     case 8: {
-      const s=8, startX=17, startY=38;
+      const s=8,startX=17,startY=38;
       let rects='';
-      const pattern=[[1,1,1,0,0,0,1,1,1],[1,0,1,0,0,0,1,0,1],[1,1,1,0,1,0,1,1,1],[0,0,0,0,0,0,0,0,0],[0,0,1,1,0,1,1,0,0],[0,0,0,0,0,0,0,0,0],[1,1,1,0,0,0,1,0,0],[1,0,1,0,0,0,0,1,0],[1,1,1,0,0,0,0,0,1]];
-      for(let r=0;r<9;r++) for(let c=0;c<9;c++) {
-        if(pattern[r][c]||Math.random()>0.55) {
-          const op=(pattern[r][c]?0.7:0.2+Math.random()*0.3).toFixed(2);
-          rects+=`<rect x="${startX+c*s}" y="${startY+r*s}" width="${s-1}" height="${s-1}" fill="${ink}" opacity="${op}" rx="0.5"/>`;
-        }
+      const pat=[[1,1,1,0,0,0,1,1,1],[1,0,1,0,0,0,1,0,1],[1,1,1,0,1,0,1,1,1],[0,0,0,0,0,0,0,0,0],[0,0,1,1,0,1,1,0,0],[0,0,0,0,0,0,0,0,0],[1,1,1,0,0,0,1,0,0],[1,0,1,0,0,0,0,1,0],[1,1,1,0,0,0,0,0,1]];
+      for(let r=0;r<9;r++) for(let c=0;c<9;c++){
+        if(pat[r][c]||Math.random()>0.55){const op=(pat[r][c]?0.7:0.2+Math.random()*0.3).toFixed(2);rects+=`<rect x="${startX+c*s}" y="${startY+r*s}" width="${s-1}" height="${s-1}" fill="${ink}" opacity="${op}" rx="0.5"/>`;}
       }
-      return `<text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">SCAN TO EXPERIENCE</text>${rects}`; }
-
+      return `<text x="18" y="32" font-family="monospace" font-size="6" fill="${ink}" opacity="0.35">SCAN TO EXPERIENCE</text>${rects}`;}
     default: return `
       <text x="75" y="100" font-family="monospace" font-size="8" fill="${ink}" opacity="0.06" text-anchor="middle" transform="rotate(-30,75,106)">KINOSHITA STUDIO</text>
       <text x="75" y="116" font-family="monospace" font-size="8" fill="${ink}" opacity="0.06" text-anchor="middle" transform="rotate(-30,75,118)">体験翻訳論</text>`;
@@ -495,7 +551,6 @@ function shootPaper(printerEl) {
   const rect = printerEl.getBoundingClientRect();
   const exitX = rect.left + rect.width * 0.30;
   const exitY = rect.bottom - rect.height * 0.18;
-
   const paperW=150, paperH=212;
   const pad=60;
   const targetX = pad + Math.random()*(window.innerWidth-paperW-pad*2);
@@ -503,195 +558,213 @@ function shootPaper(printerEl) {
   const targetRot = (Math.random()-0.5)*44;
 
   const paper = document.createElement('div');
-  paper.style.cssText = `
-    position:fixed; left:${exitX}px; top:${exitY}px;
-    width:${paperW}px; height:${paperH}px;
-    z-index:${300+paperCount}; pointer-events:none;
-    transform-origin:top center;
-    opacity:0;
-    transform:scaleX(0.08) scaleY(0.015) translateY(0px);
-  `;
+  paper.style.cssText = `position:fixed;left:${exitX}px;top:${exitY}px;width:${paperW}px;height:${paperH}px;z-index:${300+paperCount};pointer-events:none;transform-origin:top center;opacity:0;transform:scaleX(0.08) scaleY(0.015);`;
   const content = makePaperContent();
   paper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 212" width="${paperW}" height="${paperH}" style="overflow:visible">
-    <defs><filter id="ps${paperCount}" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="3" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.15)"/>
-    </filter></defs>
+    <defs><filter id="ps${paperCount}" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="3" dy="4" stdDeviation="5" flood-color="rgba(0,0,0,0.15)"/></filter></defs>
     <rect x="0" y="0" width="150" height="212" fill="white" filter="url(#ps${paperCount})" rx="1"/>
     ${content}
   </svg>`;
-
   document.body.appendChild(paper);
   papers.push(paper);
   playPrinterSound();
 
-  // Phase1: プリンターから薄く小さく出現 → フルサイズに広がる
-  requestAnimationFrame(() => {
-    paper.style.transition = 'opacity 0.12s ease, transform 0.42s cubic-bezier(0.22,1,0.36,1)';
-    paper.style.opacity = '1';
-    paper.style.transform = 'scaleX(1) scaleY(1) translateY(-12px)';
-
-    // Phase2: 飛んで着地
-    setTimeout(() => {
-      const dur = 0.38 + Math.random()*0.22;
-      paper.style.transition = `left ${dur}s cubic-bezier(0.25,0.46,0.45,0.94), top ${dur}s cubic-bezier(0.55,0,1,0.45), transform ${dur}s cubic-bezier(0.215,0.61,0.355,1)`;
-      paper.style.left = targetX+'px';
-      paper.style.top  = targetY+'px';
-      paper.style.transform = `rotate(${targetRot}deg) scale(1)`;
-    }, 400);
+  requestAnimationFrame(()=>{
+    paper.style.transition='opacity 0.12s ease, transform 0.42s cubic-bezier(0.22,1,0.36,1)';
+    paper.style.opacity='1';
+    paper.style.transform='scaleX(1) scaleY(1) translateY(-12px)';
+    setTimeout(()=>{
+      const dur=0.38+Math.random()*0.22;
+      paper.style.transition=`left ${dur}s cubic-bezier(0.25,0.46,0.45,0.94), top ${dur}s cubic-bezier(0.55,0,1,0.45), transform ${dur}s cubic-bezier(0.215,0.61,0.355,1)`;
+      paper.style.left=targetX+'px';
+      paper.style.top=targetY+'px';
+      paper.style.transform=`rotate(${targetRot}deg) scale(1)`;
+    },400);
   });
 
-  if(paperCount >= MAX_PAPERS) setTimeout(showFullMessage, 1400);
-
+  // ゴミ箱・オーディオボタン表示
+  showSubBtns();
+  if(paperCount >= MAX_PAPERS) setTimeout(showJamMsg, 1400);
 }
 
 function playPrinterSound() {
   ensureAudio();
-  const t = audioCtx.currentTime;
-
-  // メインのプリンターノイズ（変調付き）
-  const bufN = Math.floor(audioCtx.sampleRate*0.22);
-  const bufNoise = audioCtx.createBuffer(1, bufN, audioCtx.sampleRate);
-  const dN = bufNoise.getChannelData(0);
-  for(let i=0;i<bufN;i++) {
-    const mod = Math.sin(i*0.08)*0.35 + 0.65;
-    dN[i] = (Math.random()*2-1)*mod;
-  }
-  const srcN = audioCtx.createBufferSource(); srcN.buffer=bufNoise;
-  const bp = audioCtx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=650; bp.Q.value=0.9;
-  const hp = audioCtx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=280;
-  const gN = audioCtx.createGain();
-  gN.gain.setValueAtTime(0,t); gN.gain.linearRampToValueAtTime(0.55,t+0.03);
-  gN.gain.setValueAtTime(0.55,t+0.14); gN.gain.exponentialRampToValueAtTime(0.001,t+0.22);
-  srcN.connect(bp); bp.connect(hp); hp.connect(gN); gN.connect(audioCtx.destination);
-  srcN.start(t); srcN.stop(t+0.25);
-
-  // 紙送りの「カシャ」
-  const bufC = Math.floor(audioCtx.sampleRate*0.06);
-  const bufCrunch = audioCtx.createBuffer(1,bufC,audioCtx.sampleRate);
+  const t=audioCtx.currentTime;
+  const bufN=Math.floor(audioCtx.sampleRate*0.22);
+  const bufNoise=audioCtx.createBuffer(1,bufN,audioCtx.sampleRate);
+  const dN=bufNoise.getChannelData(0);
+  for(let i=0;i<bufN;i++){const mod=Math.sin(i*0.08)*0.35+0.65;dN[i]=(Math.random()*2-1)*mod;}
+  const srcN=audioCtx.createBufferSource();srcN.buffer=bufNoise;
+  const bp=audioCtx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=650;bp.Q.value=0.9;
+  const hp=audioCtx.createBiquadFilter();hp.type='highpass';hp.frequency.value=280;
+  const gN=audioCtx.createGain();
+  gN.gain.setValueAtTime(0,t);gN.gain.linearRampToValueAtTime(0.55,t+0.03);
+  gN.gain.setValueAtTime(0.55,t+0.14);gN.gain.exponentialRampToValueAtTime(0.001,t+0.22);
+  srcN.connect(bp);bp.connect(hp);hp.connect(gN);gN.connect(audioCtx.destination);
+  srcN.start(t);srcN.stop(t+0.25);
+  const bufC=Math.floor(audioCtx.sampleRate*0.06);
+  const bufCrunch=audioCtx.createBuffer(1,bufC,audioCtx.sampleRate);
   const dC=bufCrunch.getChannelData(0);
-  for(let i=0;i<bufC;i++) dC[i]=(Math.random()*2-1);
-  const srcC=audioCtx.createBufferSource(); srcC.buffer=bufCrunch;
-  const lp=audioCtx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1800;
-  const gC=audioCtx.createGain(); gC.gain.setValueAtTime(0.35,t); gC.gain.exponentialRampToValueAtTime(0.001,t+0.06);
-  srcC.connect(lp); lp.connect(gC); gC.connect(audioCtx.destination);
-  srcC.start(t); srcC.stop(t+0.07);
-
-  // 排紙完了の「カチッ」
-  const click=audioCtx.createOscillator(); click.type='square';
-  click.frequency.setValueAtTime(1600,t+0.19); click.frequency.exponentialRampToValueAtTime(180,t+0.24);
-  const gCl=audioCtx.createGain(); gCl.gain.setValueAtTime(0.09,t+0.19); gCl.gain.exponentialRampToValueAtTime(0.001,t+0.25);
-  click.connect(gCl); gCl.connect(audioCtx.destination);
-  click.start(t+0.19); click.stop(t+0.26);
+  for(let i=0;i<bufC;i++)dC[i]=(Math.random()*2-1);
+  const srcC=audioCtx.createBufferSource();srcC.buffer=bufCrunch;
+  const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1800;
+  const gC=audioCtx.createGain();gC.gain.setValueAtTime(0.35,t);gC.gain.exponentialRampToValueAtTime(0.001,t+0.06);
+  srcC.connect(lp);lp.connect(gC);gC.connect(audioCtx.destination);
+  srcC.start(t);srcC.stop(t+0.07);
+  const click=audioCtx.createOscillator();click.type='square';
+  click.frequency.setValueAtTime(1600,t+0.19);click.frequency.exponentialRampToValueAtTime(180,t+0.24);
+  const gCl=audioCtx.createGain();gCl.gain.setValueAtTime(0.09,t+0.19);gCl.gain.exponentialRampToValueAtTime(0.001,t+0.25);
+  click.connect(gCl);gCl.connect(audioCtx.destination);
+  click.start(t+0.19);click.stop(t+0.26);
 }
 
-function showFullMessage() {
-  const msg = document.createElement('div');
-  msg.style.cssText = `
+// ━━ paper jam ━━
+let _jamEl = null;
+function showJamMsg() {
+  if(_jamEl) return;
+  _jamEl = document.createElement('div');
+  _jamEl.style.cssText = `
     position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
-    z-index:9000;font-family:'DM Mono',monospace;font-weight:300;
-    font-size:13px;letter-spacing:0.1em;color:#1600A2;text-align:center;
-    pointer-events:all;cursor:none;opacity:0;transition:opacity 0.8s ease;
-    background:rgba(216,214,210,0.88);padding:20px 32px;backdrop-filter:blur(4px);
+    z-index:9500;font-family:'DM Mono',monospace;font-weight:300;
+    font-size:13px;letter-spacing:0.1em;color:#1600A2;text-anchor:middle;text-align:center;
+    pointer-events:all;opacity:0;transition:opacity 0.5s ease;
+    background:rgba(216,214,210,0.95);padding:20px 36px;
+    border:1px solid rgba(22,0,162,0.2);
   `;
-  msg.innerHTML='paper jam<br><span style="font-size:10px;opacity:0.5;letter-spacing:0.08em;">click to clear</span>';
-  document.body.appendChild(msg);
-  requestAnimationFrame(()=>msg.style.opacity='1');
-  addHover(msg);
-  msg.addEventListener('click',()=>{
-    papers.forEach((p,idx)=>setTimeout(()=>{
-      p.style.transition='all 0.25s ease';p.style.opacity='0';p.style.transform+=' scale(0.9)';
-      setTimeout(()=>p.remove(),280);
-    },idx*15));
-    papers.length=0;paperCount=0;
-    msg.style.opacity='0';setTimeout(()=>msg.remove(),800);
-  });
+  _jamEl.innerHTML = 'paper jam<br><span style="font-size:10px;opacity:0.5;letter-spacing:0.08em;">click to clear</span>';
+  document.body.appendChild(_jamEl);
+  requestAnimationFrame(()=>{ _jamEl.style.opacity='1'; });
+  _jamEl.addEventListener('click', clearPapers);
 }
 
-
-
-// ━━ 消去ジェスチャー ━━
-// papers/paperCount はこのscriptタグのトップレベルで定義済み
-// ドラッグ（PC）またはゴシゴシ（スマホ）で紙を全消去
-let _eraseDown = false;
-let _erasePts  = [];
-let _eraseBusy = false;
-
-function _erasePos(e) {
-  const src = e.touches ? e.touches[0] : e;
-  return { x: src.clientX, y: src.clientY, t: performance.now() };
+function hideJamMsg() {
+  if(!_jamEl) return;
+  _jamEl.style.opacity = '0';
+  const el = _jamEl;
+  _jamEl = null;
+  setTimeout(()=>el.remove(), 500);
 }
 
-function _eraseCheck(e) {
-  if (_eraseBusy || papers.length === 0) return;
-  const p = _erasePos(e);
-  _erasePts.push(p);
-  // 直近200ms以内だけ保持
-  _erasePts = _erasePts.filter(q => p.t - q.t < 200);
-  if (_erasePts.length < 2) return;
+// ━━ ビート ━━
+let _beatPlaying = false;
+let _beatTimer = null;
 
-  let dist = 0;
-  for (let i = 1; i < _erasePts.length; i++) {
-    const dx = _erasePts[i].x - _erasePts[i-1].x;
-    const dy = _erasePts[i].y - _erasePts[i-1].y;
-    dist += Math.sqrt(dx*dx + dy*dy);
+function startBeat() {
+  if(_beatPlaying) return;
+  _beatPlaying = true;
+  ensureAudio();
+  scheduleBeat(audioCtx.currentTime + 0.05);
+}
+
+function scheduleBeat(startT) {
+  if(!_beatPlaying) return;
+  const bpm=120, step=60/bpm;
+  for(let i=0;i<8;i++) {
+    const bt=startT+i*step;
+    // キック
+    if(i%2===0){
+      const ko=audioCtx.createOscillator();ko.type='sine';
+      ko.frequency.setValueAtTime(180,bt);ko.frequency.exponentialRampToValueAtTime(40,bt+0.12);
+      const kg=audioCtx.createGain();kg.gain.setValueAtTime(0.9,bt);kg.gain.exponentialRampToValueAtTime(0.001,bt+0.25);
+      ko.connect(kg);kg.connect(audioCtx.destination);ko.start(bt);ko.stop(bt+0.28);
+    }
+    // ハット
+    {
+      const hSz=Math.floor(audioCtx.sampleRate*0.04);
+      const hBuf=audioCtx.createBuffer(1,hSz,audioCtx.sampleRate);
+      const hD=hBuf.getChannelData(0);for(let j=0;j<hSz;j++)hD[j]=Math.random()*2-1;
+      const hSrc=audioCtx.createBufferSource();hSrc.buffer=hBuf;
+      const hHp=audioCtx.createBiquadFilter();hHp.type='highpass';hHp.frequency.value=8000;
+      const hG=audioCtx.createGain();const vol=i%2===0?0.18:0.1;
+      hG.gain.setValueAtTime(vol,bt);hG.gain.exponentialRampToValueAtTime(0.001,bt+0.06);
+      hSrc.connect(hHp);hHp.connect(hG);hG.connect(audioCtx.destination);hSrc.start(bt);hSrc.stop(bt+0.07);
+    }
+    // スネア
+    if(i%2===1){
+      const snSz=Math.floor(audioCtx.sampleRate*0.1);
+      const snBuf=audioCtx.createBuffer(1,snSz,audioCtx.sampleRate);
+      const snD=snBuf.getChannelData(0);for(let j=0;j<snSz;j++)snD[j]=Math.random()*2-1;
+      const snSrc=audioCtx.createBufferSource();snSrc.buffer=snBuf;
+      const snBp=audioCtx.createBiquadFilter();snBp.type='bandpass';snBp.frequency.value=800;snBp.Q.value=0.7;
+      const snG=audioCtx.createGain();snG.gain.setValueAtTime(0.5,bt);snG.gain.exponentialRampToValueAtTime(0.001,bt+0.12);
+      snSrc.connect(snBp);snBp.connect(snG);snG.connect(audioCtx.destination);snSrc.start(bt);snSrc.stop(bt+0.13);
+    }
   }
-  const dt = _erasePts[_erasePts.length-1].t - _erasePts[0].t;
-  const speed = dt > 0 ? dist / dt : 0;
-
-  // 速度5px/ms以上 かつ 40px以上の移動で発動
-  if (speed > 5 && dist > 40) {
-    _eraseBusy = true;
-    _doErase();
-  }
+  const nextT=startT+8*step;
+  const delay=(nextT-audioCtx.currentTime-0.05)*1000;
+  _beatTimer=setTimeout(()=>scheduleBeat(nextT), Math.max(0,delay));
 }
 
-function _doErase() {
-  // papersは配列の参照なのでspliceで中身を取り出す
+function stopBeat() {
+  _beatPlaying=false;
+  if(_beatTimer){clearTimeout(_beatTimer);_beatTimer=null;}
+}
+
+// ━━ サブボタン表示/非表示 ━━
+function showSubBtns() {
+  document.getElementById('trash-btn').classList.add('visible');
+  document.getElementById('audio-btn').classList.add('visible');
+}
+
+function hideSubBtns() {
+  document.getElementById('trash-btn').classList.remove('visible');
+  document.getElementById('audio-btn').classList.remove('visible');
+}
+
+// ━━ 全クリア ━━
+function clearPapers() {
+  // paper jamを消す
+  hideJamMsg();
+  // ビートを止める
+  stopBeat();
+  document.getElementById('audio-btn').classList.remove('playing');
+  // ボタンを隠す
+  hideSubBtns();
+  // 紙を消す
   const list = papers.splice(0, papers.length);
   paperCount = 0;
-
   // 消去音
   try {
     ensureAudio();
-    const t = audioCtx.currentTime;
-    const sz = Math.floor(audioCtx.sampleRate * 0.14);
-    const buf = audioCtx.createBuffer(1, sz, audioCtx.sampleRate);
-    const d   = buf.getChannelData(0);
-    for (let i = 0; i < sz; i++) d[i] = (Math.random()*2-1) * (1 - i/sz);
-    const src = audioCtx.createBufferSource(); src.buffer = buf;
-    const hp  = audioCtx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=1200;
-    const g   = audioCtx.createGain();
-    g.gain.setValueAtTime(0.5, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
-    src.connect(hp); hp.connect(g); g.connect(audioCtx.destination);
-    src.start(t); src.stop(t + 0.16);
-  } catch(err) {}
-
-  // 紙を飛ばして消す
-  list.forEach((p, i) => {
-    setTimeout(() => {
-      const rx = (Math.random()-0.5) * 180;
-      const ry = -60 - Math.random() * 80;
-      p.style.transition = 'all 0.28s cubic-bezier(0.55,0,1,0.45)';
-      p.style.opacity    = '0';
-      p.style.transform  = (p.style.transform || '') + ` translate(${rx}px,${ry}px) scale(0.4)`;
-      setTimeout(() => p.remove(), 310);
-    }, i * 10);
+    const t=audioCtx.currentTime;
+    const sz=Math.floor(audioCtx.sampleRate*0.14);
+    const buf=audioCtx.createBuffer(1,sz,audioCtx.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<sz;i++)d[i]=(Math.random()*2-1)*(1-i/sz);
+    const src=audioCtx.createBufferSource();src.buffer=buf;
+    const hp=audioCtx.createBiquadFilter();hp.type='highpass';hp.frequency.value=1200;
+    const g=audioCtx.createGain();g.gain.setValueAtTime(0.45,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.14);
+    src.connect(hp);hp.connect(g);g.connect(audioCtx.destination);src.start(t);src.stop(t+0.16);
+  } catch(e){}
+  list.forEach((p,i)=>{
+    setTimeout(()=>{
+      p.style.transition='opacity 0.25s ease, transform 0.25s ease';
+      p.style.opacity='0';
+      p.style.transform='translateY(40px) scale(0.6)';
+      setTimeout(()=>p.remove(),280);
+    },i*10);
   });
-
-  setTimeout(() => { _eraseBusy = false; _erasePts = []; }, 400);
 }
 
-// PCマウス
-document.addEventListener('mousedown',  (e) => { _eraseDown=true; _erasePts=[{..._erasePos(e)}]; });
-document.addEventListener('mouseup',    ()  => { _eraseDown=false; _erasePts=[]; });
-document.addEventListener('mouseleave', ()  => { _eraseDown=false; _erasePts=[]; });
-document.addEventListener('mousemove',  (e) => { if(_eraseDown) _eraseCheck(e); });
+// ━━ ゴミ箱ボタン ━━
+const trashBtn = document.getElementById('trash-btn');
+addHover(trashBtn);
+trashBtn.addEventListener('click', clearPapers);
 
-// スマホタッチ
-document.addEventListener('touchstart', (e) => { _erasePts=[{..._erasePos(e)}]; }, {passive:true});
-document.addEventListener('touchend',   ()  => { _erasePts=[]; _eraseBusy=false; });
-document.addEventListener('touchmove',  (e) => { _eraseCheck(e); }, {passive:true});
+// ━━ オーディオボタン ━━
+const audioBtn = document.getElementById('audio-btn');
+addHover(audioBtn);
+audioBtn.addEventListener('click', ()=>{
+  if(_beatPlaying) {
+    stopBeat();
+    audioBtn.classList.remove('playing');
+    audioBtn.querySelector('svg').innerHTML = '<polygon points="5,3 17,10 5,17" fill="#1600A2" opacity="0.85"/>';
+  } else {
+    startBeat();
+    audioBtn.classList.add('playing');
+    audioBtn.querySelector('svg').innerHTML = '<rect x="4" y="4" width="5" height="12" fill="#1600A2" opacity="0.85"/><rect x="11" y="4" width="5" height="12" fill="#1600A2" opacity="0.85"/>';
+  }
+});
 
 </script>
 </body>
