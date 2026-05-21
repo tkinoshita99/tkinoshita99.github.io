@@ -415,6 +415,11 @@ stageItems.forEach((item,i)=>{
     if(i===2){
       // プリンター: 紙を射出
       shootPaper(el);
+    } else if(i===0){
+      playTone(freqs[i],1.8);
+      const rect=el.getBoundingClientRect();
+      emitRings(rect.left+rect.width/2,rect.top+rect.height/2,1.8);
+      setTimeout(()=>window.open('https://bmboard.studio/','_blank'),200);
     } else {
       playTone(freqs[i],1.8);
       const rect=el.getBoundingClientRect();
