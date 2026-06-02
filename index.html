@@ -46,14 +46,19 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { height: 100%; }
+
 body {
   font-family: 'Lucida Console', monospace;
   font-size: 12px;
   color: #111;
   background: white;
-  padding: 32px;
+  padding: 20px 32px;
   max-width: 1280px;
   margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 body.jp { font-family: 'DotGothic16', monospace; }
@@ -81,10 +86,10 @@ hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
 .lang-btn:hover { color: #111; border-color: #111; }
 
 /* ── HERO ── */
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+.hero { display: flex; flex-direction: column; justify-content: flex-start; padding-top: 16px; }
 .hero-top {
   display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 .hero h1 {
   font-size: 22px; font-weight: 400; letter-spacing: 0;
@@ -501,7 +506,7 @@ footer a:hover { color: #111; text-decoration: none; }
   </ul>
 </div>
 
-<footer id="footer">
+<footer id="footer" style="margin-top:auto;">
   <span>© 2026 木下 貴博 / Takahiro Kinoshita — <a href="https://kinoshita.studio/" target="_blank" rel="noopener">木下スタジオ</a></span>
   <span id="footerRight">体験翻訳家 &nbsp;|&nbsp; 木下スタジオ &nbsp;|&nbsp; 滋賀・琵琶湖 &nbsp;|&nbsp; UXデザイン &nbsp;|&nbsp; 個人開発</span>
 </footer>
