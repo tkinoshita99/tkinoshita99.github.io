@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ja" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プロダクト — 木下 貴博 / Takahiro Kinoshita | BMBoard・Atelier・KODOCO</title>
+<meta name="description" content="木下貴博（Takahiro Kinoshita）が単独開発・運用する3つのプロダクト。BMBoard（デザイン共有ボード）、Atelier（音楽の中庭）、KODOCO（滋賀子連れおでかけアプリ）。木下スタジオ・滋賀。">
+<meta name="keywords" content="BMBoard,Black Mirror Board,Atelier,KODOCO,木下貴博,Takahiro Kinoshita,個人開発,プロダクト開発,滋賀,木下スタジオ,kinoshita studio,デザイン共有,音楽アプリ,子連れおでかけ 滋賀,UXデザイン">
+<meta property="og:title" content="プロダクト — 木下 貴博 | BMBoard・Atelier・KODOCO">
+<meta property="og:description" content="依存ゼロ、外注ゼロ。思想から実装・運用まで単独で行う3つのプロダクト。BMBoard / Atelier / KODOCO。">
+<meta property="og:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
+<meta property="og:url" content="https://tkinoshita99.github.io/products.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
+<link rel="canonical" href="https://tkinoshita99.github.io/products.html">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="192x192" href="favicon192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "BMBoard",
+    "alternateName": "Black Mirror Board",
+    "url": "https://bmboard.studio/",
+    "description": "外部ライブラリに依存しない1ファイル完結のデザイン共有ボード。デザイナーとエンジニアが同じキャンバスを見る場所。",
+    "applicationCategory": "DesignApplication",
+    "author": { "@type": "Person", "name": "木下 貴博", "url": "https://tkinoshita99.github.io/" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Atelier",
+    "url": "https://atelistudio.com/",
+    "description": "アルゴリズムなし、数字なし。自分だけの音楽コレクションを積み上げる静かな中庭。",
+    "applicationCategory": "MusicApplication",
+    "author": { "@type": "Person", "name": "木下 貴博", "url": "https://tkinoshita99.github.io/" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "KODOCO",
+    "url": "https://kodoco.jp/",
+    "description": "滋賀168スポット。天気・年齢・時間で1スポットに絞る子連れおでかけ提案アプリ。",
+    "applicationCategory": "TravelApplication",
+    "author": { "@type": "Person", "name": "木下 貴博", "url": "https://tkinoshita99.github.io/" }
+  }
+]
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lucida Console', monospace;
+  font-size: 12px;
+  color: #111;
+  background: white;
+  padding: 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+body.jp { font-family: 'DotGothic16', monospace; }
+
+body.jp pre, body.jp code {
+  font-family: 'Lucida Console', 'Courier New', monospace;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+
+/* LANG TOGGLE */
+.lang-toggle { display: flex; align-items: center; }
+.lang-btn {
+  font-family: 'Lucida Console', monospace; font-size: 11px;
+  background: none; border: 1px solid #ddd; cursor: pointer;
+  color: #aaa; padding: 2px 8px; letter-spacing: 1px;
+}
+.lang-btn:first-child { border-right: none; }
+.lang-btn.active { color: #111; border-color: #111; font-weight: bold; }
+.lang-btn:hover { color: #111; border-color: #111; }
+
+/* NAV */
+.page-nav {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 32px;
+}
+.nav-left { display: flex; flex-direction: column; gap: 8px; }
+.site-label {
+  font-size: 10px; color: #999; letter-spacing: 2px;
+  text-transform: uppercase; font-family: 'Lucida Console', monospace;
+}
+.nav-links { display: flex; gap: 16px; font-size: 12px; flex-wrap: wrap; }
+.nav-links a { color: #555; }
+.nav-links a:hover { color: #111; text-decoration: underline; }
+.nav-links a.active { color: #111; font-weight: bold; }
+
+/* HERO */
+.page-hero { margin-bottom: 40px; }
+.page-hero h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 16px; font-weight: 400;
+  line-height: 1.6; margin-bottom: 12px;
+}
+.page-hero .sub { font-size: 11px; color: #aaa; line-height: 1.8; }
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 10px; color: #999; letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 12px;
+  font-family: 'Lucida Console', monospace;
+}
+
+/* PRODUCT BLOCK */
+.product-block {
+  margin-bottom: 48px;
+}
+
+.product-header {
+  display: flex; align-items: baseline; gap: 16px;
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 1px solid #111;
+}
+
+.product-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.5px; line-height: 1.6;
+}
+
+.product-subtitle {
+  font-size: 11px; color: #999;
+}
+
+.product-since {
+  margin-left: auto;
+  font-size: 10px; color: #ccc; letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.product-body { max-width: 720px; }
+
+.product-headline {
+  font-size: 13px; font-weight: bold;
+  line-height: 1.8; margin-bottom: 12px; color: #111;
+}
+
+.body-text {
+  font-size: 12px; line-height: 2.2; color: #333;
+  margin-bottom: 12px;
+}
+.body-text em { color: #111; font-style: italic; }
+.body-text strong { color: #111; font-weight: bold; }
+
+.product-tags {
+  display: flex; gap: 6px; flex-wrap: wrap; margin: 16px 0;
+}
+.tag-pill {
+  font-family: 'Lucida Console', monospace;
+  font-size: 10px; color: #999; background: #f4f4f4;
+  padding: 2px 7px;
+}
+
+.product-links {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin-top: 12px; font-size: 11px;
+}
+.product-links a {
+  color: #111; border-bottom: 1px solid #ddd;
+  padding-bottom: 2px;
+}
+.product-links a:hover { border-color: #111; text-decoration: none; }
+.product-links a.sub { color: #999; font-size: 10px; }
+.product-links a.sub:hover { color: #555; border-color: #555; }
+
+/* PHILOSOPHY BOX */
+.philosophy {
+  border-left: 2px solid #111;
+  padding: 12px 16px;
+  margin: 16px 0;
+  background: #fafafa;
+}
+.philosophy p {
+  font-size: 12px; line-height: 2; color: #555;
+  font-style: italic;
+}
+.philosophy p strong { color: #111; font-style: normal; }
+
+/* FOOTER */
+footer {
+  margin-top: 48px; padding-top: 20px;
+  border-top: 1px solid #ddd; font-size: 11px;
+  color: #999; font-family: 'Lucida Console', monospace;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+footer a { color: #999; }
+footer a:hover { color: #111; text-decoration: none; }
+
+@media (max-width: 640px) {
+  body { padding: 16px; }
+  .page-hero h1 { font-size: 12px; }
+  .product-header { flex-wrap: wrap; gap: 8px; }
+  .product-since { margin-left: 0; }
+  footer { flex-direction: column; gap: 6px; }
+}
+</style>
+</head>
+<body class="jp" id="body">
+
+<div class="page-nav">
+  <div class="nav-left">
+    <span class="site-label">kinoshita studio</span>
+    <div class="nav-links">
+      <a href="/">← top</a>
+      <a href="/about.html" id="navAbout">about</a>
+      <a href="/products.html" class="active" id="navProducts">products</a>
+      <a href="https://kinoshita.studio/" target="_blank" rel="noopener" id="navStudio">studio →</a>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btnJP" onclick="setLang('jp')">JP</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <h1 id="heroTitle">PRODUCTS</h1>
+  <p class="sub" id="heroSub">依存ゼロ、外注ゼロ。思想から実装・運用まで単独で行う3つのプロダクト。</p>
+</div>
+
+<hr>
+
+<!-- BMBOARD -->
+<div class="product-block" id="bmboard">
+  <div class="product-header">
+    <span class="product-title">BMBoard</span>
+    <span class="product-subtitle" id="bm-sub">Black Mirror Board</span>
+    <span class="product-since">Since 2024</span>
+  </div>
+  <div class="product-body">
+    <p class="product-headline" id="bm-hl">依存ゼロ・HTMLひとつ。デザイナーとエンジニアが同じキャンバスを見る場所。</p>
+    <p class="body-text" id="bm-body1">
+      チームでデザインを共有するとき、「自分が見えているものと相手が見えているものが違う」という問題が繰り返し起きる。ツールが多すぎる。バージョンが合わない。アカウントが必要。リンクが切れる。BMBoard はそれを全部取り除いた。
+    </p>
+    <p class="body-text" id="bm-body2">
+      外部ライブラリに依存しない、<strong>1ファイルで完結するデザイン共有ボード。</strong>ブラウザさえあれば動く。サーバー不要、インストール不要、アカウント不要。依存するものが少ないほど壊れにくい——という思想がそのまま設計になっている。
+    </p>
+    <div class="philosophy">
+      <p id="bm-philosophy"><strong>設計思想：</strong>道具は、使い始めるまでの摩擦が少ないほど良い。HTMLひとつを渡せば、それがそのまま共有ボードになる。</p>
+    </div>
+    <p class="body-text" id="bm-body3">
+      Chrome拡張「BMBrowser」としてブラウザのサイドパネルにも統合。ウェブを見ながら並行してボードを使える。Product Hunt でローンチ済み。
+    </p>
+    <div class="product-tags">
+      <span class="tag-pill">canvas</span>
+      <span class="tag-pill">HTML single-file</span>
+      <span class="tag-pill">zero dependencies</span>
+      <span class="tag-pill">Chrome extension</span>
+      <span class="tag-pill">design tool</span>
+    </div>
+    <div class="product-links">
+      <a href="https://bmboard.studio/" target="_blank" rel="noopener" id="bm-link1">bmboard.studio →</a>
+      <a href="https://bmboard.studio/story.html" target="_blank" rel="noopener" class="sub" id="bm-story">開発ストーリー →</a>
+      <a href="https://kinoshita.studio/story/bmboard.html" target="_blank" rel="noopener" class="sub">kinoshita.studio →</a>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ATELIER -->
+<div class="product-block" id="atelier">
+  <div class="product-header">
+    <span class="product-title">Atelier</span>
+    <span class="product-subtitle" id="at-sub">音楽の中庭</span>
+    <span class="product-since">Since 2025</span>
+  </div>
+  <div class="product-body">
+    <p class="product-headline" id="at-hl">アルゴリズムなし、数字なし。自分だけのコレクションを積み上げる、静かな中庭。</p>
+    <p class="body-text" id="at-body1">
+      ストリーミングサービスは音楽をレコメンドし、SNSは再生回数といいね数で音楽を評価する。気づけば「自分が好きな音楽」より「流れてきた音楽」を聴いている時間の方が長くなっていた。
+    </p>
+    <p class="body-text" id="at-body2">
+      Atelier はその逆を作った。<strong>アルゴリズムなし、数字なし。</strong>再生回数もいいね数も表示されない。ただ自分が好きなものを積み上げるだけの、静かな音楽コレクション空間。音楽体験を「数字の汚染」から解放することが目的だ。
+    </p>
+    <div class="philosophy">
+      <p id="at-philosophy"><strong>設計思想：</strong>コレクションは、比較されるべきではない。積み上げるだけでいい。それだけで十分な場所を作る。</p>
+    </div>
+    <p class="body-text" id="at-body3">
+      Chrome拡張「Atelier Clip」でウェブ上の音楽URLをワンクリックで保存できる。YouTube、SoundCloud、Bandcamp など主要プラットフォームに対応。
+    </p>
+    <div class="product-tags">
+      <span class="tag-pill">music</span>
+      <span class="tag-pill">no-algorithm</span>
+      <span class="tag-pill">collection</span>
+      <span class="tag-pill">Chrome extension</span>
+      <span class="tag-pill">anti-metrics</span>
+    </div>
+    <div class="product-links">
+      <a href="https://atelistudio.com/" target="_blank" rel="noopener" id="at-link1">atelistudio.com →</a>
+      <a href="https://atelistudio.com/story.html" target="_blank" rel="noopener" class="sub" id="at-story">開発ストーリー →</a>
+      <a href="https://kinoshita.studio/story/atelier.html" target="_blank" rel="noopener" class="sub">kinoshita.studio →</a>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- KODOCO -->
+<div class="product-block" id="kodoco">
+  <div class="product-header">
+    <span class="product-title">KODOCO</span>
+    <span class="product-subtitle" id="ko-sub">今日、子どもとどこいく？</span>
+    <span class="product-since">Since 2025</span>
+  </div>
+  <div class="product-body">
+    <p class="product-headline" id="ko-hl">滋賀168スポット。天気・年齢・時間で1スポットに絞る、子連れおでかけ提案アプリ。</p>
+    <p class="body-text" id="ko-body1">
+      「今日どこ行く？」——子どもを持つ親なら毎週末直面する問いだ。検索すると大量のスポットが出てくる。選べない。結局いつもと同じ場所に行く。あるいは何も決まらずに時間が過ぎる。
+    </p>
+    <p class="body-text" id="ko-body2">
+      KODOCO はその決断疲れを解消するために作った。天気・子どもの年齢・使える時間を入力すると、<strong>1スポットだけ提案される。</strong>多すぎる選択肢は選べないのと同じ——という体験設計の思想がそのまま機能になっている。
+    </p>
+    <div class="philosophy">
+      <p id="ko-philosophy"><strong>設計思想：</strong>提案は1つでいい。100個の選択肢より、1つの答えの方が価値がある場合がある。</p>
+    </div>
+    <p class="body-text" id="ko-body3">
+      滋賀県在住者として地元の体験価値を届けることへの関心が起点。滋賀県内168スポットのデータを独自に収集・整理。地域密着型のプロダクト開発の実践でもある。
+    </p>
+    <div class="product-tags">
+      <span class="tag-pill">shiga</span>
+      <span class="tag-pill">family</span>
+      <span class="tag-pill">recommendation</span>
+      <span class="tag-pill">滋賀 子連れ</span>
+      <span class="tag-pill">おでかけ</span>
+    </div>
+    <div class="product-links">
+      <a href="https://kodoco.jp/" target="_blank" rel="noopener" id="ko-link1">kodoco.jp →</a>
+      <a href="https://kodoco.jp/story.html" target="_blank" rel="noopener" class="sub" id="ko-story">開発ストーリー →</a>
+      <a href="https://kinoshita.studio/story/kodoco.html" target="_blank" rel="noopener" class="sub">kinoshita.studio →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>tkinoshita99 — kinoshita studio</span>
+  <span id="footerRight">experience translator &nbsp;|&nbsp; shiga, japan</span>
+</footer>
+
+<script>
+var LANG = 'jp';
+
+var I18N = {
+  heroTitle:   { jp: 'PRODUCTS', en: 'PRODUCTS' },
+  heroSub:     { jp: '依存ゼロ、外注ゼロ。思想から実装・運用まで単独で行う3つのプロダクト。', en: 'Zero dependencies, zero outsourcing. Three products — from concept to production, solo.' },
+  'bm-sub':    { jp: 'Black Mirror Board', en: 'Black Mirror Board' },
+  'bm-hl':     { jp: '依存ゼロ・HTMLひとつ。デザイナーとエンジニアが同じキャンバスを見る場所。', en: 'Zero deps, one HTML file. A shared canvas where designers and engineers see the same thing.' },
+  'bm-body1':  { jp: 'チームでデザインを共有するとき、「自分が見えているものと相手が見えているものが違う」という問題が繰り返し起きる。ツールが多すぎる。バージョンが合わない。アカウントが必要。リンクが切れる。BMBoard はそれを全部取り除いた。', en: 'When sharing designs in a team, the same problem keeps happening: what you see and what they see are different. Too many tools. Version mismatches. Accounts required. Links break. BMBoard removes all of that.' },
+  'bm-body2':  { jp: '外部ライブラリに依存しない、<strong>1ファイルで完結するデザイン共有ボード。</strong>ブラウザさえあれば動く。サーバー不要、インストール不要、アカウント不要。依存するものが少ないほど壊れにくい——という思想がそのまま設計になっている。', en: 'A design sharing board in <strong>a single HTML file with zero external dependencies.</strong> Works in any browser. No server, no install, no account. The design principle: the fewer things you depend on, the less that can break.' },
+  'bm-philosophy': { jp: '<strong>設計思想：</strong>道具は、使い始めるまでの摩擦が少ないほど良い。HTMLひとつを渡せば、それがそのまま共有ボードになる。', en: '<strong>Design principle:</strong> The less friction before starting, the better the tool. Pass one HTML file — that becomes the shared board.' },
+  'bm-body3':  { jp: 'Chrome拡張「BMBrowser」としてブラウザのサイドパネルにも統合。ウェブを見ながら並行してボードを使える。Product Hunt でローンチ済み。', en: 'Also available as a Chrome extension "BMBrowser" — integrated into the browser\'s side panel. Use the board while browsing. Launched on Product Hunt.' },
+  'bm-link1':  { jp: 'bmboard.studio →', en: 'bmboard.studio →' },
+  'bm-story':  { jp: '開発ストーリー →', en: 'dev story →' },
+  'at-sub':    { jp: '音楽の中庭', en: 'A quiet courtyard for music' },
+  'at-hl':     { jp: 'アルゴリズムなし、数字なし。自分だけのコレクションを積み上げる、静かな中庭。', en: 'No algorithm. No numbers. A quiet courtyard for building your own music collection.' },
+  'at-body1':  { jp: 'ストリーミングサービスは音楽をレコメンドし、SNSは再生回数といいね数で音楽を評価する。気づけば「自分が好きな音楽」より「流れてきた音楽」を聴いている時間の方が長くなっていた。', en: 'Streaming services recommend music. Social media ranks it by plays and likes. Before you know it, you\'re listening to what came to you more than what you actually love.' },
+  'at-body2':  { jp: 'Atelier はその逆を作った。<strong>アルゴリズムなし、数字なし。</strong>再生回数もいいね数も表示されない。ただ自分が好きなものを積み上げるだけの、静かな音楽コレクション空間。音楽体験を「数字の汚染」から解放することが目的だ。', en: 'Atelier is the opposite. <strong>No algorithm. No numbers.</strong> No play counts, no likes. Just a quiet space to stack what you love. The purpose is to free music listening from "metric contamination."' },
+  'at-philosophy': { jp: '<strong>設計思想：</strong>コレクションは、比較されるべきではない。積み上げるだけでいい。それだけで十分な場所を作る。', en: '<strong>Design principle:</strong> A collection should not be compared. Just accumulate. Build a place where that is enough.' },
+  'at-body3':  { jp: 'Chrome拡張「Atelier Clip」でウェブ上の音楽URLをワンクリックで保存できる。YouTube、SoundCloud、Bandcamp など主要プラットフォームに対応。', en: 'The "Atelier Clip" Chrome extension saves music URLs from the web in one click. Supports YouTube, SoundCloud, Bandcamp, and more.' },
+  'at-link1':  { jp: 'atelistudio.com →', en: 'atelistudio.com →' },
+  'at-story':  { jp: '開発ストーリー →', en: 'dev story →' },
+  'ko-sub':    { jp: '今日、子どもとどこいく？', en: 'Where to go with kids today?' },
+  'ko-hl':     { jp: '滋賀168スポット。天気・年齢・時間で1スポットに絞る、子連れおでかけ提案アプリ。', en: '168 spots in Shiga. Filter by weather, age, and time — down to exactly one recommendation.' },
+  'ko-body1':  { jp: '「今日どこ行く？」——子どもを持つ親なら毎週末直面する問いだ。検索すると大量のスポットが出てくる。選べない。結局いつもと同じ場所に行く。あるいは何も決まらずに時間が過ぎる。', en: '"Where should we go today?" — a question every parent faces every weekend. Search and you get hundreds of spots. Too many to choose. You end up going somewhere familiar. Or nowhere at all.' },
+  'ko-body2':  { jp: 'KODOCO はその決断疲れを解消するために作った。天気・子どもの年齢・使える時間を入力すると、<strong>1スポットだけ提案される。</strong>多すぎる選択肢は選べないのと同じ——という体験設計の思想がそのまま機能になっている。', en: 'KODOCO was built to solve that decision fatigue. Enter weather, child\'s age, and available time — <strong>you get exactly one recommendation.</strong> Too many choices is the same as no choice — that UX principle is the product.' },
+  'ko-philosophy': { jp: '<strong>設計思想：</strong>提案は1つでいい。100個の選択肢より、1つの答えの方が価値がある場合がある。', en: '<strong>Design principle:</strong> One recommendation is enough. Sometimes one answer is more valuable than a hundred options.' },
+  'ko-body3':  { jp: '滋賀県在住者として地元の体験価値を届けることへの関心が起点。滋賀県内168スポットのデータを独自に収集・整理。地域密着型のプロダクト開発の実践でもある。', en: 'Started from a desire to surface the value of Shiga as a local resident. 168 spots across Shiga Prefecture — independently collected and curated. Also a practice in locally-rooted product development.' },
+  'ko-link1':  { jp: 'kodoco.jp →', en: 'kodoco.jp →' },
+  'ko-story':  { jp: '開発ストーリー →', en: 'dev story →' },
+  navAbout:    { jp: 'about', en: 'about' },
+  navProducts: { jp: 'products', en: 'products' },
+  navStudio:   { jp: 'studio →', en: 'studio →' },
+  footerRight: { jp: 'experience translator &nbsp;|&nbsp; shiga, japan', en: 'experience translator &nbsp;|&nbsp; shiga, japan' }
+};
+
+function setLang(lang) {
+  LANG = lang;
+  document.getElementById('body').className = lang === 'jp' ? 'jp' : '';
+  document.getElementById('btnJP').classList.toggle('active', lang === 'jp');
+  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  Object.keys(I18N).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var val = I18N[id][lang];
+    if (val !== undefined) el.innerHTML = val;
+  });
+}
+</script>
+</body>
+</html>
