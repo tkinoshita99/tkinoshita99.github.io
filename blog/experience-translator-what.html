@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>体験翻訳家とは何か — 木下 貴博 / Takahiro Kinoshita</title>
+<meta name="description" content="届けたい体験と届いている体験の間には必ずズレがある。そのズレを発見し翻訳することが仕事の本質。木下貴博・体験翻訳家・滋賀・木下スタジオ。">
+<meta name="keywords" content="木下貴博,体験翻訳,UXデザイン,木下スタジオ,kinoshita studio,滋賀,琵琶湖,個人開発">
+<meta property="og:title" content="体験翻訳家とは何か — 木下 貴博">
+<meta property="og:description" content="届けたい体験と届いている体験の間には必ずズレがある。そのズレを発見し翻訳することが仕事の本質。木下貴博・体験翻訳家・滋賀・木下スタジオ。">
+<meta property="og:image" content="https://tkinoshita99.github.io/img/ogp_photo_B.png">
+<meta property="og:url" content="https://tkinoshita99.github.io/blog/experience-translator-what.html">
+<link rel="canonical" href="https://tkinoshita99.github.io/blog/experience-translator-what.html">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lucida Console', monospace; font-size: 12px; color: #111; background: white; padding: 32px; max-width: 860px; margin: 0 auto; }
+body.jp { font-family: 'DotGothic16', monospace; }
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+.lang-toggle { display: flex; align-items: center; }
+.lang-btn { font-family: 'Lucida Console', monospace; font-size: 11px; background: none; border: 1px solid #ddd; cursor: pointer; color: #aaa; padding: 2px 8px; letter-spacing: 1px; }
+.lang-btn:first-child { border-right: none; }
+.lang-btn.active { color: #111; border-color: #111; font-weight: bold; }
+.page-nav { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+.nav-left { display: flex; flex-direction: column; gap: 8px; }
+.site-label { font-size: 10px; color: #999; letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 16px; font-size: 12px; flex-wrap: wrap; }
+.nav-links a { color: #555; }
+.nav-links a:hover { color: #111; text-decoration: underline; }
+.post-header { margin-bottom: 32px; }
+.post-date { font-size: 10px; color: #aaa; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+.post-title { font-family: 'Press Start 2P', monospace; font-size: 13px; font-weight: 400; line-height: 1.8; margin-bottom: 12px; }
+.post-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag-pill { font-family: 'Lucida Console', monospace; font-size: 10px; color: #999; background: #f4f4f4; padding: 1px 6px; }
+.post-body { font-size: 12px; line-height: 2.4; color: #333; }
+.post-body p { margin-bottom: 20px; }
+.post-body h2 { font-family: 'Press Start 2P', monospace; font-size: 10px; font-weight: 400; line-height: 1.8; margin: 32px 0 16px; color: #111; }
+.post-body em { color: #111; font-style: italic; }
+.post-body strong { color: #111; font-weight: bold; }
+.post-nav { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; display: flex; justify-content: space-between; font-size: 11px; }
+.post-nav a { color: #555; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+.post-nav a:hover { color: #111; border-color: #111; text-decoration: none; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 11px; color: #999; font-family: 'Lucida Console', monospace; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+footer a { color: #999; }
+footer a:hover { color: #111; text-decoration: none; }
+@media (max-width: 640px) { body { padding: 16px; } .post-title { font-size: 10px; } footer { flex-direction: column; gap: 6px; } }
+</style>
+</head>
+<body class="jp">
+<div class="page-nav">
+  <div class="nav-left">
+    <span class="site-label">kinoshita studio</span>
+    <div class="nav-links">
+      <a href="/">← top</a>
+      <a href="/blog/">blog</a>
+      <a href="/about.html">about</a>
+      <a href="https://kinoshita.studio/" target="_blank" rel="noopener">kinoshita studio →</a>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btnJP" onclick="setLang('jp')">JP</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+<article>
+  <div class="post-header">
+    <span class="post-date">2026-06-01</span>
+    <h1 class="post-title" id="postTitle">体験翻訳家とは何か</h1>
+    <div class="post-tags"><span class="tag-pill">体験翻訳</span><span class="tag-pill">UXデザイン</span><span class="tag-pill">思想</span></div>
+  </div>
+  <hr>
+  <div class="post-body" id="postBody">
+    <p>届けたい体験と、届いている体験のあいだには、<em>必ずズレがある。</em></p>
+    <p>これは失敗ではない。翻訳の問題だ。</p>
+    <h2>ズレはなぜ生まれるか</h2>
+    <p>ブランドが「こう感じてほしい」と意図した体験と、ユーザーが実際に「こう感じた」体験は、ほぼ一致しない。デザインが丁寧でも、コピーが巧みでも、体験の着地点はつくり手の意図から離れていく。</p>
+    <p>その理由は単純だ。<strong>送り手の文脈と受け手の文脈は、根本的に違う。</strong>どんなに丁寧に設計しても、その文脈の差は自動的に埋まらない。</p>
+    <h2>翻訳家の仕事</h2>
+    <p>体験翻訳家の仕事は、そのズレを発見し、言語化し、設計し直すことだ。UXデザイン・ブランド体験設計・プロダクト開発・音楽制作——これらはすべて、異なる媒体を通じた翻訳の実践として繋がっている。</p>
+    <p>Sound、Visual、Design という3つの言語を使って、体験を翻訳する。それが私の仕事であり、探求だ。</p>
+    <h2>滋賀・琵琶湖畔から</h2>
+    <p>滋賀県・琵琶湖畔という場所で、日々の沈黙の中からそのズレを見つけ続けている。<a href="https://kinoshita.studio/" target="_blank" rel="noopener">木下スタジオ（kinoshita studio）</a>として、体験設計・UXデザインの仕事を受けている。</p>
+  </div>
+</article>
+<div class="post-nav">
+  <a href="/blog/">← blog一覧</a>
+  <a href="/about.html">about →</a>
+</div>
+<footer>
+  <span>© 2026 木下 貴博 / Takahiro Kinoshita — <a href="https://kinoshita.studio/" target="_blank" rel="noopener">木下スタジオ</a></span>
+  <span>体験翻訳家 &nbsp;|&nbsp; 木下スタジオ &nbsp;|&nbsp; 滋賀・琵琶湖 &nbsp;|&nbsp; UXデザイン &nbsp;|&nbsp; 個人開発</span>
+</footer>
+<script>
+var BODY_JP = `    <p>届けたい体験と、届いている体験のあいだには、<em>必ずズレがある。</em></p>
+    <p>これは失敗ではない。翻訳の問題だ。</p>
+    <h2>ズレはなぜ生まれるか</h2>
+    <p>ブランドが「こう感じてほしい」と意図した体験と、ユーザーが実際に「こう感じた」体験は、ほぼ一致しない。デザインが丁寧でも、コピーが巧みでも、体験の着地点はつくり手の意図から離れていく。</p>
+    <p>その理由は単純だ。<strong>送り手の文脈と受け手の文脈は、根本的に違う。</strong>どんなに丁寧に設計しても、その文脈の差は自動的に埋まらない。</p>
+    <h2>翻訳家の仕事</h2>
+    <p>体験翻訳家の仕事は、そのズレを発見し、言語化し、設計し直すことだ。UXデザイン・ブランド体験設計・プロダクト開発・音楽制作——これらはすべて、異なる媒体を通じた翻訳の実践として繋がっている。</p>
+    <p>Sound、Visual、Design という3つの言語を使って、体験を翻訳する。それが私の仕事であり、探求だ。</p>
+    <h2>滋賀・琵琶湖畔から</h2>
+    <p>滋賀県・琵琶湖畔という場所で、日々の沈黙の中からそのズレを見つけ続けている。<a href="https://kinoshita.studio/" target="_blank" rel="noopener">木下スタジオ（kinoshita studio）</a>として、体験設計・UXデザインの仕事を受けている。</p>`;
+var BODY_EN = `    <p>There is always a gap between the experience you intend to deliver and the experience that is actually received.</p>
+    <p>This is not a failure. It is a translation problem.</p>
+    <h2>Why the gap exists</h2>
+    <p>What a brand means to feel, and what users actually feel — they almost never align. No matter how careful the design or how clever the copy, the landing point of an experience drifts from the creator's intent.</p>
+    <p>The reason is simple: <strong>the sender's context and the receiver's context are fundamentally different.</strong> That gap does not close automatically, no matter how careful the design.</p>
+    <h2>The translator's work</h2>
+    <p>The job of an Experience Translator is to find that gap, articulate it, and redesign the experience. UX design, brand experience design, product development, music production — all connected as forms of translation through different media.</p>
+    <p>Translating experience through three languages: Sound, Visual, and Design. That is my work and my ongoing inquiry.</p>`;
+var TITLE_JP = `体験翻訳家とは何か`;
+var TITLE_EN = `What is an Experience Translator?`;
+function setLang(lang) {
+  document.querySelector('body').className = lang === 'jp' ? 'jp' : '';
+  document.getElementById('btnJP').classList.toggle('active', lang === 'jp');
+  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('postTitle').innerHTML = lang === 'jp' ? TITLE_JP : TITLE_EN;
+  document.getElementById('postBody').innerHTML = lang === 'jp' ? BODY_JP : BODY_EN;
+}
+</script>
+</body>
+</html>

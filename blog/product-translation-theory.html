@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プロダクト翻訳論——なぜ「良いもの」は伝わらないのか — 木下 貴博 / Takahiro Kinoshita</title>
+<meta name="description" content="良いプロダクトが伝わらない理由は品質の問題ではなく翻訳の問題だ。作ること・伝えること・届けることは別の技術を必要とする。木下貴博・木下スタジオ。">
+<meta name="keywords" content="木下貴博,体験翻訳,UXデザイン,木下スタジオ,kinoshita studio,滋賀,琵琶湖,個人開発">
+<meta property="og:title" content="プロダクト翻訳論——なぜ「良いもの」は伝わらないのか — 木下 貴博">
+<meta property="og:description" content="良いプロダクトが伝わらない理由は品質の問題ではなく翻訳の問題だ。作ること・伝えること・届けることは別の技術を必要とする。木下貴博・木下スタジオ。">
+<meta property="og:image" content="https://tkinoshita99.github.io/img/ogp_photo_B.png">
+<meta property="og:url" content="https://tkinoshita99.github.io/blog/product-translation-theory.html">
+<link rel="canonical" href="https://tkinoshita99.github.io/blog/product-translation-theory.html">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lucida Console', monospace; font-size: 12px; color: #111; background: white; padding: 32px; max-width: 860px; margin: 0 auto; }
+body.jp { font-family: 'DotGothic16', monospace; }
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+.lang-toggle { display: flex; align-items: center; }
+.lang-btn { font-family: 'Lucida Console', monospace; font-size: 11px; background: none; border: 1px solid #ddd; cursor: pointer; color: #aaa; padding: 2px 8px; letter-spacing: 1px; }
+.lang-btn:first-child { border-right: none; }
+.lang-btn.active { color: #111; border-color: #111; font-weight: bold; }
+.page-nav { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+.nav-left { display: flex; flex-direction: column; gap: 8px; }
+.site-label { font-size: 10px; color: #999; letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 16px; font-size: 12px; flex-wrap: wrap; }
+.nav-links a { color: #555; }
+.nav-links a:hover { color: #111; text-decoration: underline; }
+.post-header { margin-bottom: 32px; }
+.post-date { font-size: 10px; color: #aaa; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+.post-title { font-family: 'Press Start 2P', monospace; font-size: 13px; font-weight: 400; line-height: 1.8; margin-bottom: 12px; }
+.post-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag-pill { font-family: 'Lucida Console', monospace; font-size: 10px; color: #999; background: #f4f4f4; padding: 1px 6px; }
+.post-body { font-size: 12px; line-height: 2.4; color: #333; }
+.post-body p { margin-bottom: 20px; }
+.post-body h2 { font-family: 'Press Start 2P', monospace; font-size: 10px; font-weight: 400; line-height: 1.8; margin: 32px 0 16px; color: #111; }
+.post-body em { color: #111; font-style: italic; }
+.post-body strong { color: #111; font-weight: bold; }
+.post-nav { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; display: flex; justify-content: space-between; font-size: 11px; }
+.post-nav a { color: #555; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+.post-nav a:hover { color: #111; border-color: #111; text-decoration: none; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 11px; color: #999; font-family: 'Lucida Console', monospace; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+footer a { color: #999; }
+footer a:hover { color: #111; text-decoration: none; }
+@media (max-width: 640px) { body { padding: 16px; } .post-title { font-size: 10px; } footer { flex-direction: column; gap: 6px; } }
+</style>
+</head>
+<body class="jp">
+<div class="page-nav">
+  <div class="nav-left">
+    <span class="site-label">kinoshita studio</span>
+    <div class="nav-links">
+      <a href="/">← top</a>
+      <a href="/blog/">blog</a>
+      <a href="/about.html">about</a>
+      <a href="https://kinoshita.studio/" target="_blank" rel="noopener">kinoshita studio →</a>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btnJP" onclick="setLang('jp')">JP</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+<article>
+  <div class="post-header">
+    <span class="post-date">2026-06-01</span>
+    <h1 class="post-title" id="postTitle">プロダクト翻訳論——なぜ「良いもの」は伝わらないのか</h1>
+    <div class="post-tags"><span class="tag-pill">プロダクト開発</span><span class="tag-pill">体験翻訳</span><span class="tag-pill">木下スタジオ</span></div>
+  </div>
+  <hr>
+  <div class="post-body" id="postBody">
+    <p>良いプロダクトが伝わらない。この現象を何度も目撃してきた。</p>
+    <h2>作ることと伝えることは別の技術だ</h2>
+    <p>プロダクトの品質と、それが伝わるかどうかは、別の問題だ。優れた機能を持ちながら誰にも使われないプロダクトがある。逆に、機能的には平凡でも広く使われるプロダクトがある。</p>
+    <p>この差を「マーケティングの問題」と片付けることができる。だが私はそう思わない。<strong>これは翻訳の問題だ。</strong></p>
+    <h2>3つの翻訳</h2>
+    <p>プロダクトには3つの翻訳が必要だと思っている。</p>
+    <p>ひとつ目は、<strong>思想からプロダクトへの翻訳</strong>。「こういう体験を届けたい」という意図を、機能・UI・UXとして実装する。</p>
+    <p>ふたつ目は、<strong>プロダクトから言葉への翻訳</strong>。作ったものが何者で、誰の何を解決するのかを言語化する。</p>
+    <p>みっつ目は、<strong>言葉から体験への翻訳</strong>。ユーザーが実際に触れたとき、意図した体験が着地するように設計する。</p>
+    <h2>BMBoard・Atelier・KODOCO で実践してきたこと</h2>
+    <p><a href="https://bmboard.studio/" target="_blank" rel="noopener">BMBoard</a>・<a href="https://atelistudio.com/" target="_blank" rel="noopener">Atelier</a>・<a href="https://kodoco.jp/" target="_blank" rel="noopener">KODOCO</a>を単独で開発・運用しながら、この3つの翻訳を同時にやり続けている。うまくいかないことの方が多い。それでも続けるのは、翻訳の精度が上がるたびに、プロダクトと人の関係が変わるのを実感できるからだ。</p>
+  </div>
+</article>
+<div class="post-nav">
+  <a href="/blog/">← blog一覧</a>
+  <a href="/about.html">about →</a>
+</div>
+<footer>
+  <span>© 2026 木下 貴博 / Takahiro Kinoshita — <a href="https://kinoshita.studio/" target="_blank" rel="noopener">木下スタジオ</a></span>
+  <span>体験翻訳家 &nbsp;|&nbsp; 木下スタジオ &nbsp;|&nbsp; 滋賀・琵琶湖 &nbsp;|&nbsp; UXデザイン &nbsp;|&nbsp; 個人開発</span>
+</footer>
+<script>
+var BODY_JP = `    <p>良いプロダクトが伝わらない。この現象を何度も目撃してきた。</p>
+    <h2>作ることと伝えることは別の技術だ</h2>
+    <p>プロダクトの品質と、それが伝わるかどうかは、別の問題だ。優れた機能を持ちながら誰にも使われないプロダクトがある。逆に、機能的には平凡でも広く使われるプロダクトがある。</p>
+    <p>この差を「マーケティングの問題」と片付けることができる。だが私はそう思わない。<strong>これは翻訳の問題だ。</strong></p>
+    <h2>3つの翻訳</h2>
+    <p>プロダクトには3つの翻訳が必要だと思っている。</p>
+    <p>ひとつ目は、<strong>思想からプロダクトへの翻訳</strong>。「こういう体験を届けたい」という意図を、機能・UI・UXとして実装する。</p>
+    <p>ふたつ目は、<strong>プロダクトから言葉への翻訳</strong>。作ったものが何者で、誰の何を解決するのかを言語化する。</p>
+    <p>みっつ目は、<strong>言葉から体験への翻訳</strong>。ユーザーが実際に触れたとき、意図した体験が着地するように設計する。</p>
+    <h2>BMBoard・Atelier・KODOCO で実践してきたこと</h2>
+    <p><a href="https://bmboard.studio/" target="_blank" rel="noopener">BMBoard</a>・<a href="https://atelistudio.com/" target="_blank" rel="noopener">Atelier</a>・<a href="https://kodoco.jp/" target="_blank" rel="noopener">KODOCO</a>を単独で開発・運用しながら、この3つの翻訳を同時にやり続けている。うまくいかないことの方が多い。それでも続けるのは、翻訳の精度が上がるたびに、プロダクトと人の関係が変わるのを実感できるからだ。</p>`;
+var BODY_EN = `    <p>Good products fail to communicate. I have witnessed this phenomenon many times.</p>
+    <h2>Making and communicating are different skills</h2>
+    <p>The quality of a product and whether it reaches people are separate problems. Some products with excellent features go unused. Others with mediocre features spread widely.</p>
+    <p>This could be dismissed as a marketing problem. I do not think so. <strong>It is a translation problem.</strong></p>
+    <h2>Three translations</h2>
+    <p>I believe every product requires three translations.</p>
+    <p>First: <strong>from vision to product</strong>. Implementing the intended experience as features, UI, and UX.</p>
+    <p>Second: <strong>from product to words</strong>. Articulating what the thing is, for whom, solving what.</p>
+    <p>Third: <strong>from words to experience</strong>. Designing so the intended experience actually lands when users touch it.</p>`;
+var TITLE_JP = `プロダクト翻訳論——なぜ「良いもの」は伝わらないのか`;
+var TITLE_EN = `Product Translation Theory — Why Good Products Fail to Communicate`;
+function setLang(lang) {
+  document.querySelector('body').className = lang === 'jp' ? 'jp' : '';
+  document.getElementById('btnJP').classList.toggle('active', lang === 'jp');
+  document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+  document.getElementById('postTitle').innerHTML = lang === 'jp' ? TITLE_JP : TITLE_EN;
+  document.getElementById('postBody').innerHTML = lang === 'jp' ? BODY_JP : BODY_EN;
+}
+</script>
+</body>
+</html>
