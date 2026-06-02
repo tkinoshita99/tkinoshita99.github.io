@@ -194,6 +194,25 @@ hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
 }
 .philosophy p strong { color: #111; font-style: normal; }
 
+/* PRODUCT IMAGE */
+.product-img {
+  margin-top: 16px; max-width: 100%; border: 1px solid #eee;
+  display: block; max-height: 320px; object-fit: cover;
+}
+.product-icon {
+  width: 48px; height: 48px; object-fit: contain;
+  margin-bottom: 8px; display: block;
+}
+
+/* RELATED */
+.related-block {
+  margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;
+}
+.related-label { font-size: 10px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.related-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11px; }
+.related-links a { color: #555; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+.related-links a:hover { color: #111; border-color: #111; text-decoration: none; }
+
 /* FOOTER */
 footer {
   margin-top: 48px; padding-top: 20px;
@@ -276,6 +295,8 @@ footer a:hover { color: #111; text-decoration: none; }
       <a href="https://bmboard.studio/story.html" target="_blank" rel="noopener" class="sub" id="bm-story">開発ストーリー →</a>
       <a href="https://kinoshita.studio/story/bmboard.html" target="_blank" rel="noopener" class="sub">kinoshita.studio →</a>
     </div>
+    <img src="img/bm-icon.png" alt="BMBoard — Black Mirror Board デザイン共有ボード" class="product-img" style="max-width:120px;max-height:120px;object-fit:contain;border:none;margin-top:12px;">
+    <img src="img/bmboard-screenshot.png" alt="BMBoard スクリーンショット — ブラウザで動くデザイン共有キャンバス" class="product-img" onerror="this.style.display='none'">
   </div>
 </div>
 
@@ -314,6 +335,7 @@ footer a:hover { color: #111; text-decoration: none; }
       <a href="https://atelistudio.com/story.html" target="_blank" rel="noopener" class="sub" id="at-story">開発ストーリー →</a>
       <a href="https://kinoshita.studio/story/atelier.html" target="_blank" rel="noopener" class="sub">kinoshita.studio →</a>
     </div>
+    <img src="img/atelier-screenshot.png" alt="Atelier スクリーンショット — アルゴリズムなし数字なしの音楽コレクションアプリ" class="product-img" onerror="this.style.display='none'">
   </div>
 </div>
 
@@ -352,6 +374,18 @@ footer a:hover { color: #111; text-decoration: none; }
       <a href="https://kodoco.jp/story.html" target="_blank" rel="noopener" class="sub" id="ko-story">開発ストーリー →</a>
       <a href="https://kinoshita.studio/story/kodoco.html" target="_blank" rel="noopener" class="sub">kinoshita.studio →</a>
     </div>
+    <img src="img/kodoco-screenshot.png" alt="KODOCO スクリーンショット — 滋賀子連れおでかけ提案アプリ" class="product-img" onerror="this.style.display='none'">
+  </div>
+</div>
+
+<!-- RELATED -->
+<div class="related-block">
+  <div class="related-label">related</div>
+  <div class="related-links">
+    <a href="/about.html">体験翻訳家について →</a>
+    <a href="/blog/solo-product-dev.html">ひとりで作り続けること →</a>
+    <a href="/blog/product-translation-theory.html">プロダクト翻訳論 →</a>
+    <a href="https://kinoshita.studio/" target="_blank" rel="noopener">木下スタジオ →</a>
   </div>
 </div>
 
