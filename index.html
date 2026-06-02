@@ -1,960 +1,648 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" id="htmlRoot">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>木下 貴博 / Takahiro Kinoshita — Experience Translator · 滋賀</title>
-  <meta name="description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。滋賀県を拠点に活動するUX/UIデザイナー・体験翻訳家・プロダクト開発者。BMBoard・Atelier・KODOCOを個人開発。木下貴博のポートフォリオ。">
-  <meta name="keywords" content="木下貴博,Takahiro Kinoshita,体験翻訳家,UXデザイン,滋賀 デザイナー,BMBoard,Atelier,KODOCO,木下スタジオ,kinoshita studio,琵琶湖,個人開発,99LETTERS">
-  <meta property="og:title" content="木下 貴博 / Takahiro Kinoshita — Experience Translator">
-  <meta property="og:description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。滋賀県を拠点に活動するUX/UIデザイナー・体験翻訳家。BMBoard・Atelier・KODOCOを個人開発。">
-  <meta property="og:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
-  <meta property="og:url" content="https://tkinoshita99.github.io/">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
-  <meta name="twitter:title" content="木下 貴博 / Takahiro Kinoshita — Experience Translator">
-  <meta name="twitter:description" content="届けたい体験と、届いている体験の間のズレを発見し、揃える。滋賀 / UXデザイナー / 体験翻訳家 / 個人開発者。">
-  <link rel="canonical" href="https://tkinoshita99.github.io/">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="192x192" href="favicon192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "木下 貴博",
-    "alternateName": "Takahiro Kinoshita",
-    "url": "https://tkinoshita99.github.io/",
-    "image": "https://tkinoshita99.github.io/ogp_photo_B.png",
-    "jobTitle": "体験翻訳家 / UX Designer & Developer",
-    "description": "届けたい体験と、届いている体験の間のズレを発見し、揃える。滋賀県を拠点に活動するUX/UIデザイナー・体験翻訳家・プロダクト開発者。",
-    "address": {
-      "@type": "PostalAddress",
-      "addressRegion": "滋賀県",
-      "addressLocality": "滋賀",
-      "addressCountry": "JP"
-    },
-    "worksFor": {
-      "@type": "Organization",
-      "name": "kinoshita studio",
-      "alternateName": "木下スタジオ",
-      "url": "https://kinoshita.studio/"
-    },
-    "sameAs": [
-      "https://kinoshita.studio/",
-      "https://bmboard.studio/",
-      "https://atelistudio.com/",
-      "https://kodoco.jp/",
-      "https://instagram.com/tkinoshita99",
-      "https://instagram.com/99letters"
-    ]
-  }
-  </script>
-
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --black: #ffffff;
-      --white: #0f0f0f;
-      --gray: #999;
-      --light-gray: #ddd;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      overflow-x: hidden;
-      cursor: crosshair;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.3;
-    }
-
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      padding: 2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      z-index: 100;
-    }
-
-    nav .logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--white);
-      text-transform: uppercase;
-      line-height: 1.6;
-    }
-
-    nav .nav-links {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.3rem;
-    }
-
-    nav .nav-links a {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      color: var(--gray);
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-
-    nav .nav-links a:hover { color: #111; }
-
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 8rem 3rem 4rem;
-      border-right: 1px solid #e0e0e0;
-    }
-
-    .hero-index {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--gray);
-      letter-spacing: 0.2em;
-      margin-bottom: 3rem;
-    }
-
-    .hero-name {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 1.2s ease forwards 0.3s;
-    }
-
-    .hero-name-en {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-      color: var(--gray);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 4rem;
-      opacity: 0;
-      animation: fadeUp 1.2s ease forwards 0.5s;
-    }
-
-    .hero-statement {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(0.65rem, 1vw, 0.8rem);
-      line-height: 2;
-      color: var(--gray);
-      font-style: italic;
-      max-width: 320px;
-      opacity: 0;
-      animation: fadeUp 1.2s ease forwards 0.7s;
-    }
-
-    .hero-statement em { color: var(--white); font-style: normal; }
-
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-end;
-      padding: 8rem 3rem 4rem;
-      position: relative;
-    }
-
-    .hero-large-text {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(4rem, 10vw, 9rem);
-      font-weight: normal;
-      line-height: 0.9;
-      color: #ebebeb;
-      text-align: right;
-      user-select: none;
-      position: absolute;
-      right: -0.05em;
-      bottom: 3rem;
-      letter-spacing: -0.05em;
-    }
-
-    .hero-tags {
-      position: absolute;
-      top: 50%;
-      left: 3rem;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      opacity: 0;
-      animation: fadeUp 1.2s ease forwards 0.9s;
-    }
-
-    .tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gray);
-      border: 1px solid #ddd;
-      padding: 0.4rem 0.8rem;
-      display: inline-block;
-      width: fit-content;
-      text-decoration: none;
-      transition: color 0.3s, border-color 0.3s, background 0.3s;
-    }
-    .tag:hover { color: #1a1a1a; border-color: #1a1a1a; background: rgba(0,0,0,0.04); }
-
-    .divider { width: 100%; height: 1px; background: #e0e0e0; }
-
-    section {
-      padding: 6rem 3rem;
-      border-bottom: 1px solid #e0e0e0;
-    }
-
-    .section-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.3em;
-      color: var(--gray);
-      text-transform: uppercase;
-      margin-bottom: 4rem;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #e0e0e0;
-    }
-
-    /* WHAT I DO */
-    .what-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-
-    .what-item {
-      padding: 3rem;
-      border-right: 1px solid #e0e0e0;
-      border-bottom: 1px solid #e0e0e0;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s;
-    }
-
-    .what-item:nth-child(even) { border-right: none; }
-    .what-item:nth-child(n+3) { border-bottom: none; }
-    .what-item:hover { background: #ebebeb; }
-
-    .what-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      color: #aaa;
-      letter-spacing: 0.2em;
-      margin-bottom: 2rem;
-    }
-
-    .what-title-jp {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: 1.4rem;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.3rem;
-    }
-
-    .what-title-en {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--gray);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .what-desc {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--gray);
-      line-height: 2;
-      font-style: italic;
-    }
-
-    .what-link {
-      display: inline-block;
-      margin-top: 1.5rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      color: var(--gray);
-      text-decoration: none;
-      letter-spacing: 0.15em;
-      border-bottom: 1px solid #bbb;
-      padding-bottom: 0.2rem;
-      transition: color 0.3s, border-color 0.3s;
-    }
-    .what-link:hover { color: #000; border-color: #000; }
-
-    /* HERO BUTTONS */
-    .hero-btns {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2.5rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 1.2s ease forwards 0.9s;
-    }
-
-    .hero-btn {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 0.75rem 1.5rem;
-      transition: background 0.3s, color 0.3s, border-color 0.3s;
-      display: inline-block;
-      white-space: nowrap;
-    }
-
-    .hero-btn-primary { color: #fff; background: #0f0f0f; border: 1px solid #0f0f0f; }
-    .hero-btn-primary:hover { background: transparent; color: #0f0f0f; }
-    .hero-btn-secondary { color: #0f0f0f; background: transparent; border: 1px solid #d0d0d0; }
-    .hero-btn-secondary:hover { border-color: #0f0f0f; }
-    .hero-btn-tertiary { color: #999; background: transparent; border: 1px solid transparent; padding-left: 0; }
-    .hero-btn-tertiary:hover { color: #0f0f0f; }
-
-    /* PRODUCTS */
-    .products-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0;
-    }
-
-    .product-item {
-      padding: 3rem;
-      border-right: 1px solid #e0e0e0;
-      transition: background 0.4s;
-    }
-    .product-item:last-child { border-right: none; }
-    .product-item:hover { background: #ebebeb; }
-
-    .product-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      color: #aaa;
-      letter-spacing: 0.2em;
-      margin-bottom: 2rem;
-    }
-
-    .product-name {
-      font-family: 'Space Mono', monospace;
-      font-size: 1rem;
-      letter-spacing: 0.15em;
-      margin-bottom: 0.3rem;
-      color: var(--white);
-    }
-
-    .product-sub {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: 0.75rem;
-      color: var(--gray);
-      margin-bottom: 1.5rem;
-      line-height: 1.8;
-    }
-
-    .product-desc {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: var(--gray);
-      line-height: 2;
-      font-style: italic;
-      margin-bottom: 2rem;
-    }
-
-    .product-links { display: flex; flex-direction: column; gap: 0.5rem; }
-
-    .product-link {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      color: var(--gray);
-      text-decoration: none;
-      letter-spacing: 0.15em;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 0.2rem;
-      width: fit-content;
-      transition: color 0.3s, border-color 0.3s;
-    }
-    .product-link:hover { color: #000; border-color: #000; }
-    .product-link.story { color: #bbb; font-size: 0.52rem; }
-    .product-link.story:hover { color: #555; }
-
-    /* INSTAGRAM GRID */
-    .ig-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin-top: 0;
-    }
-    .ig-grid blockquote { min-width: 0 !important; max-width: 100% !important; width: 100% !important; }
-    @media (max-width: 600px) { .ig-grid { grid-template-columns: 1fr; } }
-
-    /* BIWAKO SILENCE */
-    .biwako-section { display: grid; grid-template-columns: 1fr 2fr; gap: 0; }
-    .biwako-left { padding-right: 4rem; border-right: 1px solid #e0e0e0; }
-    .biwako-right { padding-left: 4rem; }
-
-    .biwako-statement {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: clamp(1.5rem, 3vw, 2.5rem);
-      line-height: 1.6;
-      letter-spacing: 0.05em;
-      margin-bottom: 3rem;
-    }
-
-    .biwako-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--gray);
-      line-height: 2.2;
-      font-style: italic;
-      margin-bottom: 2rem;
-    }
-
-    .biwako-data { display: flex; flex-direction: column; gap: 1rem; margin-top: 3rem; }
-
-    .data-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 0.8rem;
-    }
-
-    .data-key {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      color: var(--gray);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .data-val {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--white);
-      letter-spacing: 0.1em;
-    }
-
-    /* SILENT CARRY */
-    .sc-section { background: #f7f7f7; }
-
-    .sc-inner { display: grid; grid-template-columns: 2fr 1fr; gap: 6rem; align-items: end; }
-
-    .sc-title-logo { width: 280px; max-width: 100%; margin-bottom: 2rem; display: block; }
-
-    .sc-sub {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: 1rem;
-      color: var(--gray);
-      line-height: 2;
-      margin-bottom: 3rem;
-      letter-spacing: 0.05em;
-    }
-
-    .sc-philosophy {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: #aaa;
-      line-height: 2.5;
-      font-style: italic;
-      border-left: 1px solid #e0e0e0;
-      padding-left: 2rem;
-    }
-
-    .sc-cta {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #555;
-      text-decoration: none;
-      border-bottom: 1px solid #bbb;
-      padding-bottom: 0.25rem;
-      transition: color 0.3s, border-color 0.3s;
-    }
-    .sc-cta:hover { color: #111; border-color: #111; }
-
-    /* IDENTITY */
-    .identity-section {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      margin-top: 4rem;
-    }
-
-    .identity-block {
-      padding: 2rem 3rem 2rem 0;
-      border-right: 1px solid #e0e0e0;
-      margin-right: 3rem;
-    }
-    .identity-block:last-child { border-right: none; margin-right: 0; }
-
-    .identity-num {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.52rem;
-      color: #ccc;
-      letter-spacing: 0.2em;
-      display: block;
-      margin-bottom: 1rem;
-    }
-
-    .identity-key {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #aaa;
-      margin-bottom: 1rem;
-    }
-
-    .identity-val {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: 0.85rem;
-      color: var(--white);
-      line-height: 2;
-    }
-
-    /* CONTACT */
-    .contact-section { text-align: center; padding: 8rem 3rem; }
-
-    .contact-pre {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.3em;
-      color: var(--gray);
-      text-transform: uppercase;
-      margin-bottom: 3rem;
-    }
-
-    .contact-statement {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-weight: 100;
-      font-size: clamp(1.2rem, 2.5vw, 2rem);
-      line-height: 1.8;
-      letter-spacing: 0.05em;
-      margin-bottom: 3rem;
-    }
-
-    .contact-email {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      color: var(--gray);
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 0.3rem;
-    }
-
-    footer {
-      padding: 2rem 3rem;
-      border-top: 1px solid #e0e0e0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    footer span, footer a {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      color: var(--gray);
-      letter-spacing: 0.1em;
-      text-decoration: none;
-    }
-    footer a:hover { color: var(--white); }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .js-loaded .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    .js-loaded .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.9s ease, transform 0.9s ease;
-    }
-
-    @media (max-width: 768px) {
-      nav { padding: 1.5rem; }
-      .hero { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
-      .hero-left { padding: 7rem 1.5rem 4rem; }
-      .hero-btns { flex-direction: column; gap: 0.8rem; }
-      .hero-btn { text-align: center; }
-      section { padding: 4rem 1.5rem; }
-      .what-grid { grid-template-columns: 1fr; }
-      .what-item { border-right: none; }
-      .products-grid { grid-template-columns: 1fr; }
-      .product-item { border-right: none; border-bottom: 1px solid #e0e0e0; }
-      .biwako-section { grid-template-columns: 1fr; }
-      .biwako-left { border-right: none; padding-right: 0; margin-bottom: 3rem; }
-      .biwako-right { padding-left: 0; }
-      .sc-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .identity-section { grid-template-columns: 1fr; }
-      .identity-block { border-right: none; border-bottom: 1px solid #e0e0e0; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>木下 貴博 / Takahiro Kinoshita — 体験翻訳家・UXデザイナー・個人開発者 滋賀</title>
+<meta name="description" content="木下貴博（Takahiro Kinoshita）。滋賀県・琵琶湖畔を拠点に活動する体験翻訳家・UXデザイナー・個人開発者。BMBoard・Atelier・KODOCOを単独開発。音楽家（99LETTERS）として国際レーベルからリリース。">
+<meta name="keywords" content="木下貴博,Takahiro Kinoshita,体験翻訳家,UXデザイナー,滋賀,個人開発者,BMBoard,Atelier,KODOCO,木下スタジオ,kinoshita studio,琵琶湖,99LETTERS">
+<meta property="og:title" content="木下 貴博 / Takahiro Kinoshita">
+<meta property="og:description" content="体験翻訳家・UXデザイナー・個人開発者。BMBoard / Atelier / KODOCO を単独開発。滋賀・琵琶湖畔。">
+<meta property="og:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
+<meta property="og:url" content="https://tkinoshita99.github.io/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tkinoshita99.github.io/ogp_photo_B.png">
+<link rel="canonical" href="https://tkinoshita99.github.io/">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="192x192" href="favicon192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "木下 貴博",
+  "alternateName": "Takahiro Kinoshita",
+  "url": "https://tkinoshita99.github.io/",
+  "image": "https://tkinoshita99.github.io/ogp_photo_B.png",
+  "jobTitle": "体験翻訳家 / UX Designer & Developer",
+  "description": "届けたい体験と届いている体験のズレを翻訳する。滋賀県を拠点に活動するUXデザイナー・個人開発者・音楽プロデューサー。",
+  "address": { "@type": "PostalAddress", "addressRegion": "滋賀県", "addressCountry": "JP" },
+  "worksFor": { "@type": "Organization", "name": "kinoshita studio", "url": "https://kinoshita.studio/" },
+  "sameAs": [
+    "https://kinoshita.studio/",
+    "https://bmboard.studio/",
+    "https://atelistudio.com/",
+    "https://kodoco.jp/",
+    "https://instagram.com/tkinoshita99",
+    "https://instagram.com/99letters"
+  ]
+}
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lucida Console', monospace;
+  font-size: 12px;
+  color: #111;
+  background: white;
+  padding: 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+body.jp { font-family: 'DotGothic16', monospace; }
+
+body.jp pre, body.jp code, body.jp input,
+body.jp .tab, body.jp .cat-btn, body.jp .copy-btn,
+body.jp .tag-pill {
+  font-family: 'Lucida Console', 'Courier New', monospace;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+
+/* ── LANG TOGGLE ── */
+.lang-toggle { display: flex; align-items: center; gap: 0; font-size: 11px; }
+.lang-btn {
+  font-family: 'Lucida Console', monospace; font-size: 11px;
+  background: none; border: 1px solid #ddd; cursor: pointer;
+  color: #aaa; padding: 2px 8px; letter-spacing: 1px;
+}
+.lang-btn:first-child { border-right: none; }
+.lang-btn.active { color: #111; border-color: #111; font-weight: bold; }
+.lang-btn:hover { color: #111; border-color: #111; }
+
+/* ── HERO ── */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+.hero-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: 22px; font-weight: 400; letter-spacing: 0;
+  margin-bottom: 16px;
+  font-family: 'Press Start 2P', monospace;
+  line-height: 1.5;
+}
+.hero .tagline { font-size: 12px; color: #555; margin-bottom: 20px; }
+.hero .tagline span { color: #111; font-style: italic; }
+.nav-links { display: flex; gap: 16px; margin-bottom: 12px; font-size: 12px; flex-wrap: wrap; }
+.nav-links a { color: #111; }
+.section-label {
+  font-size: 10px; color: #999; letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 6px;
+  font-family: 'Lucida Console', monospace;
+}
+
+/* ── TABS ── */
+.tabs {
+  display: flex; gap: 0; border-bottom: 1px solid #111;
+  margin-bottom: 20px; align-items: stretch;
+}
+.tab {
+  font-family: 'Lucida Console', monospace; font-size: 12px;
+  padding: 6px 16px; cursor: pointer; background: white;
+  border: none; color: #555;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tab.active { color: #111; font-weight: bold; border-bottom: 2px solid #111; }
+.tab:hover { color: #111; }
+.tabs-right {
+  margin-left: auto; display: flex; align-items: center;
+  gap: 10px; padding-bottom: 6px;
+}
+
+/* ── SECTION ── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── PRODUCT LIST ── */
+.product-list { list-style: none; }
+.product-item {
+  border-bottom: 1px solid #eee;
+  padding: 16px 0;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.product-item:first-child { border-top: 1px solid #eee; }
+.product-name-col {}
+.product-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: #111;
+  display: block;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+.product-sub {
+  font-size: 10px; color: #999; display: block; line-height: 1.5;
+}
+.product-detail {}
+.product-headline {
+  font-size: 12px; color: #111; margin-bottom: 6px; font-weight: bold; line-height: 1.6;
+}
+.product-desc {
+  font-size: 11px; color: #555; line-height: 1.8; margin-bottom: 8px;
+}
+.product-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.tag-pill {
+  font-family: 'Lucida Console', monospace;
+  font-size: 10px; color: #999; background: #f4f4f4;
+  padding: 1px 6px;
+}
+.product-links { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11px; }
+.product-links a { color: #555; border-bottom: 1px solid #ddd; padding-bottom: 1px; }
+.product-links a:hover { color: #111; border-color: #111; text-decoration: none; }
+
+/* ── ABOUT ── */
+.about-body {
+  font-size: 12px; line-height: 2; color: #444;
+  max-width: 640px; margin-bottom: 28px;
+}
+.about-body em { color: #111; font-style: italic; }
+
+.meta-table { width: 100%; max-width: 640px; border-collapse: collapse; margin-bottom: 20px; }
+.meta-table tr { border-bottom: 1px solid #eee; }
+.meta-table td { padding: 8px 0; font-size: 11px; vertical-align: top; }
+.meta-table td:first-child {
+  font-size: 10px; color: #999; letter-spacing: 2px; text-transform: uppercase;
+  width: 120px; padding-right: 16px; white-space: nowrap;
+}
+.meta-table td a { border-bottom: 1px solid #ddd; }
+.meta-table td a:hover { border-color: #111; text-decoration: none; }
+
+/* ── NOW BOX ── */
+.now-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid #eee;
+  margin-bottom: 24px;
+}
+.now-item {
+  padding: 14px 16px;
+  border-right: 1px solid #eee;
+}
+.now-item:last-child { border-right: none; }
+.now-tag {
+  font-family: 'Lucida Console', monospace;
+  font-size: 9px; color: #aaa; letter-spacing: 2px;
+  text-transform: uppercase; display: block; margin-bottom: 6px;
+}
+.now-text { font-size: 11px; color: #444; line-height: 1.8; }
+.now-text a { color: #111; border-bottom: 1px solid #ddd; }
+.now-text a:hover { border-color: #111; text-decoration: none; }
+
+/* ── LINKS SECTION ── */
+.links-list { list-style: none; }
+.link-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+  display: flex; align-items: baseline; gap: 14px;
+}
+.link-item:first-child { border-top: 1px solid #eee; }
+.link-num { font-size: 10px; color: #ccc; min-width: 22px; flex-shrink: 0; }
+.link-label { font-size: 12px; }
+.link-label a { color: #111; }
+.link-label a:hover { text-decoration: underline; }
+.link-desc { font-size: 10px; color: #999; margin-left: auto; }
+
+/* ── MUSIC ── */
+.music-body {
+  font-size: 12px; line-height: 2; color: #444;
+  max-width: 640px; margin-bottom: 20px;
+}
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  max-width: 800px;
+}
+.ig-grid blockquote { min-width: 0 !important; max-width: 100% !important; width: 100% !important; }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 48px; padding-top: 20px;
+  border-top: 1px solid #ddd; font-size: 11px;
+  color: #999; font-family: 'Lucida Console', monospace;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+footer a { color: #999; }
+footer a:hover { color: #111; text-decoration: none; }
+
+@media (max-width: 640px) {
+  body { padding: 16px; font-size: 12px; }
+  .hero h1 { font-size: 16px; }
+  .hero-top { flex-direction: column; gap: 10px; }
+  .product-item { grid-template-columns: 1fr; gap: 8px; }
+  .now-grid { grid-template-columns: 1fr; }
+  .now-item { border-right: none; border-bottom: 1px solid #eee; }
+  .now-item:last-child { border-bottom: none; }
+  .ig-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 6px; }
+}
+</style>
 </head>
-<body>
+<body class="jp" id="body">
 
-  <nav>
-    <div class="logo">
-      Takahiro Kinoshita<br>
-      <span style="color:#999">— Shiga, Japan</span>
+<!-- HERO -->
+<div class="hero" id="heroSection">
+  <div>
+    <div class="hero-top">
+      <div class="section-label" id="heroStudio">kinoshita studio</div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btnJP" onclick="setLang('jp')">JP</button>
+        <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+      </div>
     </div>
-    <div class="nav-links">
-      <a href="experience-translator.html">Experience Translator</a>
-      <a href="#products">Products</a>
-      <a href="#silence">Biwako Silence</a>
-      <a href="#carry">Silent Carry</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
 
-  <!-- HERO -->
-  <section class="hero" style="border-bottom: 1px solid #e0e0e0; padding: 0;">
-    <div class="hero-left">
-      <div class="hero-index">001 — Identity</div>
-      <h1 class="hero-name">木下 貴博</h1>
-      <p class="hero-name-en">Kinoshita Takahiro</p>
-      <p class="hero-statement">
-        <em>EXPERIENCE TRANSLATOR</em><br><br>
-        <span style="color:#999;font-size:0.58rem;line-height:2.2;">Translating the gap between<br>what brands mean and what people feel.<br><br>届けたい体験と、<br>届いている体験のあいだを翻訳する。</span><br><br>
-        <span style="font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.2em;color:#bbb;">Sound &nbsp;/&nbsp; Visual &nbsp;/&nbsp; Design</span>
-      </p>
-      <div class="hero-btns">
-        <a href="https://kinoshita.studio/" target="_blank" rel="noopener" class="hero-btn hero-btn-primary">Kinoshita Studio →</a>
-        <a href="experience-translator.html" class="hero-btn hero-btn-secondary">Experience Translator →</a>
-        <a href="https://kinoshita.studio/what-i-do.html" target="_blank" rel="noopener" class="hero-btn hero-btn-tertiary">体験翻訳家とは何か →</a>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-tags">
-        <a href="https://kinoshita.studio/ux-ui-design.html" target="_blank" rel="noopener" class="tag">UX / UI Design</a>
-        <a href="https://instagram.com/99letters" target="_blank" rel="noopener" class="tag">Music Production</a>
-        <a href="experience-translator.html" class="tag">Experience Translator</a>
-        <a href="https://bmboard.studio/" target="_blank" rel="noopener" class="tag">BMBoard</a>
-        <a href="https://atelistudio.com/" target="_blank" rel="noopener" class="tag">Atelier</a>
-        <a href="https://kodoco.jp/" target="_blank" rel="noopener" class="tag">KODOCO</a>
-      </div>
-      <div class="hero-large-text">TK</div>
-    </div>
-  </section>
+    <h1 id="heroTitle">KINOSHITA<br>TAKAHIRO</h1>
 
-  <!-- WHAT I DO -->
-  <section id="work" style="padding: 5rem 0;">
-    <div style="padding: 0 3rem;">
-      <div class="section-label">002 — What I Do</div>
-    </div>
-    <div class="what-grid reveal">
-      <div class="what-item">
-        <div class="what-num">— 01</div>
-        <div class="what-title-jp">体験翻訳</div>
-        <div class="what-title-en">Experience Translator</div>
-        <p class="what-desc">
-          届けたい体験と、届いている体験の間には<br>
-          必ずズレがある。<br>
-          そのズレを発見して、揃える。
-        </p>
-        <a href="experience-translator.html" class="what-link">詳しく見る →</a>
-        <a href="https://kinoshita.studio/what-i-do.html" target="_blank" rel="noopener" class="what-link" style="margin-top:0.5rem;">仕事として依頼する →</a>
-      </div>
-      <div class="what-item">
-        <div class="what-num">— 02</div>
-        <div class="what-title-jp">UX / UI</div>
-        <div class="what-title-en">Interface Design</div>
-        <p class="what-desc">
-          10年以上、人が何かを<br>
-          「感じる」瞬間を設計してきた。<br>
-          余白が思想を語る。
-        </p>
-        <a href="https://kinoshita.studio/" target="_blank" rel="noopener" class="what-link">Kinoshita Studio →</a>
-      </div>
-      <div class="what-item">
-        <div class="what-num">— 03</div>
-        <div class="what-title-jp">プロダクト開発</div>
-        <div class="what-title-en">Solo Product Dev</div>
-        <p class="what-desc">
-          BMBoard・Atelier・KODOCO を<br>
-          ひとりで設計・開発・運用。<br>
-          依存ゼロ、思想から実装まで。
-        </p>
-        <a href="#products" class="what-link">プロダクトを見る →</a>
-      </div>
-      <div class="what-item">
-        <div class="what-num">— 04</div>
-        <div class="what-title-jp">音楽制作</div>
-        <div class="what-title-en">Music Production — 99LETTERS</div>
-        <p class="what-desc">
-          国際レーベルからリリース。<br>
-          音は体験設計の核にある。<br>
-          聴こえないものを聴かせる。
-        </p>
-        <a href="https://instagram.com/99letters" target="_blank" rel="noopener" class="what-link">@99letters →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section id="products">
-    <div class="section-label">003 — Products</div>
-    <div class="products-grid reveal">
-      <div class="product-item">
-        <div class="product-num">— 01</div>
-        <div class="product-name">BMBoard</div>
-        <div class="product-sub">Black Mirror Board</div>
-        <p class="product-desc">
-          依存ゼロ・HTMLひとつ。<br>
-          デザイナーとエンジニアが<br>
-          同じキャンバスを見る場所。
-        </p>
-        <div class="product-links">
-          <a href="https://bmboard.studio/" target="_blank" rel="noopener" class="product-link">bmboard.studio →</a>
-          <a href="https://bmboard.studio/story.html" target="_blank" rel="noopener" class="product-link story">開発ストーリー →</a>
-          <a href="https://kinoshita.studio/story/bmboard.html" target="_blank" rel="noopener" class="product-link story">kinoshita.studio →</a>
-        </div>
-      </div>
-      <div class="product-item">
-        <div class="product-num">— 02</div>
-        <div class="product-name">Atelier</div>
-        <div class="product-sub">音楽の中庭</div>
-        <p class="product-desc">
-          アルゴリズムなし、数字なし。<br>
-          自分だけのコレクションを<br>
-          積み上げる静かな中庭。
-        </p>
-        <div class="product-links">
-          <a href="https://atelistudio.com/" target="_blank" rel="noopener" class="product-link">atelistudio.com →</a>
-          <a href="https://atelistudio.com/story.html" target="_blank" rel="noopener" class="product-link story">開発ストーリー →</a>
-          <a href="https://kinoshita.studio/story/atelier.html" target="_blank" rel="noopener" class="product-link story">kinoshita.studio →</a>
-        </div>
-      </div>
-      <div class="product-item">
-        <div class="product-num">— 03</div>
-        <div class="product-name">KODOCO</div>
-        <div class="product-sub">今日、子どもとどこいく？</div>
-        <p class="product-desc">
-          滋賀168スポット。<br>
-          天気・年齢・時間で<br>
-          1スポットに絞る提案アプリ。
-        </p>
-        <div class="product-links">
-          <a href="https://kodoco.jp/" target="_blank" rel="noopener" class="product-link">kodoco.jp →</a>
-          <a href="https://kodoco.jp/story.html" target="_blank" rel="noopener" class="product-link story">開発ストーリー →</a>
-          <a href="https://kinoshita.studio/story/kodoco.html" target="_blank" rel="noopener" class="product-link story">kinoshita.studio →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BIWAKO SILENCE -->
-  <section id="silence">
-    <div class="section-label">004 — Project</div>
-    <div class="biwako-section reveal">
-      <div class="biwako-left">
-        <h2 class="biwako-statement">
-          BIWAKO<br>SILENCE
-        </h2>
-        <p class="biwako-sub">
-          琵琶湖の静けさを、<br>
-          AI × 音 × 視覚で体験設計するシリーズ。<br><br>
-          Lake Biwa is 104 meters deep.<br>
-          The silence has a shape.
-        </p>
-        <a href="https://instagram.com/tkinoshita99" target="_blank" rel="noopener" class="what-link">@tkinoshita99 →</a>
-        <a href="https://kinoshita.studio/index.html#thought" target="_blank" rel="noopener" class="what-link" style="margin-top:0.8rem;color:#aaa;font-size:0.58rem;">体験翻訳論 — Research Notes →</a>
-      </div>
-      <div class="biwako-right">
-        <div class="biwako-data">
-          <div class="data-line"><span class="data-key">Location</span><span class="data-val">Lake Biwa, Shiga</span></div>
-          <div class="data-line"><span class="data-key">Depth</span><span class="data-val">104 m</span></div>
-          <div class="data-line"><span class="data-key">Medium</span><span class="data-val">AI × Sound × Visual</span></div>
-          <div class="data-line"><span class="data-key">Format</span><span class="data-val">Series</span></div>
-          <div class="data-line"><span class="data-key">Status</span><span class="data-val">— Ongoing</span></div>
-        </div>
-      </div>
-      <div style="margin-top:2rem;">
-        <div class="ig-grid">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVNnUldj7gj/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVDyvVYj3-S/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;padding:0;width:100%;"></blockquote>
-        </div>
-        <script async src="//www.instagram.com/embed.js"></script>
-      </div>
-    </div>
-  </section>
-
-  <!-- SILENT CARRY -->
-  <section id="carry" class="sc-section">
-    <div class="section-label">005 — Curation</div>
-    <div class="sc-inner reveal">
-      <div>
-        <img src="silent-carry-logo-darkgrey.png" alt="Silent Carry" class="sc-title-logo">
-        <p class="sc-sub">
-          私がフィールドに持っていくものだけを置く。<br>
-          余計な主張をしないギアを、世界から連れてくる。
-        </p>
-        <a href="silent-carry.html" class="sc-cta">詳しく見る →</a>
-      </div>
-      <div>
-        <p class="sc-philosophy">
-          Selecting what survives the field.<br><br>
-          説明が要らないもの。<br>
-          使うほど理由がわかるもの。<br>
-          景色に溶けるもの。<br><br>
-          ここにあるのは、<br>
-          その基準を通過したものだけです。
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section>
-    <div class="section-label">006 — About</div>
-    <div class="reveal" style="max-width:560px;margin-bottom:5rem;">
-      <p style="font-family:'Noto Sans JP',sans-serif;font-weight:100;font-size:1.05rem;line-height:2.4;letter-spacing:0.04em;">
-        音から始まった。<br><br>
-        音楽をつくりながら、ある問いが生まれた。<br>
-        なぜ同じ体験を届けようとしても、<br>
-        受け取る人によってこんなにも違うのか。<br><br>
-        その問いがデザインへ向かわせた。<br>
-        UX、グラフィック、ブランド体験設計——<br>
-        領域を横断するほど、確信が深まった。<br><br>
-        <em style="font-family:'Space Mono',monospace;font-size:0.72rem;font-style:normal;color:#555;letter-spacing:0.05em;">
-        体験には、必ずズレがある。<br>
-        届けたい体験と、届いている体験のあいだに。
-        </em><br><br>
-        そのズレを観察し、翻訳し、形にすること。<br>
-        Sound、Visual、Designという3つの言語を使って。<br><br>
-        それが私の仕事であり、探求です。
-      </p>
-    </div>
-    <div class="identity-section reveal">
-      <div class="identity-block">
-        <span class="identity-num">— 01</span>
-        <div class="identity-key">Base</div>
-        <div class="identity-val">
-          滋賀県<br>琵琶湖畔<br>
-          <span style="font-family:'Space Mono',monospace;font-size:0.6rem;color:#aaa;letter-spacing:0.1em;">Shiga, Japan</span>
-        </div>
-      </div>
-      <div class="identity-block">
-        <span class="identity-num">— 02</span>
-        <div class="identity-key">Experience</div>
-        <div class="identity-val">
-          UX/UI Design 10yr+<br>
-          Music Production 10yr+<br>
-          <span style="font-family:'Space Mono',monospace;font-size:0.6rem;color:#aaa;letter-spacing:0.1em;">International label releases</span>
-        </div>
-      </div>
-      <div class="identity-block">
-        <span class="identity-num">— 03</span>
-        <div class="identity-key">Channels</div>
-        <div class="identity-val">
-          <a href="https://instagram.com/tkinoshita99" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:block;">@tkinoshita99</a>
-          <a href="https://instagram.com/99letters" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:block;font-family:'Space Mono',monospace;font-size:0.6rem;color:#aaa;letter-spacing:0.1em;">@99letters</a>
-          <a href="https://kinoshita.studio/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;display:block;margin-top:0.8rem;font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;border-bottom:1px solid #ddd;padding-bottom:0.3rem;">kinoshita.studio →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="contact-section">
-    <p class="contact-pre">007 — Contact</p>
-    <p class="contact-statement reveal">
-      届けたい体験と、届いている体験の間に<br>ズレを感じている人へ。<br>
-      <span style="font-family:'Space Mono',monospace;font-size:0.7rem;color:#aaa;font-style:italic;">For those who feel the gap between intent and experience.</span>
+    <p class="tagline" id="heroTagline">
+      体験翻訳家 / UXデザイナー / 個人開発者 /
+      <span>音楽プロデューサー</span>
     </p>
-    <span class="contact-email" id="contact-email-top"></span>
-  </section>
 
-  <footer>
-    <span>© 2026 Takahiro Kinoshita — Kinoshita Studio</span>
-    <div style="display:flex;gap:2rem;">
-      <a href="https://kinoshita.studio/" target="_blank" rel="noopener">kinoshita.studio →</a>
-      <span>Shiga, Japan</span>
+    <hr>
+
+    <div class="nav-links">
+      <a href="#" onclick="showSection('about'); return false;" id="navAbout">about →</a>
+      <a href="#" onclick="showSection('products'); return false;" id="navProducts">products →</a>
+      <a href="#" onclick="showSection('music'); return false;" id="navMusic">music →</a>
+      <a href="#" onclick="showSection('links'); return false;" id="navLinks">links →</a>
     </div>
-  </footer>
 
-  <script>
-    document.body.classList.add('js-loaded');
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
-    }, { threshold: 0.05 });
-    reveals.forEach(el => observer.observe(el));
-    setTimeout(() => {
-      reveals.forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
-      });
-    }, 100);
-  </script>
+    <p style="font-size:11px;color:#aaa;" id="heroSub">
+      音から始まり、デザインへ。体験のズレを発見して、翻訳する。
+    </p>
+  </div>
+</div>
 
-  <script>
-    (function(){
-      var u="99letters99", d="gmail.com";
-      var el=document.getElementById("contact-email-top");
-      if(el){
-        el.textContent=u+"@"+d;
-        el.style.cursor="pointer";
-        el.onclick=function(){ window.location.href="mailto:"+u+"@"+d; };
-      }
-    })();
-  </script>
+<hr>
 
+<!-- TABS -->
+<div class="tabs" id="mainTabs" style="display:none;">
+  <button class="tab" id="tabAbout" onclick="showSection('about')">about</button>
+  <button class="tab" id="tabProducts" onclick="showSection('products')">products</button>
+  <button class="tab" id="tabMusic" onclick="showSection('music')">music</button>
+  <button class="tab" id="tabLinks" onclick="showSection('links')">links</button>
+  <div class="tabs-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnJP2" onclick="setLang('jp')">JP</button>
+      <button class="lang-btn" id="btnEN2" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="tab" onclick="backToHero()" style="font-size:13px;color:#aaa;">↑ top</button>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section" id="sectionAbout">
+  <div class="section-label" id="labelNow" style="margin-bottom:12px;">now</div>
+  <div class="now-grid" id="nowGrid">
+    <div class="now-item">
+      <span class="now-tag">building</span>
+      <p class="now-text" id="nowBuilding">
+        <a href="https://bmboard.studio/" target="_blank" rel="noopener">BMBoard</a> /
+        <a href="https://atelistudio.com/" target="_blank" rel="noopener">Atelier</a> /
+        <a href="https://kodoco.jp/" target="_blank" rel="noopener">KODOCO</a>
+        の3プロダクトを単独運用中。
+      </p>
+    </div>
+    <div class="now-item">
+      <span class="now-tag">writing</span>
+      <p class="now-text" id="nowWriting">
+        note マガジン「プロダクト翻訳論」連載中。体験翻訳という概念を言語化するプロジェクト。
+      </p>
+    </div>
+    <div class="now-item">
+      <span class="now-tag">exploring</span>
+      <p class="now-text" id="nowExploring">
+        BIWAKO SILENCE — AI × 音 × 視覚で琵琶湖の静けさを体験設計するシリーズ継続中。
+      </p>
+    </div>
+  </div>
+
+  <div class="section-label" id="labelAbout" style="margin-bottom:12px;">about</div>
+
+  <p class="about-body" id="aboutBody">
+    音から始まった。<br><br>
+    音楽をつくりながら、ある問いが生まれた。なぜ同じ体験を届けようとしても、受け取る人によってこんなにも違うのか。その問いがデザインへ向かわせた。<br><br>
+    <em>体験には、必ずズレがある。届けたい体験と、届いている体験のあいだに。</em><br><br>
+    そのズレを観察し、翻訳し、形にすること。Sound / Visual / Design という3つの言語を使って。滋賀・琵琶湖畔で、日々の沈黙の中から何かを見つけ続けている。
+  </p>
+
+  <table class="meta-table" id="metaTable">
+    <tr><td id="mBase">base</td><td>滋賀県・琵琶湖畔 / Shiga, Japan</td></tr>
+    <tr><td id="mUx">ux / ui</td><td id="mUxVal">10年以上のデザイン実務経験</td></tr>
+    <tr><td id="mMusic">music</td><td id="mMusicVal">国際レーベルリリース実績 / 99LETTERS 名義</td></tr>
+    <tr><td id="mProducts">products</td><td id="mProductsVal">BMBoard / Atelier / KODOCO — 単独設計・開発・運用</td></tr>
+    <tr><td id="mStudio">studio</td><td><a href="https://kinoshita.studio/" target="_blank" rel="noopener">kinoshita.studio</a></td></tr>
+    <tr><td id="mSns">sns</td><td>
+      <a href="https://instagram.com/tkinoshita99" target="_blank" rel="noopener">@tkinoshita99</a>
+      &nbsp;/&nbsp;
+      <a href="https://instagram.com/99letters" target="_blank" rel="noopener">@99letters</a>
+    </td></tr>
+    <tr><td id="mContact">contact</td><td><span id="emailSpan" style="cursor:pointer;border-bottom:1px solid #ddd;"></span></td></tr>
+  </table>
+</div>
+
+<!-- PRODUCTS -->
+<div class="section" id="sectionProducts">
+  <p style="font-size:11px;color:#aaa;margin-bottom:24px;" id="productsIntro">
+    依存ゼロ、外注ゼロ。思想から実装・運用まで単独で行う3つのプロダクト。
+  </p>
+  <ul class="product-list">
+    <li class="product-item">
+      <div class="product-name-col">
+        <span class="product-name">BMBoard</span>
+        <span class="product-sub">Black Mirror Board</span>
+      </div>
+      <div class="product-detail">
+        <p class="product-headline" id="bm-hl">依存ゼロ・HTMLひとつ。デザイナーとエンジニアが同じキャンバスを見る場所。</p>
+        <p class="product-desc" id="bm-desc">
+          外部ライブラリに依存しない1ファイル完結のデザイン共有ボード。チームの「見えている画面」を揃えるために作った。ブラウザ上で動作するキャンバスは、依存するものが少ないほど壊れにくいという思想が土台。Chrome拡張（BMBrowser）でサイドパネルとしても統合。
+        </p>
+        <div class="product-tags">
+          <span class="tag-pill">canvas</span>
+          <span class="tag-pill">HTML single-file</span>
+          <span class="tag-pill">Chrome extension</span>
+          <span class="tag-pill">2024–</span>
+        </div>
+        <div class="product-links">
+          <a href="https://bmboard.studio/" target="_blank" rel="noopener">bmboard.studio →</a>
+          <a href="https://bmboard.studio/story.html" target="_blank" rel="noopener">story →</a>
+        </div>
+      </div>
+    </li>
+    <li class="product-item">
+      <div class="product-name-col">
+        <span class="product-name">Atelier</span>
+        <span class="product-sub">音楽の中庭</span>
+      </div>
+      <div class="product-detail">
+        <p class="product-headline" id="at-hl">アルゴリズムなし、数字なし。自分だけのコレクションを積み上げる静かな中庭。</p>
+        <p class="product-desc" id="at-desc">
+          StreamingやSNSが「数字」で音楽体験を汚染している時代に、まったく逆の場所を作った。再生回数もいいね数も表示されない。ただ積み上げるだけの静かな音楽コレクション空間。Chrome拡張（Atelier Clip）でウェブ上の音楽URLを直接保存できる。
+        </p>
+        <div class="product-tags">
+          <span class="tag-pill">music</span>
+          <span class="tag-pill">no-algorithm</span>
+          <span class="tag-pill">Chrome extension</span>
+          <span class="tag-pill">2025–</span>
+        </div>
+        <div class="product-links">
+          <a href="https://atelistudio.com/" target="_blank" rel="noopener">atelistudio.com →</a>
+          <a href="https://atelistudio.com/story.html" target="_blank" rel="noopener">story →</a>
+        </div>
+      </div>
+    </li>
+    <li class="product-item">
+      <div class="product-name-col">
+        <span class="product-name">KODOCO</span>
+        <span class="product-sub">今日、子どもとどこいく？</span>
+      </div>
+      <div class="product-detail">
+        <p class="product-headline" id="ko-hl">滋賀168スポット。天気・年齢・時間で1スポットに絞る子連れおでかけ提案アプリ。</p>
+        <p class="product-desc" id="ko-desc">
+          「どこ行く？」という決断疲れを解消するために作った。条件を入力すると1件だけ提案される。多すぎる選択肢は選べないのと同じ——という体験設計の思想がそのまま機能になっている。滋賀県在住者として地元の体験価値を届けることへの関心が起点。
+        </p>
+        <div class="product-tags">
+          <span class="tag-pill">shiga</span>
+          <span class="tag-pill">family</span>
+          <span class="tag-pill">recommendation</span>
+          <span class="tag-pill">2025–</span>
+        </div>
+        <div class="product-links">
+          <a href="https://kodoco.jp/" target="_blank" rel="noopener">kodoco.jp →</a>
+          <a href="https://kodoco.jp/story.html" target="_blank" rel="noopener">story →</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- MUSIC -->
+<div class="section" id="sectionMusic">
+  <p style="font-size:11px;color:#aaa;margin-bottom:20px;" id="musicIntro">
+    音楽プロデューサー / 99LETTERS 名義 / 国際レーベルリリース実績
+  </p>
+  <p class="music-body" id="musicBody">
+    音楽プロデューサーとして 99LETTERS 名義で活動。国際レーベルからリリース実績あり。音楽制作は単なる趣味ではなく、体験設計の核にある研究でもある。「聴こえないものを聴かせる」ことが音楽とデザインの共通言語だと思っている。<br><br>
+    音楽をつくりながら生まれた問い——なぜ同じ体験を届けようとしても、受け取る人によってこんなにも違うのか——が、UXデザインへの関心につながり、「体験翻訳家」というコンセプトに結実した。
+  </p>
+  <div style="margin-bottom:12px;">
+    <a href="https://instagram.com/99letters" target="_blank" rel="noopener" style="font-size:12px;border-bottom:1px solid #ddd;padding-bottom:2px;">@99letters on Instagram →</a>
+  </div>
+  <div class="ig-grid">
+    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVNnUldj7gj/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;padding:0;width:100%;"></blockquote>
+    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVDyvVYj3-S/" data-instgrm-version="14" style="background:#fff;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;padding:0;width:100%;"></blockquote>
+  </div>
+  <script async src="//www.instagram.com/embed.js"></script>
+</div>
+
+<!-- LINKS -->
+<div class="section" id="sectionLinks">
+  <p style="font-size:11px;color:#aaa;margin-bottom:20px;" id="linksIntro">
+    おもちゃ箱。自分用ツール・プロジェクト・外部リンクをまとめた場所。
+  </p>
+  <ul class="links-list">
+    <li class="link-item">
+      <span class="link-num">01</span>
+      <span class="link-label"><a href="lifehack/" target="_blank" rel="noopener">lifehack</a></span>
+      <span class="link-desc" id="ld-lifehack">CSS / JS / HTML 逆引き辞書 + playground</span>
+    </li>
+    <li class="link-item">
+      <span class="link-num">02</span>
+      <span class="link-label"><a href="lifehack/baka.html" target="_blank" rel="noopener">baka.html</a></span>
+      <span class="link-desc" id="ld-baka">— ( ˘ω˘ )スヤァ</span>
+    </li>
+    <li class="link-item">
+      <span class="link-num">03</span>
+      <span class="link-label"><a href="https://kinoshita.studio/" target="_blank" rel="noopener">kinoshita.studio</a></span>
+      <span class="link-desc" id="ld-studio">仕事・ポートフォリオ・体験翻訳論</span>
+    </li>
+    <li class="link-item">
+      <span class="link-num">04</span>
+      <span class="link-label"><a href="https://bmboard.studio/" target="_blank" rel="noopener">bmboard.studio</a></span>
+      <span class="link-desc" id="ld-bm">Black Mirror Board — デザイン共有キャンバス</span>
+    </li>
+    <li class="link-item">
+      <span class="link-num">05</span>
+      <span class="link-label"><a href="https://atelistudio.com/" target="_blank" rel="noopener">atelistudio.com</a></span>
+      <span class="link-desc" id="ld-at">Atelier — 音楽の中庭</span>
+    </li>
+    <li class="link-item">
+      <span class="link-num">06</span>
+      <span class="link-label"><a href="https://kodoco.jp/" target="_blank" rel="noopener">kodoco.jp</a></span>
+      <span class="link-desc" id="ld-ko">KODOCO — 今日、子どもとどこいく？</span>
+    </li>
+    <li class="link-item">
+      <span class="link-num">07</span>
+      <span class="link-label"><a href="https://instagram.com/tkinoshita99" target="_blank" rel="noopener">@tkinoshita99</a></span>
+      <span class="link-desc" id="ld-ig1">Instagram — BIWAKO SILENCE / personal</span>
+    </li>
+    <li class="link-item">
+      <span class="link-num">08</span>
+      <span class="link-label"><a href="https://instagram.com/99letters" target="_blank" rel="noopener">@99letters</a></span>
+      <span class="link-desc" id="ld-ig2">Instagram — music production</span>
+    </li>
+  </ul>
+</div>
+
+<footer id="footer">
+  <span>tkinoshita99 — kinoshita studio</span>
+  <span id="footerRight">experience translator &nbsp;|&nbsp; shiga, japan &nbsp;|&nbsp; own your tools</span>
+</footer>
+
+<script>
+// ── LANG ──────────────────────────────────────────
+var LANG = 'jp';
+
+var I18N = {
+  heroStudio:    { jp: 'kinoshita studio', en: 'kinoshita studio' },
+  heroTagline:   {
+    jp: '体験翻訳家 / UXデザイナー / 個人開発者 / <span>音楽プロデューサー</span>',
+    en: 'Experience Translator / UX Designer / Solo Dev / <span>Music Producer</span>'
+  },
+  heroSub:       {
+    jp: '音から始まり、デザインへ。体験のズレを発見して、翻訳する。',
+    en: 'It started with music. Translating the gap between intent and experience.'
+  },
+  navAbout:      { jp: 'about →', en: 'about →' },
+  navProducts:   { jp: 'products →', en: 'products →' },
+  navMusic:      { jp: 'music →', en: 'music →' },
+  navLinks:      { jp: 'links →', en: 'links →' },
+  tabAbout:      { jp: 'about', en: 'about' },
+  tabProducts:   { jp: 'products', en: 'products' },
+  tabMusic:      { jp: 'music', en: 'music' },
+  tabLinks:      { jp: 'links', en: 'links' },
+  labelNow:      { jp: 'now', en: 'now' },
+  labelAbout:    { jp: 'about', en: 'about' },
+  nowBuilding:   {
+    jp: '<a href="https://bmboard.studio/" target="_blank" rel="noopener">BMBoard</a> / <a href="https://atelistudio.com/" target="_blank" rel="noopener">Atelier</a> / <a href="https://kodoco.jp/" target="_blank" rel="noopener">KODOCO</a> の3プロダクトを単独運用中。',
+    en: 'Running 3 solo products: <a href="https://bmboard.studio/" target="_blank" rel="noopener">BMBoard</a> / <a href="https://atelistudio.com/" target="_blank" rel="noopener">Atelier</a> / <a href="https://kodoco.jp/" target="_blank" rel="noopener">KODOCO</a>.'
+  },
+  nowWriting:    {
+    jp: 'note マガジン「プロダクト翻訳論」連載中。体験翻訳という概念を言語化するプロジェクト。',
+    en: 'Writing a series on "Product Translation Theory" — putting the concept of Experience Translation into words.'
+  },
+  nowExploring:  {
+    jp: 'BIWAKO SILENCE — AI × 音 × 視覚で琵琶湖の静けさを体験設計するシリーズ継続中。',
+    en: 'BIWAKO SILENCE — designing the silence of Lake Biwa through AI × sound × visual.'
+  },
+  aboutBody:     {
+    jp: '音から始まった。<br><br>音楽をつくりながら、ある問いが生まれた。なぜ同じ体験を届けようとしても、受け取る人によってこんなにも違うのか。その問いがデザインへ向かわせた。<br><br><em>体験には、必ずズレがある。届けたい体験と、届いている体験のあいだに。</em><br><br>そのズレを観察し、翻訳し、形にすること。Sound / Visual / Design という3つの言語を使って。滋賀・琵琶湖畔で、日々の沈黙の中から何かを見つけ続けている。',
+    en: 'It started with music.<br><br>While making music, a question emerged: why does the same intended experience land so differently for each listener? That question led me to design.<br><br><em>There is always a gap — between the experience you mean to deliver and what people actually receive.</em><br><br>Observing that gap, translating it, giving it form. Using three languages: Sound, Visual, and Design. From the shores of Lake Biwa, I keep finding things in the daily silence.'
+  },
+  mBase:         { jp: 'base', en: 'base' },
+  mUx:           { jp: 'ux / ui', en: 'ux / ui' },
+  mUxVal:        { jp: '10年以上のデザイン実務経験', en: '10+ years of design practice' },
+  mMusic:        { jp: 'music', en: 'music' },
+  mMusicVal:     { jp: '国際レーベルリリース実績 / 99LETTERS 名義', en: 'International label releases / as 99LETTERS' },
+  mProducts:     { jp: 'products', en: 'products' },
+  mProductsVal:  { jp: 'BMBoard / Atelier / KODOCO — 単独設計・開発・運用', en: 'BMBoard / Atelier / KODOCO — solo design, dev & ops' },
+  mStudio:       { jp: 'studio', en: 'studio' },
+  mSns:          { jp: 'sns', en: 'sns' },
+  mContact:      { jp: 'contact', en: 'contact' },
+  productsIntro: {
+    jp: '依存ゼロ、外注ゼロ。思想から実装・運用まで単独で行う3つのプロダクト。',
+    en: 'Zero dependencies, zero outsourcing. Three products built and run solo — from concept to production.'
+  },
+  'bm-hl':       { jp: '依存ゼロ・HTMLひとつ。デザイナーとエンジニアが同じキャンバスを見る場所。', en: 'Zero deps, one HTML file. A shared canvas where designers and engineers see the same thing.' },
+  'bm-desc':     { jp: '外部ライブラリに依存しない1ファイル完結のデザイン共有ボード。チームの「見えている画面」を揃えるために作った。ブラウザ上で動作するキャンバスは、依存するものが少ないほど壊れにくいという思想が土台。Chrome拡張（BMBrowser）でサイドパネルとしても統合。', en: 'A single-file design sharing board with zero external dependencies. Built to align what the team actually sees. The canvas runs entirely in the browser — the fewer dependencies, the less that breaks. Also available as a Chrome side panel via BMBrowser.' },
+  'at-hl':       { jp: 'アルゴリズムなし、数字なし。自分だけのコレクションを積み上げる静かな中庭。', en: 'No algorithm. No numbers. A quiet courtyard for building your own music collection.' },
+  'at-desc':     { jp: 'StreamingやSNSが「数字」で音楽体験を汚染している時代に、まったく逆の場所を作った。再生回数もいいね数も表示されない。ただ積み上げるだけの静かな音楽コレクション空間。Chrome拡張（Atelier Clip）でウェブ上の音楽URLを直接保存できる。', en: 'Built as the opposite of what streaming and social media have done to music. No play counts. No likes. Just a quiet space to accumulate what you love. Save tracks directly from the web via the Atelier Clip Chrome extension.' },
+  'ko-hl':       { jp: '滋賀168スポット。天気・年齢・時間で1スポットに絞る子連れおでかけ提案アプリ。', en: '168 spots in Shiga. Filter by weather, age, and time — down to exactly one recommendation.' },
+  'ko-desc':     { jp: '「どこ行く？」という決断疲れを解消するために作った。条件を入力すると1件だけ提案される。多すぎる選択肢は選べないのと同じ——という体験設計の思想がそのまま機能になっている。滋賀県在住者として地元の体験価値を届けることへの関心が起点。', en: 'Built to eliminate decision fatigue around "where should we go?" Enter conditions, get one answer. Too many choices = no choice — that principle is baked into the design. Started from a desire to surface the value of Shiga for those who live here.' },
+  musicIntro:    { jp: '音楽プロデューサー / 99LETTERS 名義 / 国際レーベルリリース実績', en: 'Music Producer / as 99LETTERS / international label releases' },
+  musicBody:     {
+    jp: '音楽プロデューサーとして 99LETTERS 名義で活動。国際レーベルからリリース実績あり。音楽制作は単なる趣味ではなく、体験設計の核にある研究でもある。「聴こえないものを聴かせる」ことが音楽とデザインの共通言語だと思っている。<br><br>音楽をつくりながら生まれた問い——なぜ同じ体験を届けようとしても、受け取る人によってこんなにも違うのか——が、UXデザインへの関心につながり、「体験翻訳家」というコンセプトに結実した。',
+    en: 'Active as a music producer under the name 99LETTERS with international label releases. Music production is not just a hobby — it\'s research into the core of experience design. Making people hear what cannot be heard is the shared language of music and design.<br><br>A question that emerged while making music — why does the same intended experience land so differently? — led to UX design and ultimately to the concept of "Experience Translator."'
+  },
+  linksIntro:    {
+    jp: 'おもちゃ箱。自分用ツール・プロジェクト・外部リンクをまとめた場所。',
+    en: 'Toybox. Tools, projects, and external links collected in one place.'
+  },
+  'ld-lifehack': { jp: 'CSS / JS / HTML 逆引き辞書 + playground', en: 'CSS / JS / HTML reverse-lookup dictionary + playground' },
+  'ld-baka':     { jp: '— ( ˘ω˘ )スヤァ', en: '— ( ˘ω˘ )zzz' },
+  'ld-studio':   { jp: '仕事・ポートフォリオ・体験翻訳論', en: 'work / portfolio / experience translation theory' },
+  'ld-bm':       { jp: 'Black Mirror Board — デザイン共有キャンバス', en: 'Black Mirror Board — design sharing canvas' },
+  'ld-at':       { jp: 'Atelier — 音楽の中庭', en: 'Atelier — quiet music collection space' },
+  'ld-ko':       { jp: 'KODOCO — 今日、子どもとどこいく？', en: 'KODOCO — where to go with kids today?' },
+  'ld-ig1':      { jp: 'Instagram — BIWAKO SILENCE / personal', en: 'Instagram — BIWAKO SILENCE / personal' },
+  'ld-ig2':      { jp: 'Instagram — music production', en: 'Instagram — music production' },
+  footerRight:   {
+    jp: 'experience translator &nbsp;|&nbsp; shiga, japan &nbsp;|&nbsp; own your tools',
+    en: 'experience translator &nbsp;|&nbsp; shiga, japan &nbsp;|&nbsp; own your tools'
+  }
+};
+
+function setLang(lang) {
+  LANG = lang;
+  document.getElementById('body').className = lang === 'jp' ? 'jp' : '';
+
+  ['btnJP','btnJP2'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('active', lang === 'jp');
+  });
+  ['btnEN','btnEN2'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('active', lang === 'en');
+  });
+
+  Object.keys(I18N).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var val = I18N[id][lang];
+    if (val !== undefined) el.innerHTML = val;
+  });
+}
+
+function showSection(name) {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('mainTabs').style.display = 'flex';
+
+  ['about','products','music','links'].forEach(function(s) {
+    var sec = document.getElementById('section' + s.charAt(0).toUpperCase() + s.slice(1));
+    var tab = document.getElementById('tab' + s.charAt(0).toUpperCase() + s.slice(1));
+    if (sec) sec.classList.toggle('active', s === name);
+    if (tab) tab.classList.toggle('active', s === name);
+  });
+
+  window.scrollTo(0, 0);
+}
+
+function backToHero() {
+  document.getElementById('heroSection').style.display = '';
+  document.getElementById('mainTabs').style.display = 'none';
+  ['about','products','music','links'].forEach(function(s) {
+    var sec = document.getElementById('section' + s.charAt(0).toUpperCase() + s.slice(1));
+    if (sec) sec.classList.remove('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+// email obfuscation
+(function(){
+  var u = "99letters99", d = "gmail.com";
+  var el = document.getElementById("emailSpan");
+  if (el) {
+    el.textContent = u + "@" + d;
+    el.onclick = function(){ window.location.href = "mailto:" + u + "@" + d; };
+  }
+})();
+</script>
 </body>
 </html>
