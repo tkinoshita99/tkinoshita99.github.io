@@ -127,6 +127,23 @@ a { color: inherit; text-decoration: none; }
 
 hr.sep { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
 
+/* ── Post list (edit tab) ── */
+.post-list-label { font-size: 9px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.post-list-item {
+  display: grid; grid-template-columns: 100px 1fr auto; gap: 16px;
+  align-items: center; padding: 10px 12px; border: 1px solid #eee;
+  margin-bottom: 6px; cursor: pointer; background: white; transition: background 0.1s;
+}
+.post-list-item:hover { background: #f8f8f8; border-color: #111; }
+.post-list-item.is-loading { opacity: 0.5; pointer-events: none; }
+.pli-date { font-size: 10px; color: #aaa; letter-spacing: 1px; }
+.pli-title { font-size: 12px; color: #111; }
+.pli-tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+.pli-tag { font-size: 9px; color: #bbb; background: #f4f4f4; padding: 1px 5px; }
+.pli-action { font-size: 10px; color: #aaa; letter-spacing: 1px; }
+.post-list-empty { font-size: 11px; color: #aaa; padding: 16px 0; }
+.post-list-loading { font-size: 11px; color: #aaa; padding: 16px 0; }
+
 @media (max-width: 640px) {
   #main { padding: 16px; }
   .form-grid { grid-template-columns: 1fr; }
@@ -159,13 +176,9 @@ hr.sep { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
     <button class="tab" onclick="switchTab('edit')">Edit Post</button>
   </div>
 
-  <!-- Edit: load existing -->
+  <!-- Edit: post list -->
   <div id="load-section" style="display:none;">
-    <div class="load-row">
-      <span style="font-size:11px;color:#555;white-space:nowrap;">slug:</span>
-      <input type="text" id="loadSlug" placeholder="solo-product-dev">
-      <button onclick="loadPost()">Load</button>
-    </div>
+    <div id="postList" style="margin-bottom:24px;"></div>
     <span class="load-status" id="loadStatus"></span>
     <hr class="sep">
   </div>
@@ -293,44 +306,88 @@ if (localStorage.getItem(PW_KEY) === '1') showMain();
 function switchTab(t) {
   document.querySelectorAll('.tab').forEach((el, i) => el.classList.toggle('active', (i === 0) === (t === 'new')));
   document.getElementById('load-section').style.display = t === 'edit' ? 'block' : 'none';
+  if (t === 'edit') loadPostList();
 }
 
-// ── Load existing post ──
-async function loadPost() {
-  const slug = document.getElementById('loadSlug').value.trim();
-  if (!slug) return;
+// ── Post list: fetch blog/index.html and render ──
+let _postListLoaded = false;
+async function loadPostList() {
+  if (_postListLoaded) return;
+  const box = document.getElementById('postList');
+  box.innerHTML = '<p class="post-list-loading">Loading posts…</p>';
+  try {
+    const res = await fetch('/blog/');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const html = await res.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const items = [...doc.querySelectorAll('.post-item')];
+    if (!items.length) { box.innerHTML = '<p class="post-list-empty">No posts found.</p>'; return; }
+
+    box.innerHTML = '<div class="post-list-label">Select a post to edit</div>';
+    items.forEach(item => {
+      const date  = item.querySelector('.post-date')?.textContent?.trim() || '';
+      const link  = item.querySelector('a.post-title');
+      const title = link?.textContent?.trim() || '';
+      const href  = link?.getAttribute('href') || '';
+      const slug  = href.replace('/blog/', '').replace('.html', '');
+      const tags  = [...item.querySelectorAll('.tag-pill')].map(t => t.textContent.trim());
+      if (!slug) return;
+
+      const el = document.createElement('div');
+      el.className = 'post-list-item';
+      el.innerHTML = `
+        <span class="pli-date">${date}</span>
+        <span class="pli-title">${title}</span>
+        <div class="pli-tags">${tags.map(t => `<span class="pli-tag">${t}</span>`).join('')}</div>`;
+      el.addEventListener('click', () => loadPostBySlug(slug, el));
+      box.appendChild(el);
+    });
+    _postListLoaded = true;
+  } catch(e) {
+    box.innerHTML = `<p class="post-list-empty">Error: ${e.message}</p>`;
+  }
+}
+
+// ── Load a post by slug ──
+async function loadPostBySlug(slug, listItem) {
   const status = document.getElementById('loadStatus');
-  status.textContent = 'Loading…';
+  if (listItem) { listItem.classList.add('is-loading'); listItem.textContent = 'Loading…'; }
+  status.textContent = '';
   try {
     const res = await fetch('/blog/' + slug + '.html');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const html = await res.text();
     const doc = new DOMParser().parseFromString(html, 'text/html');
 
-    // Extract fields
-    const date = doc.querySelector('.post-date')?.textContent?.trim() || '';
+    const date    = doc.querySelector('.post-date')?.textContent?.trim() || '';
     const titleJP = doc.getElementById('postTitle')?.textContent?.trim() || '';
-    const descJP = doc.querySelector('meta[name="description"]')?.content || '';
-    const tags = [...doc.querySelectorAll('.tag-pill')].map(t => t.textContent).join(', ');
+    const descJP  = doc.querySelector('meta[name="description"]')?.content || '';
+    const tags    = [...doc.querySelectorAll('.tag-pill')].map(t => t.textContent).join(', ');
+    const bodyEl  = doc.getElementById('postBody');
+    const contentJP = bodyEl ? htmlToMd(bodyEl) : '';
 
-    // Extract body HTML and convert back to markdown-ish
-    const bodyEl = doc.getElementById('postBody');
-    let contentJP = '';
-    if (bodyEl) contentJP = htmlToMd(bodyEl);
-
-    // Fill form
-    document.getElementById('fDate').value = date;
-    document.getElementById('fSlug').value = slug;
-    document.getElementById('fTitleJP').value = titleJP;
-    document.getElementById('fDescJP').value = descJP;
-    document.getElementById('fTags').value = tags;
+    document.getElementById('fDate').value      = date;
+    document.getElementById('fSlug').value      = slug;
+    document.getElementById('fTitleJP').value   = titleJP;
+    document.getElementById('fDescJP').value    = descJP;
+    document.getElementById('fTags').value      = tags;
     document.getElementById('fContentJP').value = contentJP;
     updatePreview();
-    status.textContent = '✓ Loaded.';
+
+    // Scroll to form
+    document.getElementById('fTitleJP').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('fTitleJP').focus();
+    status.textContent = `✓ "${titleJP}" をロードしました。`;
     status.style.color = '#090';
-  } catch (e) {
+  } catch(e) {
     status.textContent = 'Error: ' + e.message;
     status.style.color = '#e00';
+  } finally {
+    // Restore list item
+    if (listItem) { listItem.classList.remove('is-loading'); }
+    loadPostList(); // re-render list
+    _postListLoaded = false;
+    loadPostList();
   }
 }
 
