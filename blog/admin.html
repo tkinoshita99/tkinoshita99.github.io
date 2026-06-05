@@ -128,6 +128,13 @@ a { color: inherit; text-decoration: none; }
 hr.sep { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
 
 /* ── Post list (edit tab) ── */
+/* ── Image queue ── */
+.img-card { display:flex;flex-direction:column;gap:6px;align-items:center;width:120px; }
+.img-card img { width:120px;height:80px;object-fit:cover;border:1px solid #ddd; }
+.img-card span { font-size:9px;color:#555;word-break:break-all;text-align:center;max-width:120px; }
+.img-card button { font-family:'Lucida Console',monospace;font-size:9px;background:none;border:1px solid #ddd;padding:2px 8px;cursor:pointer;color:#555; }
+.img-card button:hover { border-color:#111;color:#111; }
+
 .post-list-label { font-size: 9px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
 .post-list-item {
   display: grid; grid-template-columns: 100px 1fr auto; gap: 16px;
@@ -224,10 +231,22 @@ hr.sep { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
   <div class="form-full">
     <div class="field">
       <label>Content JP — Markdown: ## h2, **bold**, *italic*, [text](url), --- = hr, blank line = new paragraph</label>
-      <span class="preview-toggle" onclick="togglePreview()">preview ↕</span>
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap;">
+        <span class="preview-toggle" onclick="togglePreview()">preview ↕</span>
+        <label style="font-size:10px;color:#555;border:1px solid #ddd;padding:3px 10px;cursor:pointer;background:white;">
+          📎 画像を挿入
+          <input type="file" id="imgPicker" accept="image/*" style="display:none;" onchange="insertImage(this)">
+        </label>
+      </div>
       <div id="preview-box"></div>
       <textarea class="content-area" id="fContentJP" placeholder="本文をここに書く。&#10;&#10;## 見出し&#10;&#10;本文の続き。**太字**や*斜体*も使えます。" oninput="updatePreview()"></textarea>
     </div>
+  </div>
+
+  <!-- Image queue -->
+  <div id="imgQueue" style="display:none;margin-bottom:16px;padding:12px;border:1px solid #ddd;background:#fffef8;">
+    <div style="font-size:9px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">📁 画像アップロード待ち — GitHub /blog/img/ にアップロードしてください</div>
+    <div id="imgQueueList" style="display:flex;flex-wrap:wrap;gap:12px;"></div>
   </div>
 
   <div class="form-full">
@@ -436,6 +455,12 @@ function inlineMd(s) {
   return s
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+      // Use object URL if we have the file locally
+      const local = _imgFiles.find(f => f.path === src);
+      const imgSrc = local ? local.objectUrl : src;
+      return `<img src="${imgSrc}" alt="${alt}" style="max-width:100%;margin:12px 0;display:block;">`;
+    })
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 }
 
@@ -610,6 +635,58 @@ function setLang(l) {
 
 let _lastSlug = '';
 let _lastArticleHtml = '';
+
+// ── Image insertion ──
+const _imgFiles = []; // {name, url, file}
+
+function insertImage(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = '';
+
+  const name = file.name.replace(/[^a-zA-Z0-9._-]/g, '-');
+  const path = '/blog/img/' + name;
+  const objectUrl = URL.createObjectURL(file);
+
+  // Insert markdown at cursor in content textarea
+  const ta = document.getElementById('fContentJP');
+  const alt = name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+  const md = `\n\n![${alt}](${path})\n\n`;
+  const start = ta.selectionStart;
+  ta.value = ta.value.slice(0, start) + md + ta.value.slice(ta.selectionEnd);
+  ta.selectionStart = ta.selectionEnd = start + md.length;
+  ta.focus();
+  updatePreview();
+
+  // Add to queue
+  _imgFiles.push({ name, path, objectUrl, file });
+  renderImgQueue();
+}
+
+function renderImgQueue() {
+  const queue = document.getElementById('imgQueue');
+  const list  = document.getElementById('imgQueueList');
+  if (!_imgFiles.length) { queue.style.display = 'none'; return; }
+  queue.style.display = 'block';
+  list.innerHTML = '';
+  _imgFiles.forEach((img, i) => {
+    const card = document.createElement('div');
+    card.className = 'img-card';
+    card.innerHTML = `
+      <img src="${img.objectUrl}" alt="${img.name}">
+      <span>${img.name}</span>
+      <button onclick="downloadImg(${i})">Download</button>`;
+    list.appendChild(card);
+  });
+}
+
+function downloadImg(i) {
+  const img = _imgFiles[i];
+  const a = document.createElement('a');
+  a.href = img.objectUrl;
+  a.download = img.name;
+  a.click();
+}
 
 function esc(s) {
   return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
