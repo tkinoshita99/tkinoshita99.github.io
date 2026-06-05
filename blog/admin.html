@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog Admin — tkinoshita99</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lucida Console', monospace; font-size: 12px; color: #111; background: #f8f8f8; min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Gate ── */
+#gate {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100vh; gap: 16px;
+}
+#gate h1 { font-family: 'Press Start 2P', monospace; font-size: 10px; color: #aaa; }
+#gate input {
+  font-family: 'Lucida Console', monospace; font-size: 12px;
+  border: 1px solid #ddd; padding: 8px 12px; width: 240px; outline: none;
+  background: white;
+}
+#gate input:focus { border-color: #111; }
+#gate button {
+  font-family: 'Lucida Console', monospace; font-size: 11px;
+  background: #111; color: white; border: none; padding: 8px 20px; cursor: pointer;
+}
+#gate button:hover { background: #333; }
+#gate .err { font-size: 10px; color: #e00; }
+
+/* ── Main ── */
+#main { display: none; max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+.top-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid #ddd;
+}
+.top-bar h1 { font-family: 'Press Start 2P', monospace; font-size: 9px; color: #aaa; }
+.top-bar a { font-size: 11px; color: #555; text-decoration: underline; }
+.top-bar button { font-family: 'Lucida Console', monospace; font-size: 10px; background: none; border: 1px solid #ddd; padding: 2px 8px; cursor: pointer; color: #999; }
+.top-bar button:hover { color: #111; border-color: #111; }
+
+/* ── Tabs ── */
+.tabs { display: flex; gap: 0; margin-bottom: 24px; }
+.tab {
+  font-family: 'Lucida Console', monospace; font-size: 11px;
+  padding: 6px 18px; border: 1px solid #ddd; cursor: pointer;
+  background: white; color: #999;
+}
+.tab:first-child { border-right: none; }
+.tab.active { background: #111; color: white; border-color: #111; }
+
+/* ── Load existing ── */
+.load-row { display: flex; gap: 8px; margin-bottom: 24px; align-items: center; }
+.load-row input {
+  font-family: 'Lucida Console', monospace; font-size: 11px;
+  border: 1px solid #ddd; padding: 6px 10px; flex: 1; outline: none;
+  background: white;
+}
+.load-row input:focus { border-color: #111; }
+.load-row button {
+  font-family: 'Lucida Console', monospace; font-size: 11px;
+  background: none; border: 1px solid #ddd; padding: 6px 14px; cursor: pointer; color: #555;
+  white-space: nowrap;
+}
+.load-row button:hover { border-color: #111; color: #111; }
+.load-status { font-size: 10px; color: #aaa; }
+
+/* ── Form ── */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-full { margin-bottom: 16px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 9px; color: #999; letter-spacing: 2px; text-transform: uppercase; }
+.field input, .field textarea, .field select {
+  font-family: 'Lucida Console', monospace; font-size: 12px;
+  border: 1px solid #ddd; padding: 8px 10px; outline: none; background: white;
+  resize: vertical;
+}
+.field input:focus, .field textarea:focus { border-color: #111; }
+.field .hint { font-size: 10px; color: #bbb; margin-top: 2px; }
+.content-area { min-height: 280px; line-height: 1.8; }
+.btn-row { display: flex; gap: 10px; margin: 24px 0; flex-wrap: wrap; }
+.btn-primary {
+  font-family: 'Lucida Console', monospace; font-size: 11px;
+  background: #111; color: white; border: none; padding: 10px 24px; cursor: pointer;
+}
+.btn-primary:hover { background: #333; }
+.btn-secondary {
+  font-family: 'Lucida Console', monospace; font-size: 11px;
+  background: white; color: #555; border: 1px solid #ddd; padding: 10px 18px; cursor: pointer;
+}
+.btn-secondary:hover { color: #111; border-color: #111; }
+
+/* ── Output ── */
+.output-section { margin-top: 32px; border-top: 1px solid #ddd; padding-top: 24px; }
+.output-block { margin-bottom: 24px; }
+.output-label {
+  font-size: 9px; color: #999; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+}
+.output-label div { display: flex; gap: 8px; }
+.output-label button {
+  font-family: 'Lucida Console', monospace; font-size: 10px;
+  background: none; border: 1px solid #ddd; padding: 2px 10px; cursor: pointer; color: #555;
+}
+.output-label button:hover { border-color: #111; color: #111; }
+.output-area {
+  font-family: 'Lucida Console', monospace; font-size: 11px; line-height: 1.6;
+  border: 1px solid #ddd; padding: 12px; width: 100%; min-height: 160px;
+  background: white; color: #333; resize: vertical; outline: none;
+}
+
+/* ── Preview ── */
+.preview-toggle { font-size: 10px; color: #aaa; cursor: pointer; text-decoration: underline; margin-bottom: 8px; display: inline-block; }
+#preview-box {
+  border: 1px solid #ddd; padding: 20px; background: white; display: none;
+  font-size: 12px; line-height: 2.4; color: #333; margin-bottom: 16px;
+}
+#preview-box h2 { font-family: 'Press Start 2P', monospace; font-size: 10px; font-weight: 400; line-height: 1.8; margin: 24px 0 12px; color: #111; }
+#preview-box p { margin-bottom: 16px; }
+#preview-box strong { font-weight: bold; color: #111; }
+#preview-box em { font-style: italic; }
+#preview-box a { color: #555; text-decoration: underline; }
+#preview-box hr { border: none; border-top: 1px solid #ddd; margin: 16px 0; }
+
+hr.sep { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
+
+@media (max-width: 640px) {
+  #main { padding: 16px; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Password Gate ── -->
+<div id="gate">
+  <h1>BLOG ADMIN</h1>
+  <input type="password" id="pwInput" placeholder="password" autocomplete="current-password">
+  <button onclick="checkPw()">enter</button>
+  <span class="err" id="pwErr"></span>
+</div>
+
+<!-- ── Main ── -->
+<div id="main">
+  <div class="top-bar">
+    <h1>BLOG ADMIN</h1>
+    <div style="display:flex;gap:16px;align-items:center;">
+      <a href="/blog/" target="_blank">← blog</a>
+      <button onclick="logout()">logout</button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('new')">New Post</button>
+    <button class="tab" onclick="switchTab('edit')">Edit Post</button>
+  </div>
+
+  <!-- Edit: load existing -->
+  <div id="load-section" style="display:none;">
+    <div class="load-row">
+      <span style="font-size:11px;color:#555;white-space:nowrap;">slug:</span>
+      <input type="text" id="loadSlug" placeholder="solo-product-dev">
+      <button onclick="loadPost()">Load</button>
+    </div>
+    <span class="load-status" id="loadStatus"></span>
+    <hr class="sep">
+  </div>
+
+  <!-- Form -->
+  <div class="form-grid">
+    <div class="field">
+      <label>Date</label>
+      <input type="date" id="fDate">
+    </div>
+    <div class="field">
+      <label>Slug (filename without .html)</label>
+      <input type="text" id="fSlug" placeholder="my-post-title">
+      <span class="hint">→ /blog/my-post-title.html</span>
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <div class="field">
+      <label>Title JP</label>
+      <input type="text" id="fTitleJP" placeholder="記事タイトル">
+    </div>
+    <div class="field">
+      <label>Title EN (optional)</label>
+      <input type="text" id="fTitleEN" placeholder="Article Title">
+    </div>
+  </div>
+
+  <div class="form-full">
+    <div class="field">
+      <label>Description JP (for meta / index listing)</label>
+      <textarea id="fDescJP" rows="2" placeholder="記事の概要。検索結果に表示されます。"></textarea>
+    </div>
+  </div>
+
+  <div class="form-full">
+    <div class="field">
+      <label>Tags (comma separated)</label>
+      <input type="text" id="fTags" placeholder="個人開発, UXデザイン, 滋賀">
+    </div>
+  </div>
+
+  <div class="form-full">
+    <div class="field">
+      <label>Content JP — Markdown: ## h2, **bold**, *italic*, [text](url), --- = hr, blank line = new paragraph</label>
+      <span class="preview-toggle" onclick="togglePreview()">preview ↕</span>
+      <div id="preview-box"></div>
+      <textarea class="content-area" id="fContentJP" placeholder="本文をここに書く。&#10;&#10;## 見出し&#10;&#10;本文の続き。**太字**や*斜体*も使えます。" oninput="updatePreview()"></textarea>
+    </div>
+  </div>
+
+  <div class="form-full">
+    <div class="field">
+      <label>Content EN (optional)</label>
+      <textarea class="content-area" id="fContentEN" placeholder="English version (optional). Same markdown syntax."></textarea>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="generate()">Generate HTML</button>
+    <button class="btn-secondary" onclick="clearForm()">Clear</button>
+  </div>
+
+  <!-- Output -->
+  <div class="output-section" id="outputSection" style="display:none;">
+    <div class="output-block">
+      <div class="output-label">
+        <span>① Article HTML — upload as /blog/[slug].html</span>
+        <div>
+          <button onclick="copyOut('outArticle')">Copy</button>
+          <button onclick="downloadOut()">Download</button>
+        </div>
+      </div>
+      <textarea class="output-area" id="outArticle" readonly></textarea>
+    </div>
+    <div class="output-block">
+      <div class="output-label">
+        <span>② Index entry — add to blog/index.html post-list</span>
+        <div><button onclick="copyOut('outEntry')">Copy</button></div>
+      </div>
+      <textarea class="output-area" id="outEntry" rows="8" readonly></textarea>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Password ──
+const PW_KEY = 'blog_admin_auth';
+const PW_HASH = '7e3e3e3e'; // placeholder — see setPassword() below
+
+function checkPw() {
+  const val = document.getElementById('pwInput').value.trim();
+  // Simple check: compare against stored password hash
+  // Change ADMIN_PW to your desired password
+  const ADMIN_PW = 'tk99studio2026';
+  if (val === ADMIN_PW) {
+    localStorage.setItem(PW_KEY, '1');
+    showMain();
+  } else {
+    document.getElementById('pwErr').textContent = 'wrong password.';
+    document.getElementById('pwInput').value = '';
+  }
+}
+
+document.getElementById('pwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPw();
+});
+
+function logout() {
+  localStorage.removeItem(PW_KEY);
+  location.reload();
+}
+
+function showMain() {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('main').style.display = 'block';
+  // Set today's date
+  document.getElementById('fDate').value = new Date().toISOString().slice(0, 10);
+}
+
+// Auto-login if already authenticated
+if (localStorage.getItem(PW_KEY) === '1') showMain();
+
+// ── Tabs ──
+function switchTab(t) {
+  document.querySelectorAll('.tab').forEach((el, i) => el.classList.toggle('active', (i === 0) === (t === 'new')));
+  document.getElementById('load-section').style.display = t === 'edit' ? 'block' : 'none';
+}
+
+// ── Load existing post ──
+async function loadPost() {
+  const slug = document.getElementById('loadSlug').value.trim();
+  if (!slug) return;
+  const status = document.getElementById('loadStatus');
+  status.textContent = 'Loading…';
+  try {
+    const res = await fetch('/blog/' + slug + '.html');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const html = await res.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+    // Extract fields
+    const date = doc.querySelector('.post-date')?.textContent?.trim() || '';
+    const titleJP = doc.getElementById('postTitle')?.textContent?.trim() || '';
+    const descJP = doc.querySelector('meta[name="description"]')?.content || '';
+    const tags = [...doc.querySelectorAll('.tag-pill')].map(t => t.textContent).join(', ');
+
+    // Extract body HTML and convert back to markdown-ish
+    const bodyEl = doc.getElementById('postBody');
+    let contentJP = '';
+    if (bodyEl) contentJP = htmlToMd(bodyEl);
+
+    // Fill form
+    document.getElementById('fDate').value = date;
+    document.getElementById('fSlug').value = slug;
+    document.getElementById('fTitleJP').value = titleJP;
+    document.getElementById('fDescJP').value = descJP;
+    document.getElementById('fTags').value = tags;
+    document.getElementById('fContentJP').value = contentJP;
+    updatePreview();
+    status.textContent = '✓ Loaded.';
+    status.style.color = '#090';
+  } catch (e) {
+    status.textContent = 'Error: ' + e.message;
+    status.style.color = '#e00';
+  }
+}
+
+function htmlToMd(el) {
+  let out = '';
+  el.childNodes.forEach(node => {
+    if (node.nodeType === 3) {
+      if (node.textContent.trim()) out += node.textContent;
+    } else if (node.tagName === 'P') {
+      out += '\n\n' + nodeToMd(node);
+    } else if (node.tagName === 'H2') {
+      out += '\n\n## ' + node.textContent.trim();
+    } else if (node.tagName === 'HR') {
+      out += '\n\n---';
+    }
+  });
+  return out.trim();
+}
+
+function nodeToMd(el) {
+  let out = '';
+  el.childNodes.forEach(node => {
+    if (node.nodeType === 3) out += node.textContent;
+    else if (node.tagName === 'STRONG') out += '**' + node.textContent + '**';
+    else if (node.tagName === 'EM') out += '*' + node.textContent + '*';
+    else if (node.tagName === 'A') out += '[' + node.textContent + '](' + node.href + ')';
+    else out += node.textContent;
+  });
+  return out;
+}
+
+// ── Markdown → HTML ──
+function mdToHtml(md) {
+  if (!md.trim()) return '';
+  const paras = md.split(/\n{2,}/);
+  return paras.map(p => {
+    p = p.trim();
+    if (!p) return '';
+    if (p.startsWith('## ')) return '<h2>' + inlineMd(p.slice(3)) + '</h2>';
+    if (p === '---') return '<hr>';
+    return '<p>' + inlineMd(p) + '</p>';
+  }).filter(Boolean).join('\n    ');
+}
+
+function inlineMd(s) {
+  return s
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+
+// ── Preview ──
+let previewOpen = false;
+function togglePreview() {
+  previewOpen = !previewOpen;
+  document.getElementById('preview-box').style.display = previewOpen ? 'block' : 'none';
+  if (previewOpen) updatePreview();
+}
+function updatePreview() {
+  if (!previewOpen) return;
+  const html = mdToHtml(document.getElementById('fContentJP').value);
+  document.getElementById('preview-box').innerHTML = html;
+}
+
+// ── Generate ──
+function generate() {
+  const date  = document.getElementById('fDate').value || new Date().toISOString().slice(0, 10);
+  const slug  = document.getElementById('fSlug').value.trim();
+  const titleJP = document.getElementById('fTitleJP').value.trim();
+  const titleEN = document.getElementById('fTitleEN').value.trim();
+  const descJP  = document.getElementById('fDescJP').value.trim();
+  const tagsRaw = document.getElementById('fTags').value.trim();
+  const contentJP = document.getElementById('fContentJP').value.trim();
+  const contentEN = document.getElementById('fContentEN').value.trim();
+
+  if (!slug || !titleJP || !contentJP) {
+    alert('slug / title JP / content JP は必須です。');
+    return;
+  }
+
+  const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
+  const tagPills = tags.map(t => `<span class="tag-pill">${esc(t)}</span>`).join('');
+  const displayDate = date.slice(0, 7); // YYYY-MM
+  const url = 'https://tkinoshita99.github.io/blog/' + slug + '.html';
+  const bodyJP = mdToHtml(contentJP);
+  const bodyEN = contentEN ? mdToHtml(contentEN) : '';
+
+  const enSection = (titleEN && bodyEN) ? `
+  <hr>
+  <div class="lang-label" data-lang="en" style="display:none;">
+    <div class="post-header">
+      <h1 class="post-title">${esc(titleEN)}</h1>
+    </div>
+    <div class="post-body">
+    ${bodyEN}
+    </div>
+  </div>` : '';
+
+  const articleHtml = `<!DOCTYPE html>
+<html lang="ja" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(titleJP)} — 木下 貴博 / Takahiro Kinoshita</title>
+<meta name="description" content="${esc(descJP || titleJP)}">
+<meta name="keywords" content="木下貴博,体験翻訳,UXデザイン,木下スタジオ,kinoshita studio,滋賀,琵琶湖${tags.map(t => ',' + esc(t)).join('')}">
+<meta property="og:title" content="${esc(titleJP)} — 木下 貴博">
+<meta property="og:description" content="${esc(descJP || titleJP)}">
+<meta property="og:image" content="https://tkinoshita99.github.io/img/ogp_photo_B.png">
+<meta property="og:url" content="${esc(url)}">
+<link rel="canonical" href="${esc(url)}">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Lucida Console', monospace; font-size: 12px; color: #111; background: white; padding: 32px; max-width: 860px; margin: 0 auto; }
+body.jp { font-family: 'DotGothic16', monospace; }
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
+.lang-toggle { display: flex; align-items: center; }
+.lang-btn { font-family: 'Lucida Console', monospace; font-size: 11px; background: none; border: 1px solid #ddd; cursor: pointer; color: #aaa; padding: 2px 8px; letter-spacing: 1px; }
+.lang-btn:first-child { border-right: none; }
+.lang-btn.active { color: #111; border-color: #111; font-weight: bold; }
+.page-nav { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; }
+.nav-left { display: flex; flex-direction: column; gap: 8px; }
+.site-label { font-size: 10px; color: #999; letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 16px; font-size: 12px; flex-wrap: wrap; }
+.nav-links a { color: #555; }
+.nav-links a:hover { color: #111; text-decoration: underline; }
+.post-header { margin-bottom: 32px; }
+.post-date { font-size: 10px; color: #aaa; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+.post-title { font-family: 'Press Start 2P', monospace; font-size: 13px; font-weight: 400; line-height: 1.8; margin-bottom: 12px; }
+.post-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag-pill { font-family: 'Lucida Console', monospace; font-size: 10px; color: #999; background: #f4f4f4; padding: 1px 6px; }
+.post-body { font-size: 12px; line-height: 2.4; color: #333; }
+.post-body p { margin-bottom: 20px; }
+.post-body h2 { font-family: 'Press Start 2P', monospace; font-size: 10px; font-weight: 400; line-height: 1.8; margin: 32px 0 16px; color: #111; }
+.post-body em { color: #111; font-style: italic; }
+.post-body strong { color: #111; font-weight: bold; }
+.post-body a { color: #555; text-decoration: underline; }
+.post-nav { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; display: flex; justify-content: space-between; font-size: 11px; }
+.post-nav a { color: #555; border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+.post-nav a:hover { color: #111; border-color: #111; text-decoration: none; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 11px; color: #999; font-family: 'Lucida Console', monospace; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+footer a { color: #999; }
+footer a:hover { color: #111; text-decoration: none; }
+@media (max-width: 640px) { body { padding: 16px; } .post-title { font-size: 10px; } footer { flex-direction: column; gap: 6px; } }
+</style>
+</head>
+<body class="jp">
+<div class="page-nav">
+  <div class="nav-left">
+    <span class="site-label">kinoshita studio</span>
+    <div class="nav-links">
+      <a href="/">← top</a>
+      <a href="/blog/">blog</a>
+      <a href="/about.html">about</a>
+      <a href="https://kinoshita.studio/" target="_blank" rel="noopener">kinoshita studio →</a>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btnJP" onclick="setLang('jp')">JP</button>
+    <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+  </div>
+</div>
+<article>
+  <div class="post-header">
+    <span class="post-date">${esc(displayDate)}</span>
+    <h1 class="post-title" id="postTitle">${esc(titleJP)}</h1>
+    <div class="post-tags">${tagPills}</div>
+  </div>
+  <hr>
+  <div class="post-body" id="postBody">
+    ${bodyJP}
+  </div>${enSection}
+  <div class="post-nav">
+    <a href="/blog/">← blog</a>
+    <a href="/">top</a>
+  </div>
+</article>
+<footer>
+  <span>© 2026 木下 貴博 / Takahiro Kinoshita</span>
+  <span><a href="https://kinoshita.studio/" target="_blank" rel="noopener">kinoshita studio</a></span>
+</footer>
+<script>
+function setLang(l) {
+  document.getElementById('htmlRoot').setAttribute('lang', l === 'jp' ? 'ja' : 'en');
+  document.body.classList.toggle('jp', l === 'jp');
+  document.getElementById('btnJP').classList.toggle('active', l === 'jp');
+  document.getElementById('btnEN').classList.toggle('active', l === 'en');
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.style.display = (el.dataset.lang === l) ? 'block' : 'none';
+  });
+}
+<\/script>
+</body>
+</html>`;
+
+  const indexEntry = `  <li class="post-item">
+    <span class="post-date">${esc(date)}</span>
+    <div class="post-body">
+      <a href="/blog/${esc(slug)}.html" class="post-title">${esc(titleJP)}</a>
+      <p class="post-desc">${esc(descJP)}</p>
+      <div class="post-tags">
+        ${tags.map(t => `<span class="tag-pill">${esc(t)}</span>`).join('\n        ')}
+      </div>
+    </div>
+  </li>`;
+
+  document.getElementById('outArticle').value = articleHtml;
+  document.getElementById('outEntry').value = indexEntry;
+  document.getElementById('outputSection').style.display = 'block';
+  document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+  _lastSlug = slug;
+  _lastArticleHtml = articleHtml;
+}
+
+let _lastSlug = '';
+let _lastArticleHtml = '';
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function copyOut(id) {
+  const el = document.getElementById(id);
+  el.select();
+  navigator.clipboard?.writeText(el.value).then(() => {
+    const btn = el.parentElement.previousElementSibling.querySelector('button');
+    if (btn) { const old = btn.textContent; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = old, 1500); }
+  }).catch(() => document.execCommand('copy'));
+}
+
+function downloadOut() {
+  if (!_lastArticleHtml || !_lastSlug) return;
+  const blob = new Blob([_lastArticleHtml], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = _lastSlug + '.html';
+  a.click();
+}
+
+function clearForm() {
+  ['fSlug','fTitleJP','fTitleEN','fDescJP','fTags','fContentJP','fContentEN'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fDate').value = new Date().toISOString().slice(0, 10);
+  document.getElementById('outputSection').style.display = 'none';
+  document.getElementById('preview-box').innerHTML = '';
+}
+</script>
+</body>
+</html>
